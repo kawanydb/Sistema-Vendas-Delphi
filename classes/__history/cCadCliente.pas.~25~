@@ -1,0 +1,292 @@
+unit cCadCliente;
+
+interface
+
+  uses System.Classes,
+     Vcl.Controls,
+     Vcl.ExtCtrls,
+     Vcl.Dialogs, //lista de Units
+     FireDAC.Comp.Client,
+     FireDAC.Stan.Error,
+     FireDAC.DatS,
+     FireDAC.Phys.Intf,
+     FireDAC.DApt.Intf,
+     FireDAC.Stan.Async,
+     FireDAC.DApt,
+     FireDAC.Comp.DataSet,
+     System.SysUtils,
+     FireDAC.Stan.Param;
+
+type
+  TCliente = class  //nome da classe
+  private
+    conexaoDB:TFDConnection; // conexão com o dbconnection
+    //todas as propiedades do banco de dados
+    F_ClienteId:Integer; //int
+    F_nome:String; //varchar
+    F_endereco:String;
+    F_cidade:String;
+    F_bairro:String;
+    F_estado:String;
+    F_cep:String;
+    F_telefone:String;
+    F_email:String;
+    F_dataNascimento: TDateTime;
+    F_StatusId: Integer;
+    F_PessoaId: Integer;
+    F_numero: string;
+
+  public
+    constructor Create(aConexao:TFDConnection); //metodo create recebe uma conexao
+    destructor Destroy; override; // precisa destruir pra limpar a memória (ex:faxina antes de devolver um apê)
+    //crud
+    function Inserir:Boolean;
+    function Atualizar:Boolean;
+    function Apagar:Boolean;
+    function Selecionar(id:Integer):Boolean;
+  published //propiedades que eu vou enxergar no meu form (metodo {get; set;} )
+    property codigo        :Integer    read F_ClienteId      write F_ClienteId;
+    property nome          :string     read F_nome           write F_nome;
+    property endereco      :string     read F_endereco       write F_endereco;
+    property cidade        :string     read F_cidade         write F_cidade;
+    property bairro        :string     read F_bairro         write F_bairro;
+    property estado        :string     read F_estado         write F_estado;
+    property cep           :string     read F_cep            write F_cep;
+    property telefone      :string     read F_telefone       write F_telefone;
+    property numero        :string     read F_numero         write F_numero;
+    property email         :string     read F_email          write F_email;
+    property dataNascimento:TDateTime  read F_dataNascimento write F_dataNascimento;
+    property statusId      : Integer   read F_StatusId       write F_StatusId;
+    property pessoaId      : Integer   read F_PessoaId       write F_PessoaId;
+  end;
+
+implementation
+
+{$REGION 'Constructor and Destructor'}
+constructor TCliente.Create(aConexao:TFDConnection);
+begin
+  conexaoDB:=aConexao;
+end;
+
+destructor TCliente.Destroy;
+begin
+
+  inherited;
+end;
+{$ENDREGION}
+
+{$REGION 'CRUD'}
+function TCliente.Apagar: Boolean; //método apagar, da classe TCliente
+var Qry:TFDQuery;
+begin
+  //esse if abre uma caixa de confirmação perguntando se o usuário quer realmente apagar um registro
+  if MessageDlg('Apagar o Registro: '+#13+#13+
+                'Código: '+IntToStr(F_ClienteId)+#13+
+                'Descrição: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
+     Result:=False;
+     Abort
+  end;
+
+  //caso contrário ele puxa os dados do banco, limpa e apaga formando o DELETE
+  //se der erro retorna falso, no final a query libera memória
+  try
+    Result:=True;
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=conexaoDB;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('DELETE FROM clientes '+
+                'WHERE clienteId=:clienteId ');
+    Qry.ParamByName('clienteid').AsInteger :=F_ClienteId;
+  try
+    conexaoDB.StartTransaction;
+    Qry.ExecSQL;
+    conexaoDB.Commit;
+  except
+    conexaoDB.Rollback;
+    Result:=False;
+  end;
+
+  finally
+    if Assigned(Qry) then
+       FreeAndNil(Qry);
+  end;
+end;
+
+function TCliente.Atualizar:Boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result:=True;
+    //faz toda a conexão com o banco e qry
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=conexaoDB;
+    //limpa a qry
+    Qry.SQL.Clear;
+    //monta um update e dá a eles seus parametros (oq a ele pertence)
+    Qry.SQL.Add('UPDATE clientes '+
+                '   SET nome            =:nome '+
+                '       ,endereco       =:endereco '+
+                '       ,cidade         =:cidade '+
+                '       ,bairro         =:bairro '+
+                '       ,estado         =:estado '+
+                '       ,cep            =:cep '+
+                '       ,telefone       =:telefone '+
+                '       ,numero         =:numero '+
+                '       ,email          =:email '+
+                '       ,dataNascimento =:dataNascimento '+
+                '       ,statusId       =:statusId '+
+                '       ,pessoaId       =:pessoaId '+
+                ' WHERE clienteId=:clienteId ');
+
+    Qry.ParamByName('clienteId').AsInteger       :=Self.F_ClienteId;
+    Qry.ParamByName('nome').AsString             :=Self.F_nome;
+    Qry.ParamByName('endereco').AsString         :=Self.F_endereco;
+    Qry.ParamByName('cidade').AsString           :=Self.F_cidade;
+    Qry.ParamByName('bairro').AsString           :=Self.F_bairro;
+    Qry.ParamByName('estado').AsString           :=Self.F_estado;
+    Qry.ParamByName('cep').AsString              :=Self.F_cep;
+    Qry.ParamByName('telefone').AsString         :=Self.F_telefone;
+    Qry.ParamByName('numero').AsString           :=Self.F_numero;
+    Qry.ParamByName('email').AsString            :=Self.F_email;
+    Qry.ParamByName('dataNascimento').AsDateTime :=Self.F_dataNascimento;
+    Qry.ParamByName('statusId').AsInteger        := Self.F_StatusId;
+    Qry.ParamByName('pessoaId').AsInteger        := Self.F_PessoaId;
+
+    //executo, se der problema resulta falso; senão retorna ele lá em cima como true
+     try
+      conexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      conexaoDB.Commit;
+    except
+      conexaoDB.Rollback;
+      Result:=False;
+    end;
+
+  finally
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
+  end;
+end;
+
+function TCliente.Inserir:Boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result:=True;
+    //faz toda a conexão com o banco e qry
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=conexaoDB;
+    //limpa a qry
+    Qry.SQL.Clear;
+    //monta um insert (inserir) e dá a eles seus parametros (oq a ele pertence)
+    Qry.SQL.Add('INSERT INTO clientes (nome, '+
+                '                      endereco, '+
+                '                      cidade, '+
+                '                      bairro, '+
+                '                      estado, '+
+                '                      cep, '+
+                '                      telefone, '+
+                '                      numero, '+
+                '                      email, '+
+                '                      datanascimento, '+
+                '                      statusId, '+
+                '                      pessoaId) ' +
+                'VALUES               (:nome, '+
+                '                      :endereco, '+
+                '                      :cidade, '+
+                '                      :bairro, '+
+                '                      :estado, '+
+                '                      :cep, '+
+                '                      :telefone, '+
+                '                      :numero, '+
+                '                      :email, '+
+                '                      :datanascimento, '+
+                '                      :statusId, '+
+                '                      :pessoaId)' );
+    //o id não vai aqui, pq n é possível alterar o id
+    Qry.ParamByName('nome').AsString             :=Self.F_nome;
+    Qry.ParamByName('endereco').AsString         :=Self.F_endereco;
+    Qry.ParamByName('cidade').AsString           :=Self.F_cidade;
+    Qry.ParamByName('bairro').AsString           :=Self.F_bairro;
+    Qry.ParamByName('estado').AsString           :=Self.F_estado;
+    Qry.ParamByName('cep').AsString              :=Self.F_cep;
+    Qry.ParamByName('telefone').AsString         :=Self.F_telefone;
+    Qry.ParamByName('numero').AsString           :=Self.F_numero;
+    Qry.ParamByName('email').AsString            :=Self.F_email;
+    Qry.ParamByName('dataNascimento').AsDateTime :=Self.F_dataNascimento;
+    Qry.ParamByName('statusId').AsInteger        := Self.F_StatusId;
+    Qry.ParamByName('pessoaId').AsInteger        := Self.F_PessoaId;
+
+    try
+      conexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      conexaoDB.Commit;
+    except
+      conexaoDB.Rollback;
+      Result:=False;
+    end;
+
+  finally
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
+  end;
+end;
+
+function TCliente.Selecionar(id:Integer):Boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result:=True;
+    //faz toda a conexão com o banco e qry
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=conexaoDB;
+    //limpa a qry
+    Qry.SQL.Clear;
+    //monta um select e dá a eles seus parametros (oq a ele pertence)
+    Qry.SQL.Add('SELECT clienteId, '+
+                '       nome, '+
+                '       endereco, '+
+                '       cidade, '+
+                '       bairro, '+
+                '       estado, '+
+                '       cep, '+
+                '       telefone, '+
+                '       numero, '+
+                '       email, '+
+                '       datanascimento, ' +
+                '       statusId, ' +
+                '       pessoaId ' +
+                '  FROM clientes '+
+                ' WHERE clienteId=:clienteId');
+    Qry.ParamByName('clienteId').AsInteger:=id;
+    try
+      Qry.Open; //abro a qry
+
+      //atribuir oq eu peguei do banco de dados para as minhas propiedades da classe
+
+      Self.F_ClienteId     := Qry.FieldByName('clienteId').AsInteger;
+      Self.F_nome          := Qry.FieldByName('nome').AsString;
+      Self.F_endereco      := Qry.FieldByName('endereco').AsString;
+      Self.F_cidade        := Qry.FieldByName('cidade').AsString;
+      Self.F_bairro        := Qry.FieldByName('bairro').AsString;
+      Self.F_estado        := Qry.FieldByName('estado').AsString;
+      Self.F_cep           := Qry.FieldByName('cep').AsString;
+      Self.F_telefone      := Qry.FieldByName('telefone').AsString;
+      Self.F_numero      := Qry.FieldByName('numero').AsString;
+      Self.F_email         := Qry.FieldByName('email').AsString;
+      Self.F_dataNascimento:= Qry.FieldByName('dataNascimento').AsDateTime;
+      Self.F_StatusId      := Qry.FieldByName('statusId').AsInteger;
+      Self.F_PessoaId      := Qry.FieldByName('pessoaId').AsInteger;
+
+    except
+      Result:=False;
+    end;
+
+  finally
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
+  end;
+end;
+
+end.
+

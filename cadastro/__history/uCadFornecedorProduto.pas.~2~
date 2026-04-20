@@ -1,0 +1,44 @@
+unit uCadFornecedorProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.ComCtrls;
+
+type
+  TfrmTelaHeranca3 = class(TfrmTelaHeranca)
+    edtClienteId: TLabeledEdit;
+    edtNome: TLabeledEdit;
+    lblCpfCnpj: TLabel;
+    edtCpfCnpj: TEdit;
+    lbl3: TLabel;
+    lbl12: TLabel;
+    edtCpfCnpjTelefone: TMaskEdit;
+    edtEmail: TLabeledEdit;
+    edtEndereco: TLabeledEdit;
+    edtBairro: TLabeledEdit;
+    edtCidade: TLabeledEdit;
+    edtEstado: TLabeledEdit;
+    edtNumero: TLabeledEdit;
+    edtCEP: TEdit;
+    lbl4: TLabel;
+    lbl13: TLabel;
+    lbl14: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmTelaHeranca3: TfrmTelaHeranca3;
+
+implementation
+
+{$R *.dfm}
+
+end.

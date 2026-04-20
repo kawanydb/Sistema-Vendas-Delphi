@@ -1,0 +1,99 @@
+unit uCadCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.ComCtrls, uDtmConexao, cCadCategoria, uEnum;
+
+type
+  TfrmCadCategoria = class(TfrmTelaHeranca)
+    fdtncfldQryListagemcategoriaId: TFDAutoIncField;
+    strngfldQryListagemdescricao: TStringField;
+    edtCategoriaId: TLabeledEdit;
+    edtDescricao: TLabeledEdit;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure tabManutencaoContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+    procedure btnAlterarClick(Sender: TObject);
+  private
+    { Private declarations }
+    oCategoria:TCategoria;
+
+  public
+    { Public declarations }
+    function Apagar:Boolean; override;
+    function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
+  end;
+
+var
+  frmCadCategoria: TfrmCadCategoria;
+
+implementation
+
+{$R *.dfm}
+
+{$REGION 'Override'}
+function TfrmCadCategoria.Apagar: Boolean;
+var Qry:TFDQuery;
+begin
+  Result:=oCategoria.Apagar(QryListagem.FieldByName('categoriaId').AsInteger);
+end;
+
+function TfrmCadCategoria.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  if edtCategoriaId.Text<>EmptyStr then
+  oCategoria.codigo:=StrToInt(edtCategoriaId.Text)
+  else
+  oCategoria.codigo:=0;
+
+  oCategoria.descricao:=edtDescricao.Text;
+
+  if(EstadoDoCadastro)=ecInserir then
+  Result:=oCategoria.Inserir
+  else if (EstadoDoCadastro=ecAlterar) then
+  Result:=oCategoria.Atualizar;
+end;
+
+procedure TfrmCadCategoria.tabManutencaoContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+  inherited;
+
+end;
+
+{$ENDREGION}
+
+procedure TfrmCadCategoria.btnAlterarClick(Sender: TObject);
+begin
+  if oCategoria.Selecionar(QryListagem.FieldByName('categoriaId').AsInteger) then begin
+    edtCategoriaId.Text:=IntToStr(oCategoria.codigo);
+    edtDescricao.Text :=oCategoria.descricao;
+  end
+  else begin
+    btnCancelarClick(nil);
+    Abort
+
+  end;
+  inherited;
+
+end;
+
+procedure TfrmCadCategoria.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if Assigned(oCategoria) then
+    FreeAndNil(oCategoria);
+end;
+
+procedure TfrmCadCategoria.FormCreate(Sender: TObject);
+begin
+  inherited;
+  oCategoria := TCategoria.Create(dtmConexao.conexaoDB);
+  IndiceAtual:= 'descricao';
+
+end;
+
+end.

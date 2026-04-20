@@ -1,0 +1,64 @@
+unit uDTMVenda;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Datasnap.DBClient;
+
+type
+  TdtmVenda = class(TDataModule)
+    QryCliente: TFDQuery;
+    fdtncfldQryClienteclienteId: TFDAutoIncField;
+    strngfldQryClientenome: TStringField;
+    QryProdutos: TFDQuery;
+    dtsItensVenda: TDataSource;
+    dtsCliente: TDataSource;
+    dtsProdutos: TDataSource;
+    cdsItensVenda: TClientDataSet;
+    intgrfldItensVendaprodutoId: TIntegerField;
+    strngfldItensVendaNomeProduto: TStringField;
+    fltfldItensVendaquantidade: TFloatField;
+    fltfldItensVendavalorUnitario: TFloatField;
+    fltfldItensVendavalorTotalProduto: TFloatField;
+    fdtncfldQryProdutosprodutoId: TFDAutoIncField;
+    strngfldQryProdutosnome: TStringField;
+    fmtbcdfldQryProdutosvalor: TFMTBCDField;
+    intgrfldQryProdutosquantidade: TIntegerField;
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dtmVenda: TdtmVenda;
+
+implementation
+
+uses
+  uDTMConexao;
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TdtmVenda.DataModuleCreate(Sender: TObject);
+begin
+   cdsItensVenda.CreateDataSet;
+   QryCliente.Open;
+   QryProdutos.Open;
+
+end;
+
+procedure TdtmVenda.DataModuleDestroy(Sender: TObject);
+begin
+   cdsItensVenda.Close;
+   QryCliente.Close;
+   QryProdutos.Close;
+end;
+
+end.

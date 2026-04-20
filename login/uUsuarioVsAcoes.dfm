@@ -1,0 +1,253 @@
+object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
+  Left = 0
+  Top = 0
+  Caption = 'Usu'#225'rio VS A'#231#245'es'
+  ClientHeight = 410
+  ClientWidth = 591
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object spl1: TSplitter
+    Left = 201
+    Top = 0
+    Height = 369
+    ExplicitLeft = 256
+    ExplicitTop = 184
+    ExplicitHeight = 100
+  end
+  object pnl1: TPanel
+    Left = 0
+    Top = 0
+    Width = 201
+    Height = 369
+    Align = alLeft
+    TabOrder = 0
+    object dbgrdUsuarios: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 199
+      Height = 367
+      Align = alClient
+      DataSource = dtsUsuario
+      DrawingStyle = gdsClassic
+      FixedColor = clGray
+      GradientStartColor = clMedGray
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      ParentFont = False
+      TabOrder = 0
+      TitleFont.Charset = ANSI_CHARSET
+      TitleFont.Color = clWhite
+      TitleFont.Height = -11
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = [fsBold]
+      OnDrawColumnCell = dbgrdUsuariosDrawColumnCell
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'usuarioid'
+          Width = 44
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Nome'
+          Width = 119
+          Visible = True
+        end>
+    end
+  end
+  object pnl2: TPanel
+    Left = 204
+    Top = 0
+    Width = 387
+    Height = 369
+    Align = alClient
+    TabOrder = 1
+    object dbgrdACoes: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 385
+      Height = 367
+      Align = alClient
+      DataSource = dtsAcoes
+      DrawingStyle = gdsClassic
+      FixedColor = clGray
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      ParentFont = False
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWhite
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = [fsBold]
+      OnDrawColumnCell = dbgrdACoesDrawColumnCell
+      OnDblClick = dbgrdACoesDblClick
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'usuarioId'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'acaoAcessoId'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'descricao'
+          Width = 272
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'ativo'
+          Visible = False
+        end>
+    end
+  end
+  object pnl3: TPanel
+    Left = 0
+    Top = 369
+    Width = 591
+    Height = 41
+    Align = alBottom
+    TabOrder = 2
+    DesignSize = (
+      591
+      41)
+    object btnnFechar: TBitBtn
+      Left = 521
+      Top = 6
+      Width = 62
+      Height = 23
+      Anchors = [akTop, akRight]
+      Caption = '&FECHAR'
+      Glyph.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFA6A5A5A7A7A79F9E9E9F9E9EA7A6A6A6A5A5FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF9F9E9EAAA7A7CCC9C9CAC5C5C0
+        BBBBBAB4B4B4ACACAAA3A3A09E9E9F9E9EFF00FFFF00FFFF00FFFF00FFFF00FF
+        959393D3D1D1CCCAD56765AB3534B05050CE4F4FC53737B66B68A5AFA9A9A49E
+        9E959393FF00FFFF00FFFF00FFA09F9FE9E9E9A9A5C71818B54040E77A7AF393
+        93F69696F67A7AF43B3BEA1C1AAF9C96A3A59F9F9F9E9EFF00FFFF00FFB8B7B7
+        D7D5DE1111AB2525CA27279E2F2FB27373F27474F23030B228289E2828CE1616
+        AAB4ADADA19F9FFF00FFBCBBBBE6E6E66362BA1616C63F3FAABBBBBB9797B723
+        23AA2424AA9797B7BBBBBB3B3BA51010C95957A5B1ABABBDBCBCB5B4B4DCDADA
+        0F0FAB1212A714149D9797B7B6B6B69C9CBB9C9CBBB6B6B69797B71313991212
+        AD1717A4BDB8B8B1B1B1A6A5A5C1C0C00808B10707930F0FA51010969A9ABBC0
+        C0C0C0C0C09A9ABB1111960F0FA70909970101A0C6C1C1A09F9FA6A5A5BDBCBC
+        5C5CCA4D4DCE2222BB101096B7B7D8E2E2E2E2E2E2B7B7D81111962626BC5353
+        D12E2EB8CECACAA09F9FA9A7A7CACACA5B5BBB6969D52323A3C1C1E3FEFEFEC1
+        C1E3C1C1E3FEFEFEC1C1E31F1F9E7272D8605FB1DCD8D8A7A7A7A5A5A5C9C9C9
+        7978B58A8ADE6565BBFEFEFEC1C1E32A2AAD2A2AADC1C1E3FEFEFE5D5DB68B8B
+        E06968A9DEDDDDA6A5A5FF00FFACACACB5B5C06A6AC26A6AC75E5EB65252C164
+        64D06464D04D4DBD5E5EB66D6DCA6767B7DDDCE7ACACACFF00FFFF00FF9F9E9E
+        C6C6C6B4B4BC7575C6A0A0E19393DA8B8BD88C8CD89797DCA1A1E17776BFABAA
+        CAE7E7E7A09F9FFF00FFFF00FFFF00FF979797C6C6C6C6C6CCA4A3CB9292D187
+        87CF8686CF8E8CD09A99CAD8D8DEE0E0E0979696FF00FFFF00FFFF00FFFF00FF
+        FF00FF9F9E9EB1B0B0C7C7C7CECECED5D4D4D7D7D7DADADADADADAB5B5B5A09F
+        9FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB1B0B0ACABABA0
+        9F9FA09F9FABAAAAB1B0B0FF00FFFF00FFFF00FFFF00FFFF00FF}
+      TabOrder = 0
+      OnClick = btnnFecharClick
+    end
+  end
+  object QryUsuario: TFDQuery
+    Connection = dtmConexao.conexaoDB
+    SQL.Strings = (
+      'SELECT usuarioid,'
+      '       Nome'
+      'FROM usuarios')
+    Left = 104
+    Top = 200
+    object fdtncfldQryUsuariousuarioid: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'usuarioid'
+      Origin = 'usuarioid'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object strngfldQryUsuarioNome: TStringField
+      FieldName = 'Nome'
+      Origin = 'Nome'
+      Required = True
+      Size = 50
+    end
+  end
+  object QryAcoes: TFDQuery
+    Connection = dtmConexao.conexaoDB
+    SQL.Strings = (
+      'SELECT ua.usuarioId,'
+      '       ua.acaoAcessoId,'
+      '       a.descricao,'
+      '       ua.ativo'
+      '  FROM usuariosAcaoAcesso As ua'
+      
+        '     INNER JOIN acaoAcesso AS a ON a.acaoAcessoId = ua.acaoAcess' +
+        'oId'
+      'WHERE ua.usuarioId=:usuarioId')
+    Left = 318
+    Top = 112
+    ParamData = <
+      item
+        Name = 'USUARIOID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object intgrfldQryAcoesusuarioId: TIntegerField
+      FieldName = 'usuarioId'
+      Origin = 'usuarioId'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object intgrfldQryAcoesacaoAcessoId: TIntegerField
+      FieldName = 'acaoAcessoId'
+      Origin = 'acaoAcessoId'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object strngfldQryAcoesdescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Required = True
+      Size = 100
+    end
+    object blnfldQryAcoesativo: TBooleanField
+      FieldName = 'ativo'
+      Origin = 'ativo'
+      Required = True
+    end
+  end
+  object dtsUsuario: TDataSource
+    DataSet = QryUsuario
+    Left = 104
+    Top = 136
+  end
+  object dtsAcoes: TDataSource
+    DataSet = QryAcoes
+    Left = 454
+    Top = 184
+  end
+end

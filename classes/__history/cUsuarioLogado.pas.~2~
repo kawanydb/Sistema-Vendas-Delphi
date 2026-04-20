@@ -1,0 +1,26 @@
+unit cUsuarioLogado;
+
+interface
+
+uses System.Classes,
+     Vcl.Controls,
+     Vcl.ExtCtrls,
+     Vcl.Dialogs,
+     System.SysUtils;
+type
+  TUsuariologado = class
+    private
+      F_Usuario:Integer;
+      F_nome:string;
+      F_senha:string;
+    public
+
+    published
+      property codigo     :Integer    read F_usuarioId    write F_usuarioId;
+      property nome       :string     read F_nome         write F_nome;
+      property senha      :string     read F_senha        write F_senha;
+    end;
+
+implementation
+
+end.

@@ -1,0 +1,381 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao, uCadCategoria, uCadCliente, uCadProduto,
+  uFrmAtualizaDB,uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto,
+  uRelCadProdutoComGrupoCategoria, uSelecionarData,uRelVendaPorData, uCadUsuario, uAlterarSenha,
+  cUsuarioLogado, Vcl.ComCtrls, cAtualizacaoBancoDeDados, cArquivoIni, cAcaoAcesso, RLReport, Vcl.ExtCtrls,
+  VclTee.TeeGDIPlus, Data.DB, VCLTee.TeEngine, VCLTee.Series, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart,
+  cFuncao, Vcl.StdCtrls, Vcl.Buttons, uCadFornecedor;
+
+type
+  TdtmPrincipal = class(TForm)
+    mainPrincipal: TMainMenu;
+    CADASTRO1: TMenuItem;
+    MOVIMENTAO1: TMenuItem;
+    RELATRIOS1: TMenuItem;
+    CLIENTE1: TMenuItem;
+    CLIENTE2: TMenuItem;
+    N1: TMenuItem;
+    CATEGORIA1: TMenuItem;
+    PRODUTO1: TMenuItem;
+    N2: TMenuItem;
+    mnuFechar: TMenuItem;
+    VENDA1: TMenuItem;
+    CLIENTE3: TMenuItem;
+    N3: TMenuItem;
+    PRODUTO2: TMenuItem;
+    N4: TMenuItem;
+    VENDAPORDATA1: TMenuItem;
+    CATEGORIA2: TMenuItem;
+    FICHADECLIENTE1: TMenuItem;
+    PRODUTOPORCATEGORIA1: TMenuItem;
+    USURIO1: TMenuItem;
+    ALTERARSENHA1: TMenuItem;
+    N6: TMenuItem;
+    N7: TMenuItem;
+    StbPrincipal: TStatusBar;
+    AOACESSO1: TMenuItem;
+    N5: TMenuItem;
+    USURIOSVSAES1: TMenuItem;
+    N8: TMenuItem;
+    pnl1: TPanel;
+    a1: TGridPanel;
+    dbcht1: TDBChart;
+    brsrsSeries1: TBarSeries;
+    dbcht2: TDBChart;
+    aSeries1: TPieSeries;
+    dbcht4: TDBChart;
+    aSeries3: TPieSeries;
+    dbcht3: TDBChart;
+    fstlnsrsSeries1: TFastLineSeries;
+    tmrAtualizacaoDashBoard: TTimer;
+    SAIR1: TMenuItem;
+    lbl1: TLabel;
+    FORNECEDOR1: TMenuItem;
+    procedure mnuFecharClick(Sender: TObject);
+    procedure CATEGORIA1Click(Sender: TObject);
+    procedure CLIENTE2Click(Sender: TObject);
+    procedure PRODUTO1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure VENDA1Click(Sender: TObject);
+    procedure CATEGORIA2Click(Sender: TObject);
+    procedure CLIENTE3Click(Sender: TObject);
+    procedure FICHADECLIENTE1Click(Sender: TObject);
+    procedure PRODUTO2Click(Sender: TObject);
+    procedure PRODUTOPORCATEGORIA1Click(Sender: TObject);
+    procedure VENDAPORDATA1Click(Sender: TObject);
+    procedure USURIO1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ALTERARSENHA1Click(Sender: TObject);
+    procedure AOACESSO1Click(Sender: TObject);
+    procedure USURIOSVSAES1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SAIR1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FORNECEDOR1Click(Sender: TObject);
+  private
+    procedure AtualizacaobancoDados(aForm: TufrmmAtualizaDB);
+    procedure AtualizarDashBoard;
+    procedure ColorirPie(Grafico: TDBChart);
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dtmPrincipal: TdtmPrincipal;
+  oUsuarioLogado: TUsuariologado;
+
+implementation
+
+{$R *.dfm}
+
+uses uLogin, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico;
+
+
+// quando o usuário clica em categoria cria um formulário de cadastro
+procedure TdtmPrincipal.CATEGORIA1Click(Sender: TObject);
+begin
+   TFuncao.CriarForm(TfrmCadCategoria, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.CATEGORIA2Click(Sender: TObject);
+begin
+   TFuncao.CriarRelatorio(TfrmRelCategoria, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.CLIENTE2Click(Sender: TObject);
+begin
+  TFuncao.CriarForm(TfrmCadCliente, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.CLIENTE3Click(Sender: TObject);
+begin
+   TFuncao.CriarRelatorio(TfrmRelCadCliente, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
+begin
+   TFuncao.CriarRelatorio(TfrmRelCadCliente, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if Assigned(dtmConexao) then
+    FreeAndNil(dtmConexao);
+  if Assigned(DTMGrafico) then
+    FreeAndNil(DTMGrafico);
+end;
+
+procedure TdtmPrincipal.FormCreate(Sender: TObject);
+begin
+//se não existir o arquivo ini, ele cria
+  if not FileExists(TArquivoIni.ArquivoIni) then
+  begin
+    TArquivoIni.AtualizarIni('SERVER', 'TipoDataBase', 'MSSQL');
+    TArquivoIni.AtualizarIni('SERVER', 'HostName', '.\DC-TR-03-VM\SQLEXPRESS');
+    TArquivoIni.AtualizarIni('SERVER', 'Port', '1433');
+    TArquivoIni.AtualizarIni('SERVER', 'User', 'sa');
+    TArquivoIni.AtualizarIni('SERVER', 'Password', 'domtec@10');
+    TArquivoIni.AtualizarIni('SERVER', 'Database', 'vendas');
+
+    MessageDlg('Arquivo'+ TArquivoIni.ArquivoIni +' Criado com sucesso '+#13+
+               ',configure o arquivo antes de inicializar aplicação', mtInformation,[mbOK], 0);
+
+    Application.Terminate;
+  end
+  else
+  begin
+    dtmConexao := TdtmConexao.Create(Self);
+    dtmConexao.conexaoDB.Params.DriverID:='MSSQL';
+    dtmConexao.conexaoDB.Params.UserName:='sa';
+    dtmConexao.conexaoDB.Params.Password:='domtec@10';
+    dtmConexao.conexaoDB.Params.Database:='vendas';
+    dtmConexao.conexaoDB.Connected:=true;
+
+   uFrmmAtualizaDB := TuFrmmAtualizaDB.Create(self);
+   uFrmmAtualizaDB.Show;
+   uFrmmAtualizaDB.Refresh;
+
+   AtualizacaobancoDados(uFrmmAtualizaDB);
+
+   TAcaoAcesso.CriarAcoes(TfrmCadCategoria, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmCadCliente, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmCadProduto, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmCadUsuario, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmCadAcaoAcesso, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmAlterarSenha, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmProVenda, dtmConexao.conexaoDB);
+
+   TAcaoAcesso.CriarAcoes(TfrmRelVendaPorData, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmRelCadClienteFicha, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmRelCadCliente, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmRelCadProdutoComGrupoCategoria, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmRelCadProduto, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmRelCategoria, dtmConexao.conexaoDB);
+   TAcaoAcesso.CriarAcoes(TfrmUsuarioVsAcoes, dtmConexao.conexaoDB);
+
+   TAcaoAcesso.PreencherUsuariosVsAcoes(dtmConexao.conexaoDB);
+
+   DTMGrafico:=TDTMGrafico.Create(self);
+   AtualizarDashBoard;
+
+   uFrmmAtualizaDB.Free;
+
+     // no final do FormCreate, depois de tudo inicializado:
+  frmLogin := TfrmLogin.Create(Self);
+  try
+    frmLogin.ShowModal;
+  finally
+    FreeAndNil(frmLogin);
+  end;
+  end;
+end;
+
+procedure TdtmPrincipal.FormDestroy(Sender: TObject);
+begin
+ if Assigned(oUsuarioLogado) then
+    FreeAndNil(oUsuarioLogado);
+end;
+
+procedure TdtmPrincipal.FormShow(Sender: TObject);
+begin
+  if not Assigned(oUsuarioLogado) then
+    oUsuarioLogado := TUsuariologado.Create;
+
+//  frmLogin := TfrmLogin.Create(Self);
+//  try
+//    frmLogin.ShowModal;
+//  finally
+//    FreeAndNil(frmLogin);
+//  end;
+
+  StbPrincipal.Panels[0].Text := 'USUÁRIO: ' + oUsuarioLogado.nome;
+  ColorirPie(dbcht2);
+  ColorirPie(dbcht4);
+end;
+
+procedure TdtmPrincipal.FORNECEDOR1Click(Sender: TObject);
+begin
+  TFuncao.CriarForm(TfrmCadFornecedorProduto, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.mnuFecharClick(Sender: TObject);
+begin
+   //Close;
+    Application.Terminate;
+end;
+
+procedure TdtmPrincipal.PRODUTO1Click(Sender: TObject);
+begin
+   TFuncao.CriarForm(TfrmCadProduto, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.PRODUTO2Click(Sender: TObject);
+begin
+   TFuncao.CriarRelatorio(TfrmRelCadProduto, oUsuarioLogado, dtmConexao.conexaoDB);
+
+end;
+
+procedure TdtmPrincipal.PRODUTOPORCATEGORIA1Click(Sender: TObject);
+begin
+   TFuncao.CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.SAIR1Click(Sender: TObject);
+begin
+  if Assigned(oUsuarioLogado) then
+  begin
+    oUsuarioLogado.codigo := 0;
+    oUsuarioLogado.nome   := '';
+    oUsuarioLogado.senha  := '';
+  end;
+
+  Self.Hide;
+
+  frmLogin := TfrmLogin.Create(Self);
+  try
+    frmLogin.ShowModal;
+  finally
+    FreeAndNil(frmLogin);
+  end;
+
+  StbPrincipal.Panels[0].Text := 'USUÁRIO: ' + oUsuarioLogado.nome;
+  ColorirPie(dbcht2);
+  ColorirPie(dbcht4);
+  Self.Visible := True;
+end;
+
+procedure TdtmPrincipal.USURIO1Click(Sender: TObject);
+begin
+   TFuncao.CriarForm(TfrmCadUsuario, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.USURIOSVSAES1Click(Sender: TObject);
+begin
+  TFuncao.CriarForm(TfrmUsuarioVsAcoes, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.VENDA1Click(Sender: TObject);
+begin
+   TFuncao.CriarForm(TfrmProVenda, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.VENDAPORDATA1Click(Sender: TObject);
+begin
+  try
+    frmSelecionarData:=TfrmSelecionarData.Create(Self);
+    if TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, frmSelecionarData.Name, dtmConexao.conexaoDB) then
+    begin
+      frmSelecionarData.ShowModal;
+
+      frmRelVendaPorData:=TfrmRelVendaPorData.Create(Self);
+      frmRelVendaPorData.QryVenda.Close;
+      frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate:=frmSelecionarData.edtDataInicio.Date;
+      frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate:=frmSelecionarData.edtDataFinal.Date;
+      frmRelVendaPorData.QryVenda.Open;
+      frmRelVendaPorData.Relatorio.PreviewModal;
+    end
+    else begin
+      MessageDlg('Usuário: '+oUsuarioLogado.nome+', não tem permissão de acesso',mtWarning,[mbOK],0);
+    end;
+  finally
+    if Assigned(frmSelecionarData) then
+       frmSelecionarData.Release;
+    if Assigned(frmRelVendaPorData) then
+      frmRelVendaPorData.Release;
+  end;
+end;
+
+procedure TdtmPrincipal.ALTERARSENHA1Click(Sender: TObject);
+begin
+  TFuncao.CriarForm(TfrmAlterarSenha, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.AOACESSO1Click(Sender: TObject);
+begin
+  TFuncao.CriarForm(TfrmCadAcaoAcesso, oUsuarioLogado, dtmConexao.conexaoDB);
+end;
+
+procedure TdtmPrincipal.AtualizacaobancoDados(aForm:TufrmmAtualizaDB); //recebe o formulario TufrmmAtualizaDB
+var oAtualizarMSSQL:TAtualizaBancoDadosMSSQL;
+begin
+  aForm.Refresh;
+
+  try
+    oAtualizarMSSQL:=TAtualizaBancoDadosMSSQL.Create(dtmConexao.conexaoDB);
+    oAtualizarMSSQL.AtualizaBancoDadosMSSQL;
+  finally
+    if Assigned(oAtualizarMSSQL) then
+       FreeAndNil(oAtualizarMSSQL);
+  end;
+end;
+
+procedure TdtmPrincipal.AtualizarDashBoard;
+begin
+  try
+    Screen.Cursor:=crSQLWait;
+    if DTMGrafico.QryProdutoEstoque.Active then
+       DTMGrafico.QryProdutoEstoque.Close;
+
+    if DTMGrafico.QryVendaValorPorCliente.Active then
+       DTMGrafico.QryVendaValorPorCliente.Close;
+
+    if DTMGrafico.Qry10ProdutosMaisVendidos.Active then
+       DTMGrafico.Qry10ProdutosMaisVendidos.Close;
+
+    if DTMGrafico.QryVendasUltimaSemana.Active then
+       DTMGrafico.QryVendasUltimaSemana.Close;
+
+    DTMGrafico.QryProdutoEstoque.Open;
+    DTMGrafico.QryVendaValorPorCliente.Open;
+    DTMGrafico.Qry10ProdutosMaisVendidos.Open;
+    DTMGrafico.QryVendasUltimaSemana.Open;
+  finally
+    Screen.Cursor:=crSQLWait;
+  end;
+end;
+
+procedure TdtmPrincipal.ColorirPie(Grafico: TDBChart);
+var
+  i: Integer;
+  Cores: array of TColor;
+begin
+  SetLength(Cores, 7);
+  Cores[0] := $00AA94C5;
+  Cores[1] := $008F74D4;
+  Cores[2] := $00E1CAFD;
+  Cores[3] := $00F0E5FF;
+  Cores[4] := $00C8B8F7;
+  Cores[5] := $00848485;
+  Cores[6] := $00E6E6E8;
+
+  for i := 0 to Grafico.Series[0].Count - 1 do
+    Grafico.Series[0].ValueColor[i] := Cores[i mod Length(Cores)];
+end;
+
+end.

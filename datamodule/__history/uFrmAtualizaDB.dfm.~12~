@@ -1,0 +1,111 @@
+object uFrmmAtualizaDB: TuFrmmAtualizaDB
+  Left = 0
+  Top = 0
+  BorderStyle = bsNone
+  Caption = 'uFrmAtualizaDB'
+  ClientHeight = 287
+  ClientWidth = 489
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnl1: TPanel
+    Left = 0
+    Top = 0
+    Width = 489
+    Height = 287
+    Align = alClient
+    BevelOuter = bvLowered
+    BevelWidth = 3
+    BorderWidth = 3
+    Color = clBlack
+    ParentBackground = False
+    TabOrder = 0
+    object uFrmAtualizaDB: TPanel
+      Left = 6
+      Top = 6
+      Width = 477
+      Height = 275
+      Align = alClient
+      BevelOuter = bvNone
+      Enabled = False
+      ParentBackground = False
+      TabOrder = 0
+      object lbl1: TLabel
+        Left = 28
+        Top = 8
+        Width = 230
+        Height = 19
+        Caption = 'Atualiza'#231#227'o Banco de Dados'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object chkConexao: TCheckBox
+        Left = 236
+        Top = 64
+        Width = 161
+        Height = 17
+        Caption = 'Conex'#227'o com Banco de Dados'
+        TabOrder = 0
+      end
+      object chkCategoria: TCheckBox
+        Left = 236
+        Top = 87
+        Width = 161
+        Height = 17
+        Caption = 'Categoria'
+        TabOrder = 1
+      end
+      object chkProdutos: TCheckBox
+        Left = 236
+        Top = 110
+        Width = 161
+        Height = 17
+        Caption = 'Produto'
+        TabOrder = 2
+      end
+      object chkCliente: TCheckBox
+        Left = 236
+        Top = 133
+        Width = 161
+        Height = 17
+        Caption = 'Cliente'
+        TabOrder = 3
+      end
+      object chkVendas: TCheckBox
+        Left = 236
+        Top = 156
+        Width = 161
+        Height = 17
+        Caption = 'Vendas'
+        TabOrder = 4
+      end
+      object chkItensVendas: TCheckBox
+        Left = 236
+        Top = 181
+        Width = 161
+        Height = 17
+        Caption = 'Itens Vendas'
+        TabOrder = 5
+      end
+      object chkUsuarios: TCheckBox
+        Left = 236
+        Top = 204
+        Width = 161
+        Height = 17
+        Caption = 'Usu'#225'rios'
+        TabOrder = 6
+      end
+    end
+  end
+end

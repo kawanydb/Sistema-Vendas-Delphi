@@ -1,0 +1,89 @@
+unit uRelProVenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, RLReport, RLFilters, RLPDFFilter;
+
+type
+  TfrmRelProVenda = class(TForm)
+    QryVendas: TFDQuery;
+    dtsVenda: TDataSource;
+    RLPDFFilter1: TRLPDFFilter;
+    QryVendasItens: TFDQuery;
+    dtsVendasItens: TDataSource;
+    fdtncfldQryVendasvendaId: TFDAutoIncField;
+    intgrfldQryVendasclienteId: TIntegerField;
+    strngfldQryVendasnome: TStringField;
+    sqltmstmpfldQryVendasdataVenda: TSQLTimeStampField;
+    bcdfldQryVendastotalVenda: TBCDField;
+    intgrfldQryVendasItensvendaId: TIntegerField;
+    intgrfldQryVendasItensprodutoId: TIntegerField;
+    nQryVendasItensnome: TStringField;
+    fmtbcdfldQryVendasItensquantidade: TFMTBCDField;
+    fmtbcdfldQryVendasItensvalorUnitario: TFMTBCDField;
+    fmtbcdfldQryVendasItenstotalProduto: TFMTBCDField;
+    Relatorio: TRLReport;
+    rlbndCabecalho: TRLBand;
+    rlbl1: TRLLabel;
+    rldrw2: TRLDraw;
+    rldbtxt1: TRLDBText;
+    rlbndRodape: TRLBand;
+    rldrw3: TRLDraw;
+    rlsystmnf1: TRLSystemInfo;
+    rlsystmnf2: TRLSystemInfo;
+    rlsystmnf3: TRLSystemInfo;
+    rlbl2: TRLLabel;
+    rlbl3: TRLLabel;
+    rlbnd6: TRLBand;
+    rldbrsltTotalVenda: TRLDBResult;
+    rlbl10: TRLLabel;
+    rldrw6: TRLDraw;
+    rldrw7: TRLDraw;
+    rlgrpBandaDoGrupo: TRLGroup;
+    rlbnd3: TRLBand;
+    rlbl13: TRLLabel;
+    rldbtxtDescricaoCategoria: TRLDBText;
+    rlbnd2: TRLBand;
+    rlbl5: TRLLabel;
+    rlbl6: TRLLabel;
+    rlbl8: TRLLabel;
+    rlbnd1: TRLBand;
+    rldbtxtcategoriaId: TRLDBText;
+    rldbtxtcategoriaId1: TRLDBText;
+    rldbtxtnome: TRLDBText;
+    rlbnd4: TRLBand;
+    rldrw4: TRLDraw;
+    rlbnd5: TRLBand;
+    rldbrsltQuantidade: TRLDBResult;
+    rlbl9: TRLLabel;
+    rldrw5: TRLDraw;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
+  private
+    procedure FormShow(Sender: TObject);
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelProVenda: TfrmRelProVenda;
+
+implementation
+
+
+{$R *.dfm}
+
+
+procedure TfrmRelProVenda.FormDestroy(Sender: TObject);
+begin
+  QryVendas.Close;
+  QryVendasItens;
+end;
+
+end.
+

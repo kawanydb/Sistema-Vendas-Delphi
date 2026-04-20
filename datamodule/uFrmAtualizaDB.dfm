@@ -1,0 +1,71 @@
+object uFrmmAtualizaDB: TuFrmmAtualizaDB
+  Left = 0
+  Top = 0
+  BorderStyle = bsNone
+  Caption = 'uFrmAtualizaDB'
+  ClientHeight = 115
+  ClientWidth = 403
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnl1: TPanel
+    Left = 0
+    Top = 0
+    Width = 403
+    Height = 115
+    Align = alClient
+    BevelOuter = bvLowered
+    BevelWidth = 3
+    BorderWidth = 3
+    Color = clBlack
+    ParentBackground = False
+    TabOrder = 0
+    object uFrmAtualizaDB: TPanel
+      Left = 6
+      Top = 6
+      Width = 391
+      Height = 103
+      Align = alClient
+      BevelOuter = bvNone
+      Color = 15921906
+      Enabled = False
+      ParentBackground = False
+      TabOrder = 0
+      object lbl1: TLabel
+        Left = 41
+        Top = 20
+        Width = 294
+        Height = 30
+        Caption = 'Atualizando Banco de Dados'
+        Color = 3157643
+        Font.Charset = ANSI_CHARSET
+        Font.Color = 9401556
+        Font.Height = -21
+        Font.Name = 'Segoe UI Black'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object lbl2: TLabel
+        Left = 153
+        Top = 51
+        Width = 92
+        Height = 25
+        Caption = 'Aguarde...'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = 11179205
+        Font.Height = -19
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+  end
+end

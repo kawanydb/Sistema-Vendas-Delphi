@@ -1,0 +1,305 @@
+inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
+  Caption = 'Cadastro Fornecedor'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pgcPrincipal: TPageControl
+    ActivePage = tabManutencao
+    inherited tabListagem: TTabSheet
+      inherited grddListagem: TDBGrid
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'fornecedorId'
+            Width = 78
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nomeFornecedor'
+            Width = 126
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cnpj'
+            Width = 63
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'telefone'
+            Width = 89
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'email'
+            Width = 72
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cidade'
+            Width = 112
+            Visible = True
+          end>
+      end
+    end
+    inherited tabManutencao: TTabSheet
+      ExplicitLeft = 8
+      ExplicitTop = 22
+      object lbl2: TLabel
+        Left = 9
+        Top = 111
+        Width = 19
+        Height = 13
+        Caption = 'CEP'
+      end
+      object lbl3: TLabel
+        Left = 9
+        Top = 197
+        Width = 45
+        Height = 13
+        Caption = 'Telefone '
+      end
+      object lblCpfCnpj: TLabel
+        Left = 311
+        Top = 65
+        Width = 25
+        Height = 13
+        Caption = 'CNPJ'
+      end
+      object lbl12: TLabel
+        Left = 55
+        Top = 199
+        Width = 38
+        Height = 10
+        Caption = '(fixo, SAC)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -8
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl13: TLabel
+        Left = 252
+        Top = 112
+        Width = 45
+        Height = 10
+        Caption = '(rua,avenida)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -8
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object edtClienteId: TLabeledEdit
+        Tag = 1
+        Left = 9
+        Top = 37
+        Width = 287
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'C'#243'digo'
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 0
+      end
+      object edtNome: TLabeledEdit
+        Tag = 2
+        Left = 9
+        Top = 81
+        Width = 287
+        Height = 21
+        EditLabel.Width = 86
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Nome da Empresa'
+        MaxLength = 30
+        TabOrder = 1
+      end
+      object edtEndereco: TLabeledEdit
+        Left = 202
+        Top = 125
+        Width = 311
+        Height = 21
+        EditLabel.Width = 45
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Endere'#231'o'
+        MaxLength = 30
+        TabOrder = 2
+      end
+      object edtBairro: TLabeledEdit
+        Left = 9
+        Top = 170
+        Width = 180
+        Height = 21
+        EditLabel.Width = 28
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Bairro'
+        MaxLength = 30
+        TabOrder = 3
+      end
+      object edtCidade: TLabeledEdit
+        Left = 202
+        Top = 170
+        Width = 311
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Cidade'
+        MaxLength = 30
+        TabOrder = 4
+      end
+      object edtTelefone: TMaskEdit
+        Left = 9
+        Top = 216
+        Width = 180
+        Height = 21
+        TabOrder = 5
+        Text = ''
+        OnChange = edtTelefoneChange
+      end
+      object edtEmail: TLabeledEdit
+        Left = 202
+        Top = 214
+        Width = 377
+        Height = 21
+        EditLabel.Width = 28
+        EditLabel.Height = 13
+        EditLabel.Caption = 'E-mail'
+        MaxLength = 30
+        TabOrder = 6
+      end
+      object edtEstado: TLabeledEdit
+        Left = 525
+        Top = 170
+        Width = 54
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Estado'
+        MaxLength = 30
+        TabOrder = 7
+      end
+      object edtNumero: TLabeledEdit
+        Left = 525
+        Top = 125
+        Width = 54
+        Height = 21
+        EditLabel.Width = 37
+        EditLabel.Height = 13
+        EditLabel.Caption = 'N'#250'mero'
+        MaxLength = 30
+        TabOrder = 8
+      end
+      object edtCEP: TEdit
+        Left = 9
+        Top = 125
+        Width = 180
+        Height = 21
+        MaxLength = 9
+        TabOrder = 9
+        OnChange = edtCEPChange
+        OnExit = edtCEPExit
+      end
+      object edtCnpj: TEdit
+        Left = 310
+        Top = 81
+        Width = 269
+        Height = 21
+        TabOrder = 10
+        OnChange = edtCnpjChange
+      end
+    end
+  end
+  inherited pnlRodape: TPanel
+    inherited btnNavigator: TDBNavigator
+      Hints.Strings = ()
+    end
+  end
+  inherited dtsListagem: TDataSource
+    Left = 520
+    Top = 9
+  end
+  inherited QryListagem: TFDQuery
+    SQL.Strings = (
+      'SELECT fornecedorId,'
+      '       nomeFornecedor,'
+      '       cnpj,'
+      '       telefone,'
+      '       email,'
+      '       cep,'
+      '       endereco,'
+      '       numero,'
+      '       bairro,'
+      '       cidade,'
+      '       estado'
+      'FROM fornecedor')
+    Left = 452
+    Top = 9
+    object intgrfldQryListagemfornecedorId: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'fornecedorId'
+      Origin = 'fornecedorId'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object strngfldQryListagemnomeFornecedor: TStringField
+      DisplayLabel = 'Nome Fornecedor'
+      FieldName = 'nomeFornecedor'
+      Origin = 'nomeFornecedor'
+      Size = 100
+    end
+    object strngfldQryListagemcnpj: TStringField
+      DisplayLabel = 'CNPJ'
+      FieldName = 'cnpj'
+      Origin = 'cnpj'
+      Size = 18
+    end
+    object strngfldQryListagemtelefone: TStringField
+      DisplayLabel = 'Telefone'
+      FieldName = 'telefone'
+      Origin = 'telefone'
+    end
+    object strngfldQryListagememail: TStringField
+      DisplayLabel = 'E-mail'
+      FieldName = 'email'
+      Origin = 'email'
+      Size = 100
+    end
+    object strngfldQryListagemcep: TStringField
+      FieldName = 'cep'
+      Origin = 'cep'
+      Size = 10
+    end
+    object strngfldQryListagemendereco: TStringField
+      FieldName = 'endereco'
+      Origin = 'endereco'
+      Size = 60
+    end
+    object strngfldQryListagemnumero: TStringField
+      FieldName = 'numero'
+      Origin = 'numero'
+      Size = 10
+    end
+    object strngfldQryListagembairro: TStringField
+      FieldName = 'bairro'
+      Origin = 'bairro'
+      Size = 40
+    end
+    object strngfldQryListagemcidade: TStringField
+      DisplayLabel = 'Cidade'
+      FieldName = 'cidade'
+      Origin = 'cidade'
+      Size = 50
+    end
+    object strngfldQryListagemestado: TStringField
+      FieldName = 'estado'
+      Origin = 'estado'
+      Size = 2
+    end
+  end
+end

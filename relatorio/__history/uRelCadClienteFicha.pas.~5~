@@ -1,0 +1,111 @@
+unit uRelCadClienteFicha;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, RLReport,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, RLFilters, RLPDFFilter, RLHTMLFilter, RLXLSFilter, RLXLSXFilter;
+
+type
+  TfrmRelCadClienteFicha = class(TForm)
+    QryCliente: TFDQuery;
+    dtsCliente: TDataSource;
+    Relatorio: TRLReport;
+    Cabecalho: TRLBand;
+    rlbl1: TRLLabel;
+    RLPDFFilter1: TRLPDFFilter;
+    Rodape: TRLBand;
+    rldrw2: TRLDraw;
+    rldrw3: TRLDraw;
+    rlsystmnf1: TRLSystemInfo;
+    rlsystmnf2: TRLSystemInfo;
+    rlsystmnf3: TRLSystemInfo;
+    rlbl2: TRLLabel;
+    rlbl3: TRLLabel;
+    rldbtxt1: TRLDBText;
+    rlbnd1: TRLBand;
+    rldbtxtcategoriaId: TRLDBText;
+    rldbtxtcategoriaId1: TRLDBText;
+    rlxlsxfltr1: TRLXLSXFilter;
+    rlxlsfltr1: TRLXLSFilter;
+    rlhtmlfltr1: TRLHTMLFilter;
+    rldbtxtNome: TRLDBText;
+    rldbtxtemail: TRLDBText;
+    fdtncfldQryClienteclienteId: TFDAutoIncField;
+    strngfldQryClientenome: TStringField;
+    strngfldQryClientecep: TStringField;
+    strngfldQryClienteendereco: TStringField;
+    strngfldQryClientebairro: TStringField;
+    strngfldQryClientecidade: TStringField;
+    strngfldQryClienteestado: TStringField;
+    strngfldQryClienteemail: TStringField;
+    strngfldQryClientetelefone: TStringField;
+    sqltmstmpfldQryClientedataNascimento: TSQLTimeStampField;
+    rlbl6: TRLLabel;
+    rlbl5: TRLLabel;
+    rlbl7: TRLLabel;
+    rlbl8: TRLLabel;
+    rldbtxtclienteId: TRLDBText;
+    rlbl61: TRLLabel;
+    rlbl9: TRLLabel;
+    rldbtxtNome1: TRLDBText;
+    rlbl10: TRLLabel;
+    rldbtxtNome2: TRLDBText;
+    rlbl11: TRLLabel;
+    rldbtxtcep: TRLDBText;
+    rlbl12: TRLLabel;
+    rlbl13: TRLLabel;
+    rldbtxtendereco: TRLDBText;
+    rlbl14: TRLLabel;
+    rldbtxtemail1: TRLDBText;
+    rldrw4: TRLDraw;
+    RLBand1: TRLBand;
+    RLDBText1: TRLDBText;
+    RLDBText2: TRLDBText;
+    RLDBText3: TRLDBText;
+    RLDBText4: TRLDBText;
+    RLLabel1: TRLLabel;
+    RLLabel2: TRLLabel;
+    RLLabel3: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLDBText5: TRLDBText;
+    RLLabel6: TRLLabel;
+    RLDBText6: TRLDBText;
+    RLLabel7: TRLLabel;
+    RLDBText7: TRLDBText;
+    RLLabel8: TRLLabel;
+    RLLabel9: TRLLabel;
+    RLDBText8: TRLDBText;
+    RLLabel10: TRLLabel;
+    RLDBText9: TRLDBText;
+    RLDraw1: TRLDraw;
+    rldbtxtcidade: TRLDBText;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelCadClienteFicha: TfrmRelCadClienteFicha;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelCadClienteFicha.FormCreate(Sender: TObject);
+begin
+   QryCliente.Open;
+end;
+
+procedure TfrmRelCadClienteFicha.FormDestroy(Sender: TObject);
+begin
+   QryCliente.Close;
+end;
+
+end.

@@ -1,0 +1,73 @@
+unit uRelCadCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, RLReport,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, RLFilters, RLPDFFilter, RLHTMLFilter, RLXLSFilter, RLXLSXFilter;
+
+type
+  TfrmRelCadCliente = class(TForm)
+    QryCliente: TFDQuery;
+    dtsCliente: TDataSource;
+    Relatorio: TRLReport;
+    Cabecalho: TRLBand;
+    rlbl1: TRLLabel;
+    RLPDFFilter1: TRLPDFFilter;
+    Rodape: TRLBand;
+    rldrw2: TRLDraw;
+    rldrw3: TRLDraw;
+    rlsystmnf1: TRLSystemInfo;
+    rlsystmnf2: TRLSystemInfo;
+    rlsystmnf3: TRLSystemInfo;
+    rlbl2: TRLLabel;
+    rlbl3: TRLLabel;
+    rldbtxt1: TRLDBText;
+    rlbnd1: TRLBand;
+    rldbtxtcategoriaId: TRLDBText;
+    rldbtxtcategoriaId1: TRLDBText;
+    rlbnd2: TRLBand;
+    rlpnl1: TRLPanel;
+    rlbl5: TRLLabel;
+    rlbl6: TRLLabel;
+    rlxlsxfltr1: TRLXLSXFilter;
+    rlxlsfltr1: TRLXLSFilter;
+    rlhtmlfltr1: TRLHTMLFilter;
+    fdtncfldQryClienteclienteId: TFDAutoIncField;
+    strngfldQryClienteNome: TStringField;
+    strngfldQryClienteemail: TStringField;
+    strngfldQryClientetelefone: TStringField;
+    rlbl7: TRLLabel;
+    rldbtxtNome: TRLDBText;
+    rlbl8: TRLLabel;
+    rldbtxtemail: TRLDBText;
+    rlbl9: TRLLabel;
+    rldbtxttelefone: TRLDBText;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelCadCliente: TfrmRelCadCliente;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelCadCliente.FormCreate(Sender: TObject);
+begin
+   QryCliente.Open;
+end;
+
+procedure TfrmRelCadCliente.FormDestroy(Sender: TObject);
+begin
+   QryCliente.Close;
+end;
+
+end.

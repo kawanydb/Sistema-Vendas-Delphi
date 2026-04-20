@@ -1,0 +1,300 @@
+unit cCadProduto;
+
+interface
+
+uses System.Classes,
+     Vcl.Controls,
+     Vcl.ExtCtrls,
+     Vcl.Dialogs, //lista de Units
+     FireDAC.Comp.Client,
+     FireDAC.Stan.Error,
+     FireDAC.DatS,
+     FireDAC.Phys.Intf,
+     FireDAC.DApt.Intf,
+     FireDAC.Stan.Async,
+     FireDAC.DApt,
+     FireDAC.Comp.DataSet,
+     System.SysUtils,
+     FireDAC.Stan.Param,
+     System.StrUtils,
+     Vcl.Imaging.jpeg,
+     Vcl.Graphics,
+     System.Variants,
+     Data.DB;
+
+type
+TProduto = class
+  private
+    ConexaoDB:TFDConnection;
+    F_produtoId:Integer;
+    F_nome:string;
+    F_descricao:string;
+    F_valor:Double;
+    F_quantidade: Double;
+    F_categoriaId: Integer;
+    F_Foto:TBitmap;
+    F_FornecedorId: Integer;
+
+  public
+    constructor Create(aConexao:TFDConnection);
+    destructor Destroy; override;
+    function Inserir:Boolean;
+    function Atualizar:Boolean;
+    function Apagar:Boolean;
+    function Selecionar(id:Integer):Boolean;
+  published
+    property codigo        :Integer    read F_produtoId      write F_produtoId;
+    property nome          :string     read F_nome           write F_nome;
+    property descricao     :string     read F_descricao      write F_descricao;
+    property valor         :Double     read F_valor          write F_valor;
+    property quantidade    :Double     read F_quantidade     write F_quantidade;
+    property categoriaId   :Integer    read F_categoriaId    write F_categoriaId;
+    property foto          :TBitmap    read F_Foto           write F_Foto;
+    property fornecedorId  :Integer    read F_FornecedorId   write F_FornecedorId;
+
+end;
+
+implementation
+
+{$REGION 'Constructor and Destructor'}
+
+constructor TProduto.Create(aConexao:TFDConnection);
+begin
+  ConexaoDB:=aConexao;
+  F_Foto   :=TBitmap.Create;
+  F_Foto.Assign(nil);
+end;
+
+destructor TProduto.Destroy;
+begin
+  if Assigned(F_Foto) then begin
+     F_Foto.Assign(nil);
+     F_Foto.Free;
+  end;
+
+inherited;
+end;
+
+{$ENDREGION}
+
+{$REGION 'CRUD'}
+function TProduto.Apagar: Boolean;
+var Qry:TFDQuery;  //construo a qry
+begin
+  //mensagem perguntando se deseja apagar o produto ou não
+  if MessageDlg('Apagar o Registro: '+#13+#13+
+                'Código: '+IntToStr(F_produtoId)+#13+
+                'Descrição: '+F_nome,mtConfirmation,[mbYes,mbNo],0)=mrNo then begin
+    Result:=False;
+    Abort;  //caso responda não dá abort
+  end;
+  //caso responda sim, ele entra aqui
+  try
+  //passa as funções SQL e apaga
+    Result:=True;
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=ConexaoDB;
+
+    //teste pra tirar tds q dependem dele primeiro
+    Qry.SQL.Text := 'DELETE FROM vendasitens WHERE produtoId=:produtoId';
+    Qry.ParamByName('produtoId').AsInteger :=F_produtoId;
+    Qry.ExecSQL;
+
+    Qry.SQL.Add('DELETE FROM produtos '+
+                'WHERE produtoId=:produtoId ');
+    Qry.ParamByName('produtoId').AsInteger :=F_produtoId;
+
+    try
+      conexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      conexaoDB.Commit;
+    except
+      conexaoDB.Rollback;
+      Result:=False;
+    end;
+  finally
+    if Assigned(Qry) then
+        FreeAndNil(Qry);
+  end;
+end;
+
+function Tproduto.Atualizar:Boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result:=True;
+    //faz toda a conexão com o banco e qry
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=conexaoDB;
+    //limpa a qry
+    Qry.SQL.Clear;
+    //monta um update e dá a eles seus parametros (oq a ele pertence)
+    Qry.SQL.Add('UPDATE produtos '+
+                '   SET nome            =:nome '+
+                '       ,descricao      =:descricao '+
+                '       ,valor          =:valor '+
+                '       ,quantidade     =:quantidade '+
+                '       ,categoriaId    =:categoriaId '+
+                '       ,fornecedorid   =:fornecedorId '+
+                '       ,foto           =:foto '+
+                ' WHERE produtoId=:produtoId ');
+
+    Qry.ParamByName('produtoId').AsInteger       :=Self.F_produtoId;
+    Qry.ParamByName('nome').AsString             :=Self.F_nome;
+    Qry.ParamByName('descricao').AsString        :=Self.F_descricao;
+    Qry.ParamByName('valor').AsFloat             :=Self.F_valor;
+    Qry.ParamByName('quantidade').AsFloat        :=Self.F_quantidade;
+    Qry.ParamByName('categoriaId').AsInteger     :=Self.F_categoriaId;
+    Qry.ParamByName('foto').DataType             :=ftBlob;
+    Qry.ParamByName('fornecedorId').AsInteger    :=Self.F_fornecedorId;
+
+    if (F_Foto <> nil) and (not F_Foto.Empty) then
+    begin
+      // Se houver imagem, grava os bytes
+      Qry.ParamByName('foto').Assign(F_Foto);
+    end
+    else
+    begin
+      // Se não houver imagem, envia NULL de forma segura
+      Qry.ParamByName('foto').Value :=Null;
+    end;
+
+
+    //executo, se der problema resulta falso; senão retorna ele lá em cima como true
+    try
+      conexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      conexaoDB.Commit;
+    except
+      conexaoDB.Rollback;
+      Result:=False;
+    end;
+
+  finally
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
+  end;
+end;
+
+function Tproduto.Inserir:Boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result:=True;
+    //faz toda a conexão com o banco e qry
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=conexaoDB;
+    //limpa a qry
+    Qry.SQL.Clear;
+    //monta um insert (inserir) e dá a eles seus parametros (oq a ele pertence)
+    Qry.SQL.Add('INSERT INTO produtos (nome, '+
+                '                      descricao, '+
+                '                      valor, '+
+                '                      quantidade, '+
+                '                      categoriaId, ' +
+                '                      foto, '+
+                '                      fornecedorId ' +
+                '                      ) '+
+                'VALUES               (:nome, '+
+                '                      :descricao, '+
+                '                      :valor, '+
+                '                      :quantidade, '+
+                '                      :categoriaId, ' +
+                '                      :foto, '+
+                '                      :fornecedorId ' +
+                '                      ) ');
+    //o id não vai aqui, pq n é possível alterar o id
+    Qry.ParamByName('nome').AsString            :=Self.F_nome;
+    Qry.ParamByName('descricao').AsString       :=Self.F_descricao;
+    Qry.ParamByName('valor').AsFloat            :=Self.F_valor;
+    Qry.ParamByName('quantidade').AsFloat       :=Self.F_quantidade;
+    Qry.ParamByName('categoriaId').AsInteger    :=Self.F_categoriaId;
+    Qry.ParamByName('foto').DataType            :=ftBlob;
+    Qry.ParamByName('fornecedorId').AsInteger   :=Self.F_FornecedorId;
+
+
+    if (F_Foto <> nil) and (not F_Foto.Empty) then
+    begin
+      // Se houver imagem, grava os bytes
+      Qry.ParamByName('foto').Assign(F_Foto);
+    end
+    else
+    begin
+      // Se não houver imagem, envia NULL de forma segura
+      Qry.ParamByName('foto').Value :=Null;
+    end;
+
+
+    try
+      conexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      conexaoDB.Commit;
+    except
+      conexaoDB.Rollback;
+      Result:=False;
+    end;
+
+  finally
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
+  end;
+end;
+
+function TProduto.Selecionar(id:Integer):Boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result:=True;
+    //faz toda a conexão com o banco e qry
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:=conexaoDB;
+    //limpa a qry
+    Qry.SQL.Clear;
+    //monta um select e dá a eles seus parametros (oq a ele pertence)
+    Qry.SQL.Add('SELECT produtoId, '+
+                '       nome, '+
+                '       descricao, '+
+                '       valor, '+
+                '       quantidade, '+
+                '       categoriaId, '+
+                '       foto, '+
+                '       fornecedorId '+
+                '  FROM produtos '+
+                ' WHERE produtoId=:produtoId');
+    Qry.ParamByName('produtoId').AsInteger:=id;
+    try
+      Qry.Open; //abro a qry
+
+      //atribuir oq eu peguei do banco de dados para as minhas propiedades da classe
+
+      if not Qry.IsEmpty then
+      begin
+        Self.F_produtoId    := Qry.FieldByName('produtoId').AsInteger;
+        Self.F_nome         := Qry.FieldByName('nome').AsString;
+        Self.F_descricao    := Qry.FieldByName('descricao').AsString;
+        Self.F_valor        := Qry.FieldByName('valor').AsFloat;
+        Self.F_quantidade   := Qry.FieldByName('quantidade').AsFloat;
+        Self.F_categoriaId  := Qry.FieldByName('categoriaId').AsInteger;
+        Self.F_FornecedorId := Qry.FieldByName('fornecedorId').AsInteger;
+
+        if not Qry.FieldByName('foto').IsNull then
+          Self.F_Foto.Assign(Qry.FieldByName('foto'))
+        else
+          Self.F_Foto.Assign(nil); // Limpa a imagem
+
+        Result := True;
+      end;
+    except
+      on E: Exception do
+      begin
+        Result := False;
+      end;
+    end;
+
+  finally
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
+  end;
+end;
+
+end.

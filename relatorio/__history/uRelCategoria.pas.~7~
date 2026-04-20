@@ -1,0 +1,50 @@
+unit uRelCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, RLReport,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, RLFilters, RLPDFFilter;
+
+type
+  TfrmRelCategoria = class(TForm)
+    QryCategorias: TFDQuery;
+    dtsCategorias: TDataSource;
+    fdtncfldQryCategoriascategoriaId: TFDAutoIncField;
+    strngfldQryCategoriasdescricao: TStringField;
+    Relatorio: TRLReport;
+    Cabecalho: TRLBand;
+    rlbl1: TRLLabel;
+    RLPDFFilter1: TRLPDFFilter;
+    Rodape: TRLBand;
+    rldrw2: TRLDraw;
+    rldrw3: TRLDraw;
+    rlsystmnf1: TRLSystemInfo;
+    rlsystmnf2: TRLSystemInfo;
+    rlsystmnf3: TRLSystemInfo;
+    rlbl2: TRLLabel;
+    rlbl3: TRLLabel;
+    rldbtxt1: TRLDBText;
+    rlbnd1: TRLBand;
+    rldbtxtcategoriaId: TRLDBText;
+    rldbtxtcategoriaId1: TRLDBText;
+    rlbnd2: TRLBand;
+    rlpnl1: TRLPanel;
+    rlbl5: TRLLabel;
+    rlbl6: TRLLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelCategoria: TfrmRelCategoria;
+
+implementation
+
+{$R *.dfm}
+
+end.

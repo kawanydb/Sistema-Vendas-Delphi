@@ -1,0 +1,69 @@
+unit cFuncao;
+
+interface
+
+uses System.Classes, Vcl.Controls,Vcl.ExtCtrls, Vcl.Dialogs, System.SysUtils, Vcl.Forms,Vcl.Buttons,
+cAcaoAcesso, cUsuarioLogado, RLReport, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
+  FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet;
+
+type
+  TFuncao = class
+  private
+
+  public
+  class procedure CriarForm(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
+  class procedure CriarRelatorio(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
+  end;
+  implementation
+
+class procedure TFuncao.CriarForm(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
+var form: TForm;
+begin
+  try
+  //cria o form e mostra a modal
+    form := aNomeForm.Create(Application);
+      if TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, form.Name, aConexao) then
+      begin
+          form.ShowModal
+      end
+      else
+
+      begin
+        MessageDlg('Usuario: '+oUsuarioLogado.nome +' Não tem permissão de acesso', mtWarning,[mbOK],0)
+      end;
+  finally
+    if Assigned(form) then
+       form.Release;
+  end;
+end;
+
+class procedure TFuncao.CriarRelatorio(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
+var form: TForm;
+    aRelatorio:TRLReport;
+    i:Integer;
+begin
+  try
+    form := aNomeForm.Create(Application);
+    if TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, form.Name, aConexao) then
+    begin
+      for I := 0 to form.ComponentCount-1 do
+      begin
+        if form.Components[i] is TRLReport then
+        begin
+          TRLReport(form.Components[i]).PreviewModal;
+          Break;
+        end;
+       end;
+    end
+    else begin
+      MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    end;
+  finally
+    if Assigned(form) then
+       form.Release;
+  end;
+end;
+
+end.

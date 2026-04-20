@@ -1,0 +1,288 @@
+unit uCadFornecedor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.ComCtrls, RxToolEdit, cCadCliente, uEnum, uDTMConexao, System.ImageList, Vcl.ImgList,IdHTTP, IdSSLOpenSSL,
+   System.JSON, cCadFornecedor, uCadCliente;
+
+type
+  TfrmCadFornecedorProduto = class(TfrmTelaHeranca)
+    lbl2: TLabel;
+    lbl3: TLabel;
+    lblCpfCnpj: TLabel;
+    lbl12: TLabel;
+    edtClienteId: TLabeledEdit;
+    edtNome: TLabeledEdit;
+    edtEndereco: TLabeledEdit;
+    edtBairro: TLabeledEdit;
+    edtCidade: TLabeledEdit;
+    edtTelefone: TMaskEdit;
+    edtEmail: TLabeledEdit;
+    edtEstado: TLabeledEdit;
+    edtNumero: TLabeledEdit;
+    edtCEP: TEdit;
+    edtCnpj: TEdit;
+    lbl13: TLabel;
+    intgrfldQryListagemfornecedorId: TIntegerField;
+    strngfldQryListagemnomeFornecedor: TStringField;
+    strngfldQryListagemcnpj: TStringField;
+    strngfldQryListagemtelefone: TStringField;
+    strngfldQryListagememail: TStringField;
+    strngfldQryListagemcep: TStringField;
+    strngfldQryListagemendereco: TStringField;
+    strngfldQryListagemnumero: TStringField;
+    strngfldQryListagembairro: TStringField;
+    strngfldQryListagemcidade: TStringField;
+    strngfldQryListagemestado: TStringField;
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure edtTelefoneChange(Sender: TObject);
+    procedure edtCnpjChange(Sender: TObject);
+    procedure edtCEPChange(Sender: TObject);
+    procedure edtCEPExit(Sender: TObject);
+  private
+    { Private declarations }
+    oFornecedor: TFornecedor;
+    function Apagar: Boolean; override;
+    function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; override;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadFornecedorProduto: TfrmCadFornecedorProduto;
+
+implementation
+
+{$R *.dfm}
+
+{ TfrmCadFornecedorProduto }
+
+{$REGION 'OVERRIDE'}
+function TfrmCadFornecedorProduto.Apagar: Boolean;
+begin
+  result:= False;
+
+  //verifica se existe no selecionar e se existir apaga
+  if oFornecedor.Selecionar(QryListagem.FieldByName('fornecedorId').AsInteger) then begin
+    Result:=oFornecedor.Apagar;
+  end;
+end;
+
+function TfrmCadFornecedorProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  if not frmCadCliente.EmailValido(edtEmail.Text) then
+  begin
+    ShowMessage('E-mail inválido!');
+    edtEmail.SetFocus;
+    Exit;
+  end;
+
+   if not frmCadCliente.ValidarCpfCnpj(edtCnpj.Text) then
+  begin
+    ShowMessage('CPF/CNPJ inválido!');
+    Result := False;
+    Exit;
+  end;
+
+  if edtClienteId.Text<>EmptyStr then
+    oFornecedor.codigo:=StrToInt(edtClienteId.Text)
+  else
+    oFornecedor.codigo:=0;
+
+  oFornecedor.nome := edtNome.Text;
+  oFornecedor.cep            := SomenteNumeros(edtCEP .Text);
+  oFornecedor.endereco       := edtEndereco.Text;
+  oFornecedor.estado         := edtEstado.Text;
+  oFornecedor.bairro         := edtBairro.Text;
+  oFornecedor.cidade         := edtCidade.Text;
+  oFornecedor.telefone       := SomenteNumeros(edtTelefone.Text);
+  oFornecedor.numero         := SomenteNumeros(edtNumero.Text);
+  oFornecedor.email          := edtEmail.Text;
+  oFornecedor.cnpj           := SomenteNumeros(edtCnpj.Text);
+
+  if (EstadoDoCadastro=ecInserir) then
+    Result:=oFornecedor.Inserir
+  else if (EstadoDoCadastro=ecAlterar) then
+    Result:=oFornecedor.Atualizar;
+end;
+
+procedure TfrmCadFornecedorProduto.btnAlterarClick(Sender: TObject);
+begin
+  QryListagem.Edit;
+  if oFornecedor.Selecionar(QryListagem.FieldByName('fornecedorId').AsInteger) then begin
+     edtClienteId.Text:=IntToStr(oFornecedor.codigo);
+     edtNome.Text     :=oFornecedor.nome;
+     edtCEP.Text      :=oFornecedor.cep;
+     edtEndereco.Text :=oFornecedor.endereco;
+     edtEstado.Text   :=oFornecedor.estado;
+     edtBairro.Text   :=oFornecedor.bairro;
+     edtCidade.Text   :=oFornecedor.cidade;
+     edtTelefone.Text :=oFornecedor.telefone;
+     edtNumero.Text   :=oFornecedor.numero;
+     edtEmail.Text    :=oFornecedor.email;
+     edtCnpj.Text     := oFornecedor.cnpj;
+  end
+  else begin
+    btnCancelar.Click;
+    Abort;
+  end;
+inherited;
+end;
+
+procedure TfrmCadFornecedorProduto.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  edtNome.SetFocus;
+end;
+
+procedure TfrmCadFornecedorProduto.edtCEPChange(Sender: TObject);
+var
+  TextoFormatado: string;
+begin
+  TextoFormatado := frmCadCliente.FormatarCEP(edtCEP.Text);
+
+  if edtCEP.Text <> TextoFormatado then
+  begin
+    edtCEP.OnChange := nil; // evita loop
+
+    edtCEP.Text := TextoFormatado;
+    edtCEP.SelStart := Length(edtCEP.Text);
+
+    edtCEP.OnChange := edtCEPChange; //reativa
+  end;
+end;
+
+procedure TfrmCadFornecedorProduto.edtCEPExit(Sender: TObject);
+var
+  frmTemp: TfrmCadCliente;
+begin
+  frmTemp := TfrmCadCliente.Create(nil);
+  try
+    // liga os edits do fornecedor nos edits do cliente
+    frmTemp.edtEndereco := edtEndereco;
+    frmTemp.edtBairro   := edtBairro;
+    frmTemp.edtCidade   := edtCidade;
+    frmTemp.edtEstado   := edtEstado;
+
+    // chama a função
+    frmTemp.BuscarCEP(SomenteNumeros(edtCEP.Text));
+
+  finally
+    frmTemp.Free;
+  end;
+end;
+
+procedure TfrmCadFornecedorProduto.edtCnpjChange(Sender: TObject);
+var
+  Num, Texto: string;
+begin
+  Num := SomenteNumeros(edtCnpj.Text);
+  Texto := '';
+
+  edtCnpj.OnChange := nil;
+
+  if Length(Num) >= 1 then
+    Texto := Copy(Num,1,2);
+
+  if Length(Num) >= 3 then
+    Texto := Texto + '.' + Copy(Num,3,3);
+
+  if Length(Num) >= 6 then
+    Texto := Texto + '.' + Copy(Num,6,3);
+
+  if Length(Num) >= 9 then
+    Texto := Texto + '/' + Copy(Num,9,4);
+
+  if Length(Num) >= 13 then
+    Texto := Texto + '-' + Copy(Num,13,2);
+
+  edtCnpj.Text := Texto;
+  edtCnpj.SelStart := Length(Texto);
+
+  edtCnpj.OnChange := edtCnpjChange;
+end;
+
+procedure TfrmCadFornecedorProduto.edtTelefoneChange(Sender: TObject);
+var
+  Num, Texto: string;
+begin
+  Num := SomenteNumeros(edtTelefone.Text);
+  Texto := ''; //começa vazio
+
+  edtTelefone.OnChange := nil; //desligando o  evento temporariamente
+
+  //tipo 0400,0800 e etc
+  if (Length(Num) >= 4) and (Num[1] = '0') then
+  begin
+    if Length(Num) >= 1 then
+      Texto := Copy(Num,1,4);
+
+    if Length(Num) >= 5 then
+      Texto := Texto + ' ' + Copy(Num,5,3);
+
+    if Length(Num) >= 8 then
+      Texto := Texto + ' ' + Copy(Num,8,4);
+  end
+
+  // tipo celular
+  else if Length(Num) = 11 then
+  begin
+    Texto := '(' + Copy(Num,1,2) + ') ' +
+             Copy(Num,3,5) + '-' +
+             Copy(Num,8,4);
+  end
+
+  // tipo fixo
+  else
+  begin
+    if Length(Num) >= 1 then
+      Texto := '(' + Copy(Num,1,2);
+
+    if Length(Num) >= 3 then
+      Texto := Texto + ') ' + Copy(Num,3,4);
+
+    if Length(Num) >= 7 then
+      Texto := Texto + '-' + Copy(Num,7,4);
+  end;
+
+  edtTelefone.Text := Texto;  //texto já formatado
+  edtTelefone.SelStart := Length(Texto); //cursor no final do texto
+
+  edtTelefone.OnChange := edtTelefoneChange; //liga o evento dnv
+end;
+
+procedure TfrmCadFornecedorProduto.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if Assigned(oFornecedor) then
+  FreeAndNil(oFornecedor);
+end;
+
+procedure TfrmCadFornecedorProduto.FormCreate(Sender: TObject);
+var i: Integer;
+begin
+  inherited;
+  QryListagem.Connection := dtmConexao.conexaoDB;
+  oFornecedor:=TFornecedor.Create(dtmConexao.conexaoDB);
+  IndiceAtual:= 'nomeFornecedor';
+end;
+
+procedure TfrmCadFornecedorProduto.FormShow(Sender: TObject);
+begin
+  inherited;
+end;
+
+{$ENDREGION}
+
+
+
+end.

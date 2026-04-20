@@ -1,0 +1,51 @@
+inherited frmConCategoria: TfrmConCategoria
+  Caption = 'Consulta de Categorias'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnl1: TPanel
+    inherited mskPesquisa: TMaskEdit
+      ExplicitTop = 27
+    end
+  end
+  inherited pnl2: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 369
+    ExplicitWidth = 627
+  end
+  inherited pnl3: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 49
+    ExplicitHeight = 320
+    inherited grdPesquisa: TDBGrid
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'categoriaId'
+          Width = 106
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'descricao'
+          Width = 476
+          Visible = True
+        end>
+    end
+  end
+  inherited QryListagem: TFDQuery
+    SQL.Strings = (
+      'SELECT categoriaId,'
+      '   descricao'
+      ' FROM categorias')
+    object fdtncfldQryListagemcategoriaId: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'categoriaId'
+      ReadOnly = True
+    end
+    object strngfldQryListagemdescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Size = 30
+    end
+  end
+end

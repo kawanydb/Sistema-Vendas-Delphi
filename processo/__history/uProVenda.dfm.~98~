@@ -1,0 +1,485 @@
+inherited frmProVenda: TfrmProVenda
+  Caption = 'Vendas'
+  ClientHeight = 387
+  ClientWidth = 680
+  ExplicitWidth = 686
+  ExplicitHeight = 416
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pgcPrincipal: TPageControl
+    Width = 680
+    Height = 346
+    ActivePage = tabManutencao
+    ExplicitWidth = 680
+    ExplicitHeight = 346
+    inherited tabListagem: TTabSheet
+      ExplicitWidth = 672
+      ExplicitHeight = 318
+      inherited pnlListagemTopo: TPanel
+        Width = 672
+        ExplicitWidth = 672
+      end
+      inherited grddListagem: TDBGrid
+        Width = 672
+        Height = 271
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'vendaId'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DataVenda'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'totalVenda'
+            Visible = True
+          end>
+      end
+    end
+    inherited tabManutencao: TTabSheet
+      ExplicitWidth = 672
+      ExplicitHeight = 318
+      object lbl2: TLabel
+        Left = 139
+        Top = 21
+        Width = 33
+        Height = 13
+        Caption = 'Cliente'
+      end
+      object lbl4: TLabel
+        Left = 488
+        Top = 20
+        Width = 56
+        Height = 13
+        Caption = 'Data Venda'
+      end
+      object lbl7: TLabel
+        Left = 406
+        Top = 20
+        Width = 67
+        Height = 12
+        Caption = 'Dados do Cliente'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clGray
+        Font.Height = -9
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object edtVendaId: TLabeledEdit
+        Tag = 1
+        Left = 13
+        Top = 37
+        Width = 116
+        Height = 21
+        EditLabel.Width = 70
+        EditLabel.Height = 13
+        EditLabel.Caption = 'N'#250'mero Venda'
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 0
+      end
+      object lkpCliente: TDBLookupComboBox
+        Left = 139
+        Top = 37
+        Width = 257
+        Height = 21
+        KeyField = 'clienteId'
+        ListField = 'nome'
+        ListSource = dtmVenda.dtsCliente
+        TabOrder = 1
+      end
+      object edtDataVenda: TDateEdit
+        Left = 487
+        Top = 37
+        Width = 161
+        Height = 21
+        ClickKey = 114
+        DialogTitle = 'Selecione a data'
+        NumGlyphs = 2
+        CalendarStyle = csDialog
+        TabOrder = 2
+      end
+      object pnl1: TPanel
+        Left = 0
+        Top = 82
+        Width = 672
+        Height = 236
+        Align = alBottom
+        TabOrder = 3
+        object pnl2: TPanel
+          Left = 1
+          Top = 1
+          Width = 670
+          Height = 56
+          Align = alTop
+          TabOrder = 0
+          object lbl21: TLabel
+            Left = 11
+            Top = 4
+            Width = 38
+            Height = 13
+            Caption = 'Produto'
+          end
+          object lbl41: TLabel
+            Left = 186
+            Top = 4
+            Width = 64
+            Height = 13
+            Caption = 'Valor Unit'#225'rio'
+          end
+          object lbl5: TLabel
+            Left = 276
+            Top = 4
+            Width = 56
+            Height = 13
+            Caption = 'Quantidade'
+          end
+          object lbl6: TLabel
+            Left = 366
+            Top = 4
+            Width = 80
+            Height = 13
+            Caption = 'Total do Produto'
+          end
+          object lkpProduto: TDBLookupComboBox
+            Left = 11
+            Top = 20
+            Width = 169
+            Height = 22
+            DataField = 'produtoId'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'lkpProduto'
+            Font.Style = []
+            KeyField = 'produtoId'
+            ListField = 'nome'
+            ListSource = dtmVenda.dtsProdutos
+            ParentFont = False
+            TabOrder = 0
+            OnExit = lkpProdutoExit
+          end
+          object edtValorUnitario: TCurrencyEdit
+            Left = 186
+            Top = 20
+            Width = 84
+            Height = 22
+            DisplayFormat = ' ,0.00; ,0.00'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'edtValorUnitario'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 1
+          end
+          object edtQuantidade: TCurrencyEdit
+            Left = 277
+            Top = 20
+            Width = 84
+            Height = 22
+            DisplayFormat = ' ,0.00; ,0.00'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'edtQuantidade'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 2
+            OnExit = edtQuantidadeExit
+          end
+          object edtTotalProduto: TCurrencyEdit
+            Left = 369
+            Top = 19
+            Width = 84
+            Height = 21
+            DisplayFormat = ' ,0.00; ,0.00'
+            ParentColor = True
+            ReadOnly = True
+            TabOrder = 3
+          end
+          object btnAdicionarItem: TBitBtn
+            Left = 459
+            Top = 18
+            Width = 81
+            Height = 23
+            Caption = 'AD&ICIONAR'
+            Glyph.Data = {
+              36030000424D3603000000000000360000002800000010000000100000000100
+              18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+              FF00FF14A4FF14A4FF14A4FF14A4FF14A4FF14A4FF14A4FF0083060081000381
+              08FF00FFFF00FFFF00FFFF00FFFF00FF14A4FF11A0FF1FABFF49C7FF5CD1FF53
+              D1FF46D3FF4CD8FF008100139E1600810014A4FFFF00FFFF00FFFF00FFFF00FF
+              14A4FF35B8FF49C7FF87E1FFA5EBFF8FE9FF73E6FF77E9FF0081002CAF2D0081
+              0014A4FFFF00FFFF00FFFF00FFFF00FF14A4FF58CAFF46C6FF82DEFFA1EAFF03
+              870600810000810000810046C047008100008100008100008100FF00FFFF00FF
+              14A4FF73D4FF43C6FF7EDDFF9CE7FF00810095E69698E99889E78866DD6546C2
+              4521A3210B900B008100FF00FFFF00FF14A4FF8FDDFF3FC5FF78DCFF96E3FF03
+              870600810000810000810087E588008100008100008100008100FF00FFFF00FF
+              14A4FFACE6FF43C7FF73DAFF90E3FF6BD8FF3FCBFF3ECAFF00810090E5900081
+              0014A4FFFF00FFFF00FFFF00FFFF00FF14A4FF7FD2FFB1E7FFC5F0FFC9F2FFC7
+              F2FFC5F0FFC5F0FF00810084E08700810014A4FFFF00FFFF00FFFF00FFFF00FF
+              14A4FF129EFF1BABFF31BCFF3EC6FF3CC9FF37CCFF3DD1FF0186060081000183
+              0614A4FFFF00FFFF00FFFF00FFFF00FF14A4FF2EB4FF47C6FF86E1FFA6EBFF90
+              E9FF75E6FF79EAFF76E7FF56D9FF1EB2FF14A4FFFF00FFFF00FFFF00FFFF00FF
+              14A4FF55C9FF45C6FF82DEFFA3EAFF89E6FF69E0FF6BE2FF68E1FF4DD4FF1DB0
+              FF14A4FFFF00FFFF00FFFF00FFFF00FF14A4FF6ED1FF42C5FF7EDDFF9DE7FF81
+              E2FF5CD9FF5BDAFF59D9FF43CEFF1AACFF14A4FFFF00FFFF00FFFF00FFFF00FF
+              14A4FF8ADCFF3FC5FF78DAFF97E5FF77DDFF4ED3FF4DD3FF4CD3FF39C6FF16A7
+              FF14A4FFFF00FFFF00FFFF00FFFF00FF14A4FFA7E5FF3AC5FF73DAFF91E2FF6E
+              D9FF41CBFF40CBFF3ECBFF2FC0FF23AFFF14A4FFFF00FFFF00FFFF00FFFF00FF
+              14A4FF95DDFFB6EBFFB0EBFFBCEFFFB0EBFF9FE6FF9EE6FF9DE6FFABE9FF88DC
+              FF14A4FFFF00FFFF00FFFF00FFFF00FFFF00FF14A4FF14A4FF14A4FF14A4FF14
+              A4FF14A4FF14A4FF14A4FF14A4FF14A4FFFF00FFFF00FFFF00FF}
+            TabOrder = 4
+            OnClick = btnAdicionarItemClick
+          end
+          object btnApagarItem: TBitBtn
+            Left = 546
+            Top = 18
+            Width = 79
+            Height = 23
+            Caption = 'RE&MOVER'
+            Glyph.Data = {
+              36030000424D3603000000000000360000002800000010000000100000000100
+              18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+              2D2BAA252595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0101
+              60000073FF00FFFF00FFFF00FF3836B61111B81C1CB82F2FA4FF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FF06066D01018A00008B020074FF00FF3F3FBB1616C5
+              0A0AC20A0AC02222C43737ADFF00FFFF00FFFF00FFFF00FF11117B0505910000
+              9000009000008B0200743B3BB22C2CD30D0DD00D0DCE0C0CC92828CC3D3DB4FF
+              00FFFF00FF1F1F8E0C0C9F00009200009000009000008800005DFF00FF4747C1
+              3333DE1111DA0F0FD50D0DCF2A2AD13C3CB42F2FA41717B40303A30101990000
+              91010189010160FF00FFFF00FFFF00FF5454CC3C3CE71313E11111DA0E0ED328
+              28CF2222C60707B50505AA0303A0060693050566FF00FFFF00FFFF00FFFF00FF
+              FF00FF5C5CD33F3FEA1414E31111DC0E0ED10C0CC70909BC0606B10D0DA40E0E
+              77FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5B5BD03D3DE61414E311
+              11DA0D0DCF0A0AC21616B5181886FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FF6E6ECE5B5BE92020E71313E10F0FD40C0CC91616B7181887FF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF7878CE7474E75353EE4848ED35
+              35E92020DD1111CE0A0ABF0F0FAB0E0E79FF00FFFF00FFFF00FFFF00FFFF00FF
+              7F7FCB8787E56D6DF26363F05757EF5C5CDE5252D83B3BDA2D2DCE1F1FC01818
+              A5111176FF00FFFF00FFFF00FF8484C79797E38484F47B7BF37070F27272E05B
+              5BBB4D4DB15151CF4141D43838C92F2FBD2929A51B1B78FF00FF8686C2A0A0E0
+              9999F69191F68888F48383DE6767BCFF00FFFF00FF4747A55050C54242CB3737
+              C02E2EB52929A01D1D7A9393B7A5A5EAA1A1F79A9AF69292DD6E6EBDFF00FFFF
+              00FFFF00FFFF00FF3F3F9C4A4ABC3B3BC03232B52D2DA92B2B8EFF00FF9594B6
+              A7A7E99D9DDC7676BBFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3C3C984141
+              B53535B0343495FF00FFFF00FFFF00FF9796B68080C0FF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FF3636933E3E9AFF00FFFF00FF}
+            TabOrder = 5
+            TabStop = False
+            OnClick = btnApagarItemClick
+          end
+        end
+        object pnl3: TPanel
+          Left = 1
+          Top = 57
+          Width = 670
+          Height = 137
+          Align = alClient
+          TabOrder = 1
+          object dbGridItens: TDBGrid
+            Left = 1
+            Top = 1
+            Width = 668
+            Height = 135
+            Align = alClient
+            Color = clWhite
+            DataSource = dtmVenda.dtsItensVenda
+            DrawingStyle = gdsClassic
+            FixedColor = 8419560
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleHotTrack]
+            ParentFont = False
+            TabOrder = 0
+            TitleFont.Charset = DEFAULT_CHARSET
+            TitleFont.Color = clWhite
+            TitleFont.Height = -11
+            TitleFont.Name = 'Tahoma'
+            TitleFont.Style = [fsBold]
+            OnDrawColumnCell = dbGridItensDrawColumnCell
+            OnDblClick = dbGridItensDblClick
+            OnKeyDown = dbGridItensKeyDown
+            Columns = <
+              item
+                Expanded = False
+                FieldName = 'produtoId'
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'NomeProduto'
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'quantidade'
+                Width = 64
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'valorUnitario'
+                Width = 64
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'valorTotalProduto'
+                Width = 173
+                Visible = True
+              end>
+          end
+        end
+        object pnl4: TPanel
+          Left = 1
+          Top = 194
+          Width = 670
+          Height = 41
+          Align = alBottom
+          TabOrder = 2
+          object lbl3: TLabel
+            Left = 458
+            Top = 19
+            Width = 84
+            Height = 13
+            Caption = 'Valor da Venda'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object edtValorTotal: TCurrencyEdit
+            Left = 548
+            Top = 15
+            Width = 72
+            Height = 21
+            DisplayFormat = ' R$ ,0.00;R$ ,0.00'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentColor = True
+            ParentFont = False
+            ReadOnly = True
+            TabOrder = 0
+          end
+        end
+      end
+      object btnAlterarCliente: TBitBtn
+        Left = 406
+        Top = 35
+        Width = 68
+        Height = 25
+        Glyph.Data = {
+          36030000424D3603000000000000360000002800000010000000100000000100
+          18000000000000030000C40E0000C40E000000000000000000007F7F7F7F7F7F
+          7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+          7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7FFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFF7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+          7F7F7FF4FCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FF7F7F7F7F7F7F7F7F7F7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7F7F7F7F7F7F7F7F7F7F
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000FFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFF7F7F7F7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
+          0000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7F7F7F7FFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFF7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
+          0000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7F7F7F7FFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000FFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFF7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
+          0000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7F7F7F7FDCF6FF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000FFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFDDF7FF7F7F7F7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
+          0000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7F7F7F7F7F7F7F7F7F7F
+          F3FCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFF4FCFF7F7F7F7F7F7F7F7F7F7F7F7F7F7F7FF3FCFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFF4FCFF7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+          7F7F7F7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDDF7FF7F7F7F7F7F
+          7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+          7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F}
+        TabOrder = 4
+        OnClick = btnAlterarClienteClick
+      end
+    end
+  end
+  inherited pnlRodape: TPanel
+    Top = 346
+    Width = 680
+    ExplicitTop = 346
+    ExplicitWidth = 680
+    inherited btnNavigator: TDBNavigator
+      Hints.Strings = ()
+    end
+    inherited btnnFechar: TBitBtn
+      Left = 612
+      ExplicitLeft = 612
+    end
+  end
+  inherited dtsListagem: TDataSource
+    Left = 256
+    Top = 1
+  end
+  inherited QryListagem: TFDQuery
+    SQL.Strings = (
+      'SELECT vendas.vendaId'
+      '      ,vendas.clienteId'
+      '      ,clientes.nome'
+      '      ,clientes.statusId'
+      '      ,vendas.DataVenda'
+      '      ,vendas.totalVenda'
+      '  FROM vendas'
+      '  INNER JOIN clientes ON clientes.clienteId = vendas.clienteId')
+    Left = 204
+    Top = 1
+    object fdtncfldQryListagemvendaId: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'vendaId'
+      Origin = 'vendaId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object strngfldQryListagemnome: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 60
+    end
+    object intgrfldQryListagemstatusId: TIntegerField
+      DisplayLabel = 'Status'
+      FieldName = 'statusId'
+      Origin = 'statusId'
+    end
+    object sqltmstmpfldQryListagemDataVenda: TSQLTimeStampField
+      DisplayLabel = 'Data Venda'
+      FieldName = 'DataVenda'
+      Origin = 'DataVenda'
+    end
+    object fmtbcdfldQryListagemtotalVenda: TFMTBCDField
+      DisplayLabel = 'Total Venda'
+      FieldName = 'totalVenda'
+      Origin = 'totalVenda'
+      DisplayFormat = '#,##0.00'
+      Precision = 18
+      Size = 5
+    end
+  end
+end

@@ -1,0 +1,209 @@
+inherited frmTelaHeranca3: TfrmTelaHeranca3
+  Caption = 'Cadastro de Fornecedor'
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lbl13: TLabel [0]
+    Left = 374
+    Top = 144
+    Width = 38
+    Height = 10
+    Caption = '(fixo, SAC)'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGray
+    Font.Height = -8
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  inherited pgcPrincipal: TPageControl
+    inherited tabManutencao: TTabSheet
+      ExplicitLeft = 8
+      ExplicitTop = 40
+      ExplicitWidth = 589
+      ExplicitHeight = 300
+      object lblCpfCnpj: TLabel
+        Left = 320
+        Top = 81
+        Width = 25
+        Height = 13
+        Caption = 'CNPJ'
+      end
+      object lbl3: TLabel
+        Left = 320
+        Top = 134
+        Width = 45
+        Height = 13
+        Caption = 'Telefone '
+      end
+      object lbl12: TLabel
+        Left = 366
+        Top = 136
+        Width = 38
+        Height = 10
+        Caption = '(fixo, SAC)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -8
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl4: TLabel
+        Left = 13
+        Top = 182
+        Width = 45
+        Height = 13
+        Caption = 'Telefone '
+      end
+      object lbl14: TLabel
+        Left = 245
+        Top = 185
+        Width = 48
+        Height = 10
+        Caption = '(rua, avenida)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -8
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object edtClienteId: TLabeledEdit
+        Tag = 1
+        Left = 13
+        Top = 37
+        Width = 300
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'C'#243'digo'
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 0
+      end
+      object edtNome: TLabeledEdit
+        Tag = 2
+        Left = 13
+        Top = 96
+        Width = 300
+        Height = 21
+        EditLabel.Width = 85
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Nome Fornecedor'
+        MaxLength = 30
+        TabOrder = 1
+      end
+      object edtCpfCnpj: TEdit
+        Left = 320
+        Top = 96
+        Width = 252
+        Height = 21
+        TabOrder = 2
+        Text = 'edtCpfCnpj'
+      end
+      object edtCpfCnpjTelefone: TMaskEdit
+        Left = 320
+        Top = 148
+        Width = 252
+        Height = 21
+        TabOrder = 3
+        Text = ''
+      end
+      object edtEmail: TLabeledEdit
+        Left = 13
+        Top = 148
+        Width = 300
+        Height = 21
+        EditLabel.Width = 28
+        EditLabel.Height = 13
+        EditLabel.Caption = 'E-mail'
+        MaxLength = 30
+        TabOrder = 4
+      end
+      object edtEndereco: TLabeledEdit
+        Left = 197
+        Top = 198
+        Width = 300
+        Height = 21
+        EditLabel.Width = 45
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Endere'#231'o'
+        MaxLength = 30
+        TabOrder = 5
+      end
+      object edtBairro: TLabeledEdit
+        Left = 13
+        Top = 243
+        Width = 178
+        Height = 21
+        EditLabel.Width = 28
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Bairro'
+        MaxLength = 30
+        TabOrder = 6
+      end
+      object edtCidade: TLabeledEdit
+        Left = 197
+        Top = 243
+        Width = 300
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Cidade'
+        MaxLength = 30
+        TabOrder = 7
+      end
+      object edtEstado: TLabeledEdit
+        Left = 510
+        Top = 243
+        Width = 62
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Estado'
+        MaxLength = 30
+        TabOrder = 8
+      end
+      object edtNumero: TLabeledEdit
+        Left = 510
+        Top = 198
+        Width = 62
+        Height = 21
+        EditLabel.Width = 37
+        EditLabel.Height = 13
+        EditLabel.Caption = 'N'#250'mero'
+        MaxLength = 30
+        TabOrder = 9
+      end
+      object edtCEP: TEdit
+        Left = 13
+        Top = 198
+        Width = 178
+        Height = 21
+        MaxLength = 9
+        TabOrder = 10
+        Text = 'edtCEP'
+      end
+    end
+  end
+  inherited pnlRodape: TPanel
+    inherited btnNavigator: TDBNavigator
+      Hints.Strings = ()
+    end
+  end
+  inherited QryListagem: TFDQuery
+    SQL.Strings = (
+      'SELECT fornecedorId,'
+      '       nomeFornecedor,'
+      '       cnpj,'
+      '       telefone,'
+      '       email,'
+      '       cep,'
+      '       endere'#231'o,'
+      '       numero,'
+      '       bairro,'
+      '       cidade,'
+      '       estado'
+      'FROM fornecedor')
+  end
+end
