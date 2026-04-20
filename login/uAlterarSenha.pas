@@ -53,27 +53,40 @@ uses uPrincipal, uLogin;
 {$R *.dfm}
 
 procedure TfrmAlterarSenha.btnAlterarClick(Sender: TObject);
-var oUsuario:TUsuario;
+var
+  oUsuario: TUsuario;
 begin
-  if (edtSenhaAtual.Text=oUsuarioLogado.senha) then begin
-    if (edtSenhaNova.Text=edtRepetirNovaSenha.Text) then begin
+  if (edtSenhaAtual.Text = oUsuarioLogado.senha) then
+  begin
+    if (edtSenhaNova.Text = edtRepetirNovaSenha.Text) then
+    begin
       try
-        oUsuario:=TUsuario.Create(dtmConexao.conexaoDB);
+        oUsuario := TUsuario.Create(dtmConexao.conexaoDB);
         oUsuario.codigo := oUsuarioLogado.codigo;
         oUsuario.senha := edtSenhaNova.Text;
         oUsuario.AlterarSenha;
-        MessageDlg('Senha Alterada',MtInformation,[mbok],0);
+
+        MessageDlg('Senha Alterada', mtInformation, [mbOK], 0);
+
+        edtSenhaAtual.Clear;
+        edtSenhaNova.Clear;
+        edtRepetirNovaSenha.Clear;
+
       finally
+        Close;
         FreeAndNil(oUsuario);
       end;
     end
-    else begin
-      MessageDlg('Senhas digitadas não coincidem',MtInformation,[mbok],0);
+    else
+    begin
+      MessageDlg('Senhas digitadas não coincidem', mtInformation, [mbOK], 0);
       edtSenhaNova.SetFocus;
     end;
   end
-  else begin
-    MessageDlg('Senhas digitadas não coincidem',MtInformation,[mbok],0);
+  else
+  begin
+    MessageDlg('Senha atual incorreta', mtInformation, [mbOK], 0);
+    edtSenhaAtual.SetFocus;
   end;
 end;
 

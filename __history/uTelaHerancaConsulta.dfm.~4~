@@ -118,7 +118,6 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       Align = alClient
       Color = clWhite
       DataSource = dtsListagem
-      DrawingStyle = gdsClassic
       FixedColor = clGray
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       TabOrder = 0
@@ -130,11 +129,6 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       OnDblClick = grdPesquisaDblClick
       OnKeyDown = grdPesquisaKeyDown
       OnTitleClick = grdPesquisaTitleClick
-      Columns = <
-        item
-          Expanded = False
-          Visible = True
-        end>
     end
   end
   object QryListagem: TFDQuery

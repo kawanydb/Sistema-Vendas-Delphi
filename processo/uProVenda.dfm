@@ -9,6 +9,7 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 680
     Height = 346
+    ActivePage = tabManutencao
     ExplicitWidth = 680
     ExplicitHeight = 346
     inherited tabListagem: TTabSheet
@@ -45,8 +46,9 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
+      OnShow = tabManutencaoShow
+      ExplicitLeft = 8
+      ExplicitTop = 22
       ExplicitWidth = 672
       ExplicitHeight = 318
       object lbl2: TLabel
@@ -123,6 +125,8 @@ inherited frmProVenda: TfrmProVenda
           Width = 670
           Height = 56
           Align = alTop
+          Color = 15855351
+          ParentBackground = False
           TabOrder = 0
           object lbl21: TLabel
             Left = 11
@@ -296,7 +300,7 @@ inherited frmProVenda: TfrmProVenda
             Width = 668
             Height = 135
             Align = alClient
-            Color = clWhite
+            Color = 15855351
             DataSource = dtmVenda.dtsItensVenda
             DrawingStyle = gdsClassic
             FixedColor = clGray
@@ -330,11 +334,13 @@ inherited frmProVenda: TfrmProVenda
               item
                 Expanded = False
                 FieldName = 'quantidade'
+                Width = 64
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'valorUnitario'
+                Width = 64
                 Visible = True
               end
               item
@@ -351,6 +357,8 @@ inherited frmProVenda: TfrmProVenda
           Width = 670
           Height = 41
           Align = alBottom
+          Color = 15855351
+          ParentBackground = False
           TabOrder = 2
           object lbl3: TLabel
             Left = 502
@@ -423,6 +431,7 @@ inherited frmProVenda: TfrmProVenda
   inherited pnlRodape: TPanel
     Top = 346
     Width = 680
+    Color = 15855351
     ExplicitTop = 346
     ExplicitWidth = 680
     inherited btnNavigator: TDBNavigator

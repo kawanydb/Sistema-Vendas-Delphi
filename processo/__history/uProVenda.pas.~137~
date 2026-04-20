@@ -38,6 +38,8 @@ type
     intgrfldQryListagemstatusId: TIntegerField;
     sqltmstmpfldQryListagemDataVenda: TSQLTimeStampField;
     fmtbcdfldQryListagemtotalVenda: TFMTBCDField;
+    btnAlterarCliente: TBitBtn;
+    lbl7: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbGridItensKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -52,6 +54,7 @@ type
     procedure dbGridItensDblClick(Sender: TObject);
     procedure dbGridItensDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure btnAlterarClienteClick(Sender: TObject);
 //    procedure edtValorTotalChange(Sender: TObject);
   private
     { Private declarations }
@@ -94,6 +97,15 @@ var
   QryCliente: TFDQuery;
   StatusAtual: Integer;
 begin
+  Result:= False;
+
+  if dtmVenda.cdsItensVenda.IsEmpty then
+  begin
+    ShowMessage('Adicione pelo menos um produto antes de gravar.');
+    lkpProduto.SetFocus;
+    Exit;
+  end;
+
   if edtVendaId.Text <> EmptyStr then
     oVenda.VendaId := StrToInt(edtVendaId.Text)
   else
@@ -119,6 +131,8 @@ begin
   if not PodeRealizarCompra(StatusAtual) then
   begin
     ShowMessage('Cliente não pode realizar compras (Bloqueado ou em Atenção)');
+    LimparCds;                //  limpa os itens
+    edtValorTotal.Value := 0; //  zera total
     Exit;
   end;
 
@@ -135,10 +149,17 @@ begin
     frmCadCliente.QryListagem.Open;
   end;
 
+
   frmRelProVenda := TfrmRelProVenda.Create(Self);
+
   frmRelProVenda.QryVendas.Close;
-  frmRelProVenda.QryVendas.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+  frmRelProVenda.QryVendas.ParamByName('vendaId').AsInteger := oVenda.VendaId;
   frmRelProVenda.QryVendas.Open;
+
+  frmRelProVenda.QryVendasItens.Close;
+  frmRelProVenda.QryVendasItens.ParamByName('vendaId').AsInteger := oVenda.VendaId;
+  frmRelProVenda.QryVendasItens.Open;
+
   frmRelProVenda.Relatorio.PreviewModal;
   frmRelProVenda.Release;
 
@@ -176,6 +197,18 @@ begin
   else begin
     btnCancelar.Click;
     Abort;
+  end;
+end;
+
+procedure TfrmProVenda.btnAlterarClienteClick(Sender: TObject);
+var
+  frm: TfrmCadCliente;
+begin
+  frm := TfrmCadCliente.Create(nil);
+  try
+    frm.ShowModal; // abre como janela modal
+  finally
+    frm.Free; // libera memória
   end;
 end;
 
@@ -299,7 +332,7 @@ procedure TfrmProVenda.dbGridItensDrawColumnCell(Sender: TObject; const Rect: TR
   State: TGridDrawState);
 begin
   inherited;
-  frmTelaHeranca.CentralizarColunas;
+  frmTelaHeranca.CentralizarColunas(dbGridItens);
   if not (gdSelected in State) then
   begin
   //verifica se o número da linha é ímpar ou par e da uma cor p cada
@@ -312,7 +345,7 @@ begin
   //teste
    if (gdSelected in State) then
 begin
-  TDBGrid(Sender).Canvas.Brush.Color := $00D6D5ED;
+  TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
   TDBGrid(Sender).Canvas.Font.Color  := clBlack;
 end;
 

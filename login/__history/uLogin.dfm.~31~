@@ -6,7 +6,7 @@ object frmLogin: TfrmLogin
   Caption = 'Login de Usu'#225'rio Cadastrado'
   ClientHeight = 378
   ClientWidth = 621
-  Color = 15855351
+  Color = 15921906
   Font.Charset = DEFAULT_CHARSET
   Font.Color = 4868032
   Font.Height = -11

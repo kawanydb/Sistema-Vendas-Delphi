@@ -15,9 +15,8 @@ uses
   Vcl.StdCtrls,
   Vcl.Buttons,
   cCadUsuario,
-  uLogin,
   cUsuarioLogado,
-  uPrincipal;
+  uDTMConexao;
 
 type
   TfrmAlterarSenha = class(TForm)
@@ -30,6 +29,9 @@ type
     edtSenhaNova: TEdit;
     edtRepetirNovaSenha: TEdit;
     lbl4: TLabel;
+    lblUsuarioLogado: TLabel;
+    lbl5: TLabel;
+    lbl6: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
@@ -45,13 +47,47 @@ var
 
 implementation
 
+
+uses uPrincipal, uLogin;
+
 {$R *.dfm}
 
 procedure TfrmAlterarSenha.btnAlterarClick(Sender: TObject);
-var oUsuario:TUsuario;
+var
+  oUsuario: TUsuario;
 begin
-  if (edtSenhaAtual.Text=oUsuarioLogado.senha) then begin
-    if (edtSenhaNova.Text=edtRepetirNovaSenha.text) then begin
+  if (edtSenhaAtual.Text = oUsuarioLogado.senha) then
+  begin
+    if (edtSenhaNova.Text = edtRepetirNovaSenha.Text) then
+    begin
+      try
+        oUsuario := TUsuario.Create(dtmConexao.conexaoDB);
+        oUsuario.codigo := oUsuarioLogado.codigo;
+        oUsuario.senha := edtSenhaNova.Text;
+        oUsuario.AlterarSenha;
+
+        MessageDlg('Senha Alterada', mtInformation, [mbOK], 0);
+
+        edtSenhaAtual.Clear;
+        edtSenhaNova.Clear;
+        edtRepetirNovaSenha.Clear;
+
+        Close;
+
+      finally
+        FreeAndNil(oUsuario);
+      end;
+    end
+    else
+    begin
+      MessageDlg('Senhas digitadas não coincidem', mtInformation, [mbOK], 0);
+      edtSenhaNova.SetFocus;
+    end;
+  end
+  else
+  begin
+    MessageDlg('Senha atual incorreta', mtInformation, [mbOK], 0);
+    edtSenhaAtual.SetFocus;
   end;
 end;
 
@@ -70,6 +106,7 @@ begin
   edtSenhaAtual.Clear;
   edtSenhaNova.Clear;
   edtRepetirNovaSenha.Clear;
+  lblUsuarioLogado.Caption:=oUsuarioLogado.nome;
 end;
 
 end.

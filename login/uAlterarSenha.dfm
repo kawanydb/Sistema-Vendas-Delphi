@@ -78,14 +78,14 @@ object frmAlterarSenha: TfrmAlterarSenha
     AlignWithMargins = True
     Left = 141
     Top = 44
-    Width = 44
-    Height = 21
+    Width = 36
+    Height = 17
     Alignment = taCenter
     Caption = 'XXXX'
     Font.Charset = ANSI_CHARSET
     Font.Color = 11179205
-    Font.Height = -16
-    Font.Name = 'Segoe UI Black'
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
   end

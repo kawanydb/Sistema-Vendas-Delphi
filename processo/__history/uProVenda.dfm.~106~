@@ -2,7 +2,6 @@ inherited frmProVenda: TfrmProVenda
   Caption = 'Vendas'
   ClientHeight = 387
   ClientWidth = 680
-  ExplicitLeft = -48
   ExplicitWidth = 686
   ExplicitHeight = 416
   PixelsPerInch = 96
@@ -47,32 +46,33 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
+      OnShow = tabManutencaoShow
       ExplicitLeft = 8
-      ExplicitTop = 28
+      ExplicitTop = 22
       ExplicitWidth = 672
       ExplicitHeight = 318
       object lbl2: TLabel
-        Left = 148
+        Left = 139
         Top = 21
         Width = 33
         Height = 13
         Caption = 'Cliente'
       end
       object lbl4: TLabel
-        Left = 496
+        Left = 488
         Top = 20
         Width = 56
         Height = 13
         Caption = 'Data Venda'
       end
       object lbl7: TLabel
-        Left = 414
-        Top = 19
+        Left = 406
+        Top = 18
         Width = 67
         Height = 12
         Caption = 'Dados do Cliente'
         Font.Charset = ANSI_CHARSET
-        Font.Color = clGray
+        Font.Color = 4737096
         Font.Height = -9
         Font.Name = 'Segoe UI'
         Font.Style = []
@@ -92,7 +92,7 @@ inherited frmProVenda: TfrmProVenda
         TabOrder = 0
       end
       object lkpCliente: TDBLookupComboBox
-        Left = 148
+        Left = 139
         Top = 37
         Width = 257
         Height = 21
@@ -102,14 +102,14 @@ inherited frmProVenda: TfrmProVenda
         TabOrder = 1
       end
       object edtDataVenda: TDateEdit
-        Left = 496
+        Left = 487
         Top = 37
         Width = 161
         Height = 21
         ClickKey = 114
+        Color = 16711422
         DialogTitle = 'Selecione a data'
         NumGlyphs = 2
-        CalendarStyle = csDialog
         TabOrder = 2
       end
       object pnl1: TPanel
@@ -125,6 +125,8 @@ inherited frmProVenda: TfrmProVenda
           Width = 670
           Height = 56
           Align = alTop
+          Color = 15855351
+          ParentBackground = False
           TabOrder = 0
           object lbl21: TLabel
             Left = 11
@@ -212,7 +214,7 @@ inherited frmProVenda: TfrmProVenda
             TabOrder = 3
           end
           object btnAdicionarItem: TBitBtn
-            Left = 459
+            Left = 460
             Top = 18
             Width = 81
             Height = 23
@@ -248,7 +250,7 @@ inherited frmProVenda: TfrmProVenda
             OnClick = btnAdicionarItemClick
           end
           object btnApagarItem: TBitBtn
-            Left = 546
+            Left = 549
             Top = 18
             Width = 79
             Height = 23
@@ -298,10 +300,10 @@ inherited frmProVenda: TfrmProVenda
             Width = 668
             Height = 135
             Align = alClient
-            Color = clWhite
+            Color = 15855351
             DataSource = dtmVenda.dtsItensVenda
             DrawingStyle = gdsClassic
-            FixedColor = 8419560
+            FixedColor = clGray
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
             Font.Height = -11
@@ -357,11 +359,11 @@ inherited frmProVenda: TfrmProVenda
           Align = alBottom
           TabOrder = 2
           object lbl3: TLabel
-            Left = 458
+            Left = 502
             Top = 19
-            Width = 84
+            Width = 87
             Height = 13
-            Caption = 'Valor da Venda'
+            Caption = 'Valor da Venda:'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -11
@@ -370,8 +372,8 @@ inherited frmProVenda: TfrmProVenda
             ParentFont = False
           end
           object edtValorTotal: TCurrencyEdit
-            Left = 548
-            Top = 15
+            Left = 590
+            Top = 14
             Width = 72
             Height = 21
             DisplayFormat = ' R$ ,0.00;R$ ,0.00'
@@ -388,9 +390,9 @@ inherited frmProVenda: TfrmProVenda
         end
       end
       object btnAlterarCliente: TBitBtn
-        Left = 423
+        Left = 406
         Top = 35
-        Width = 55
+        Width = 68
         Height = 25
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100

@@ -30,10 +30,7 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 571
-      ExplicitHeight = 300
       object edtUsuarioId: TLabeledEdit
         Tag = 1
         Left = 13

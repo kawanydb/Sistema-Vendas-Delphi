@@ -41,7 +41,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         Height = 47
         Align = alTop
         BiDiMode = bdRightToLeft
-        Color = 16249591
+        Color = 15855351
         ParentBiDiMode = False
         ParentBackground = False
         TabOrder = 0
@@ -120,7 +120,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         Width = 589
         Height = 253
         Align = alClient
-        Color = 16249591
+        Color = 15855351
         DataSource = dtsListagem
         DrawingStyle = gdsClassic
         FixedColor = clGray

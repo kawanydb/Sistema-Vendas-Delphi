@@ -54,14 +54,18 @@ end;
 
 procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
 begin
-inherited;
-    if oUsuario.Selecionar(QryListagem.FieldByName('usuarioId').AsInteger) then begin
-     edtUsuarioId.Text :=IntToStr(oUsuario.codigo);
-     edtNome.Text      :=oUsuario.nome;
-     edtSenha.Text     :=oUsuario.senha;
+  inherited;
+  if oUsuario.Selecionar(QryListagem.FieldByName('usuarioId').AsInteger) then
+  begin
+    edtUsuarioId.Text := IntToStr(oUsuario.codigo);
+    edtNome.Text      := oUsuario.nome;
+
+    edtSenha.Clear;
+    edtSenha.Enabled := False;
 
   end
-  else begin
+  else
+  begin
     btnCancelar.Click;
     Abort;
   end;
@@ -92,6 +96,8 @@ procedure TfrmCadUsuario.btnNovoClick(Sender: TObject);
 begin
   inherited;
   edtNome.SetFocus;
+  edtSenha.Enabled := True;
+  edtSenha.Clear;
 end;
 
 procedure TfrmCadUsuario.FormClose(Sender: TObject; var Action: TCloseAction);

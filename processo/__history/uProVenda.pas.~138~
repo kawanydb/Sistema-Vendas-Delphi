@@ -39,6 +39,7 @@ type
     sqltmstmpfldQryListagemDataVenda: TSQLTimeStampField;
     fmtbcdfldQryListagemtotalVenda: TFMTBCDField;
     btnAlterarCliente: TBitBtn;
+    lbl7: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbGridItensKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -54,6 +55,7 @@ type
     procedure dbGridItensDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure btnAlterarClienteClick(Sender: TObject);
+    procedure tabManutencaoShow(Sender: TObject);
 //    procedure edtValorTotalChange(Sender: TObject);
   private
     { Private declarations }
@@ -96,6 +98,15 @@ var
   QryCliente: TFDQuery;
   StatusAtual: Integer;
 begin
+  Result:= False;
+
+  if dtmVenda.cdsItensVenda.IsEmpty then
+  begin
+    ShowMessage('Adicione pelo menos um produto antes de gravar.');
+    lkpProduto.SetFocus;
+    Exit;
+  end;
+
   if edtVendaId.Text <> EmptyStr then
     oVenda.VendaId := StrToInt(edtVendaId.Text)
   else
@@ -121,6 +132,8 @@ begin
   if not PodeRealizarCompra(StatusAtual) then
   begin
     ShowMessage('Cliente não pode realizar compras (Bloqueado ou em Atenção)');
+    LimparCds;                //  limpa os itens
+    edtValorTotal.Value := 0; //  zera total
     Exit;
   end;
 
@@ -137,10 +150,17 @@ begin
     frmCadCliente.QryListagem.Open;
   end;
 
+
   frmRelProVenda := TfrmRelProVenda.Create(Self);
+
   frmRelProVenda.QryVendas.Close;
-  frmRelProVenda.QryVendas.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+  frmRelProVenda.QryVendas.ParamByName('vendaId').AsInteger := oVenda.VendaId;
   frmRelProVenda.QryVendas.Open;
+
+  frmRelProVenda.QryVendasItens.Close;
+  frmRelProVenda.QryVendasItens.ParamByName('vendaId').AsInteger := oVenda.VendaId;
+  frmRelProVenda.QryVendasItens.Open;
+
   frmRelProVenda.Relatorio.PreviewModal;
   frmRelProVenda.Release;
 
@@ -326,7 +346,7 @@ begin
   //teste
    if (gdSelected in State) then
 begin
-  TDBGrid(Sender).Canvas.Brush.Color := $00D6D5ED;
+  TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
   TDBGrid(Sender).Canvas.Font.Color  := clBlack;
 end;
 
@@ -398,6 +418,12 @@ end;
 function TfrmProVenda.PodeRealizarCompra(StatusId: Integer): Boolean;
 begin
   Result := not (StatusId in [2, 3]); // 2 = Bloqueado, 3 = Atenção
+end;
+
+procedure TfrmProVenda.tabManutencaoShow(Sender: TObject);
+begin
+  inherited;
+  tabManutencao.Color := RGB(247, 238, 241);
 end;
 
 procedure TfrmProVenda.AtualizarStatusCliente(ClienteId: Integer; StatusId: Integer);

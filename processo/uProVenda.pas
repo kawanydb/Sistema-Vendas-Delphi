@@ -55,6 +55,7 @@ type
     procedure dbGridItensDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure btnAlterarClienteClick(Sender: TObject);
+    procedure tabManutencaoShow(Sender: TObject);
 //    procedure edtValorTotalChange(Sender: TObject);
   private
     { Private declarations }
@@ -417,6 +418,12 @@ end;
 function TfrmProVenda.PodeRealizarCompra(StatusId: Integer): Boolean;
 begin
   Result := not (StatusId in [2, 3]); // 2 = Bloqueado, 3 = Atenção
+end;
+
+procedure TfrmProVenda.tabManutencaoShow(Sender: TObject);
+begin
+  inherited;
+  TTabSheet(tabManutencao).Brush.Color := RGB(247, 238, 241);
 end;
 
 procedure TfrmProVenda.AtualizarStatusCliente(ClienteId: Integer; StatusId: Integer);

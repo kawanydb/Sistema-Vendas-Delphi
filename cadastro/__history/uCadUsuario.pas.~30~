@@ -11,22 +11,22 @@ uses
 
 type
   TfrmCadUsuario = class(TfrmTelaHeranca)
-    fdtncfldQryListagemusuarioID: TFDAutoIncField;
-    strngfldQryListagemnome: TStringField;
-    strngfldQryListagemsenha: TStringField;
     edtUsuarioId: TLabeledEdit;
     edtNome: TLabeledEdit;
     edtSenha: TLabeledEdit;
+    fdtncfldQryListagemusuarioId: TFDAutoIncField;
+    strngfldQryListagemnome: TStringField;
+    strngfldQryListagemsenha: TStringField;
     procedure btnGravarClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
   private
     { Private declarations }
     oUsuario:TUsuario;
     function Gravar(estadoDoCadastro:TEstadoDoCadastro):boolean; override;
     function Apagar:Boolean; override;
-    procedure btnAlterarClick(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -45,18 +45,21 @@ begin
   result:= False;
 
 //quando apertar em apagar, ele vai procurar no banco se o id existe e se existir apaga
-  if oUsuario.Selecionar(QryListagem.FieldByName('usuarioID').AsInteger) then begin
+  if oUsuario.Selecionar(QryListagem.FieldByName('usuarioId').AsInteger) then begin
     Result:=oUsuario.Apagar;
   end;
 end;
 
+
+
 procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
 begin
-ShowMessage('FILHA');
-  if oUsuario.Selecionar(QryListagem.FieldByName('usuarioID').AsInteger) then begin
+inherited;
+    if oUsuario.Selecionar(QryListagem.FieldByName('usuarioId').AsInteger) then begin
      edtUsuarioId.Text :=IntToStr(oUsuario.codigo);
      edtNome.Text      :=oUsuario.nome;
      edtSenha.Text     :=oUsuario.senha;
+
   end
   else begin
     btnCancelar.Click;
@@ -115,5 +118,7 @@ begin
 
   TACaoAcesso.PreencherUsuariosVsAcoes(dtmConexao.conexaoDB)
 end;
+
+
 
 end.
