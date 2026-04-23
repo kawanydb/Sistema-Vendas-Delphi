@@ -159,7 +159,7 @@ object frmRelProVenda: TfrmRelProVenda
         Alignment = taRightJustify
         DataField = 'TotalVenda'
         DataSource = dtsVenda
-        DisplayMask = '#,##0.00'
+        DisplayMask = 'R$#,##0.00'
         Info = riSum
         Text = ''
       end
@@ -231,6 +231,30 @@ object frmRelProVenda: TfrmRelProVenda
           Text = ''
           Transparent = False
         end
+        object rlbl18: TRLLabel
+          Left = 519
+          Top = 3
+          Width = 93
+          Height = 17
+          Caption = 'DATA VENDA:'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold, fsUnderline]
+          ParentFont = False
+          Transparent = False
+        end
+        object rldbtxtvendaId: TRLDBText
+          Left = 618
+          Top = 3
+          Width = 66
+          Height = 16
+          DataField = 'dataVenda'
+          DataSource = dtsVenda
+          Text = ''
+          Transparent = False
+        end
       end
       object rlbnd1: TRLBand
         Left = 0
@@ -238,7 +262,7 @@ object frmRelProVenda: TfrmRelProVenda
         Width = 718
         Height = 26
         object rldbtxtcategoriaId1: TRLDBText
-          Left = 126
+          Left = 81
           Top = 0
           Width = 37
           Height = 17
@@ -420,11 +444,12 @@ object frmRelProVenda: TfrmRelProVenda
           end
           object rldbtxtquantidade: TRLDBText
             Left = 503
-            Top = 3
+            Top = 2
             Width = 79
             Height = 17
             DataField = 'valorUnitario'
             DataSource = dtsVendasItens
+            DisplayMask = 'R$#,##0.00'
             Font.Charset = ANSI_CHARSET
             Font.Color = clBlack
             Font.Height = -13
@@ -440,6 +465,7 @@ object frmRelProVenda: TfrmRelProVenda
             Height = 17
             DataField = 'totalProduto'
             DataSource = dtsVendasItens
+            DisplayMask = 'R$#,##0.00'
             Font.Charset = ANSI_CHARSET
             Font.Color = clBlack
             Font.Height = -13
@@ -499,7 +525,7 @@ object frmRelProVenda: TfrmRelProVenda
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       ReadOnly = True
-      DisplayFormat = '#0.00'
+      DisplayFormat = 'R$#,##0.00'
       Precision = 18
       Size = 3
     end
@@ -567,13 +593,14 @@ object frmRelProVenda: TfrmRelProVenda
     object fmtbcdfldQryVendasItensvalorUnitario: TFMTBCDField
       FieldName = 'valorUnitario'
       Origin = 'valorUnitario'
+      DisplayFormat = 'R$#,##0.00'
       Precision = 18
       Size = 5
     end
     object fmtbcdfldQryVendasItenstotalProduto: TFMTBCDField
       FieldName = 'totalProduto'
       Origin = 'totalProduto'
-      DisplayFormat = '#0.00'
+      DisplayFormat = 'R$#,##0.00'
       Precision = 18
       Size = 5
     end

@@ -10,19 +10,23 @@ inherited frmConCategoria: TfrmConCategoria
       ExplicitWidth = 142
     end
     inherited mskPesquisa: TMaskEdit
-      ExplicitTop = 27
+      AlignWithMargins = True
+      Left = 4
+      Top = 24
+      Width = 619
+      Text = ''
+      TextHint = 'Digite sua Pesquisa'
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 619
     end
   end
   inherited pnl3: TPanel
-    ExplicitLeft = 0
-    ExplicitTop = 49
-    ExplicitHeight = 320
     inherited grdPesquisa: TDBGrid
       Color = 16249591
-      DrawingStyle = gdsClassic
-      FixedColor = clGray
       Font.Color = clBlack
       Font.Style = [fsBold]
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ParentFont = False
       TitleFont.Charset = ANSI_CHARSET
       TitleFont.Color = clWhite

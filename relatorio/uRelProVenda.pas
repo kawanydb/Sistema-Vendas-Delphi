@@ -65,6 +65,8 @@ type
     rlbl15: TRLLabel;
     rlbl16: TRLLabel;
     rlbl17: TRLLabel;
+    rlbl18: TRLLabel;
+    rldbtxtvendaId: TRLDBText;
     procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }

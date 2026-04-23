@@ -49,7 +49,7 @@ object dtmPrincipal: TdtmPrincipal
       AlignWithMargins = True
       Left = 4
       Top = 4
-      Width = 101
+      Width = 574
       Height = 25
       Align = alTop
       Alignment = taCenter
@@ -62,6 +62,7 @@ object dtmPrincipal: TdtmPrincipal
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
+      ExplicitWidth = 101
     end
   end
   object a1: TGridPanel

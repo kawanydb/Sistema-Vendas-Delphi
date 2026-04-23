@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, RLReport,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, RLFilters, RLPDFFilter, RLHTMLFilter, RLXLSFilter, RLXLSXFilter,
-  Vcl.Imaging.pngimage;
+  Vcl.Imaging.pngimage, uCadCliente;
 
 type
   TfrmRelCadClienteFicha = class(TForm)
@@ -78,8 +78,20 @@ type
     rlnglbl1: TRLAngleLabel;
     rlnglbl2: TRLAngleLabel;
     fdqryQryClientes: TFDQuery;
+    fdtncfldQryClientesclienteId: TFDAutoIncField;
+    nQryClientesnome: TStringField;
+    nQryClientesendereco: TStringField;
+    nQryClientesbairro: TStringField;
+    nQryClientescidade: TStringField;
+    nQryClientesestado: TStringField;
+    nQryClientescep: TStringField;
+    nQryClientesemail: TStringField;
+    nQryClientestelefone: TStringField;
+    sqltmstmpfldQryClientesdatanascimento: TSQLTimeStampField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure nQryClientestelefoneGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+    procedure nQryClientescepGetText(Sender: TField; var Text: string; DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -104,5 +116,15 @@ begin
 
 end;
 
+
+procedure TfrmRelCadClienteFicha.nQryClientescepGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+begin
+  Text := frmCadCliente.FormatarCEP(Sender.AsString);
+end;
+
+procedure TfrmRelCadClienteFicha.nQryClientestelefoneGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+begin
+  Text := frmCadCliente.FormatarTelefone(Sender.AsString);
+end;
 
 end.

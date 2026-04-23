@@ -16,6 +16,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure grdPesquisaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure mskPesquisaChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,6 +67,22 @@ end;
 
   //mostra o texto padrão
   TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+//ajuda do chat para concertar o erro de quando troquei o text para texthint
+procedure TfrmConCategoria.mskPesquisaChange(Sender: TObject);
+  begin
+  if not QryListagem.Active then
+    Exit;
+
+  if Trim(mskPesquisa.Text) = '' then
+    Exit;
+
+  QryListagem.Locate(
+    'descricao',
+    mskPesquisa.Text,
+    [loPartialKey]
+  );
 end;
 
 end.

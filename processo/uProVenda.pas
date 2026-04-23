@@ -56,6 +56,7 @@ type
       State: TGridDrawState);
     procedure btnAlterarClienteClick(Sender: TObject);
     procedure tabManutencaoShow(Sender: TObject);
+    procedure lkpClienteCloseUp(Sender: TObject);
 //    procedure edtValorTotalChange(Sender: TObject);
   private
     { Private declarations }
@@ -167,6 +168,32 @@ begin
   Result := True;
 end;
 
+//testeeeeeeeeeeeeeeee
+procedure TfrmProVenda.lkpClienteCloseUp(Sender: TObject);
+begin
+  if dbGridItens.DataSource.DataSet.RecordCount > 0 then
+  begin
+    if MessageDlg(
+      'Ao alterar o cliente, os produtos da venda serão removidos. Deseja continuar?',
+      mtConfirmation,
+      [mbYes, mbNo],
+      0
+    ) = mrNo then
+    begin
+      // mantém o cliente anterior
+      lkpCliente.KeyValue := QryListagem.FieldByName('clienteId').AsInteger;
+      Exit;
+    end;
+
+    // se confirmou, limpa os itens da venda
+    LimparCds;
+    LimparComponenteItem;
+    LimparEdits;
+
+    // opcional: zerar valores totais
+    edtValorTotal.Value := 0;
+  end;
+end;
 
 procedure TfrmProVenda.lkpProdutoExit(Sender: TObject);
 begin

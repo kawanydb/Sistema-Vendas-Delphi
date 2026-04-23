@@ -326,6 +326,7 @@ object frmRelCadProdutoComGrupoCategoria: TfrmRelCadProdutoComGrupoCategoria
           Height = 17
           DataField = 'Valor'
           DataSource = dtsProdutoss
+          DisplayMask = 'R$ #,##0.00'
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -364,7 +365,7 @@ object frmRelCadProdutoComGrupoCategoria: TfrmRelCadProdutoComGrupoCategoria
           Alignment = taRightJustify
           DataField = 'Quantidade'
           DataSource = dtsProdutoss
-          DisplayMask = '#,##0.00'
+          DisplayMask = 'R$ #,##0.00'
           Info = riSum
           Text = ''
         end
@@ -455,6 +456,7 @@ object frmRelCadProdutoComGrupoCategoria: TfrmRelCadProdutoComGrupoCategoria
       FieldName = 'Valor'
       Origin = 'Valor'
       ReadOnly = True
+      DisplayFormat = 'R$ #,##0.00'
       Precision = 18
       Size = 3
     end

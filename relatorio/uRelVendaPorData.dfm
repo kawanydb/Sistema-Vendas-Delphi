@@ -15,7 +15,7 @@ object frmRelVendaPorData: TfrmRelVendaPorData
   PixelsPerInch = 96
   TextHeight = 13
   object Relatorio: TRLReport
-    Left = 0
+    Left = 8
     Top = -3
     Width = 794
     Height = 1123
@@ -159,12 +159,12 @@ object frmRelVendaPorData: TfrmRelVendaPorData
         Alignment = taRightJustify
         DataField = 'TotalVenda'
         DataSource = dtsVenda
-        DisplayMask = '#,##0.00'
+        DisplayMask = 'R$ #,##0.00'
         Info = riSum
         Text = ''
       end
       object rlbl10: TRLLabel
-        Left = 570
+        Left = 568
         Top = 6
         Width = 75
         Height = 17
@@ -365,12 +365,12 @@ object frmRelVendaPorData: TfrmRelVendaPorData
           Alignment = taRightJustify
           DataField = 'TotalVenda'
           DataSource = dtsVenda
-          DisplayMask = '#,##0.00'
+          DisplayMask = 'R$ #,##0.00'
           Info = riSum
           Text = ''
         end
         object rlbl9: TRLLabel
-          Left = 555
+          Left = 524
           Top = 14
           Width = 98
           Height = 17
@@ -450,6 +450,7 @@ object frmRelVendaPorData: TfrmRelVendaPorData
       FieldName = 'TotalVenda'
       Origin = 'TotalVenda'
       ReadOnly = True
+      DisplayFormat = 'R$ #,##0.00'
       Precision = 18
       Size = 3
     end

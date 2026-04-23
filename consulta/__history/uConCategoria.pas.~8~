@@ -1,0 +1,87 @@
+unit uConCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHerancaConsulta, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, uTelaHeranca;
+
+type
+  TfrmConCategoria = class(TfrmTelaHerancaConsulta)
+    fdtncfldQryListagemcategoriaId: TFDAutoIncField;
+    strngfldQryListagemdescricao: TStringField;
+    procedure FormCreate(Sender: TObject);
+    procedure grdPesquisaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
+    procedure mskPesquisaChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmConCategoria: TfrmConCategoria;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmConCategoria.FormCreate(Sender: TObject);
+begin
+
+  aCampoId :='categoriaId';
+  IndiceAtual:='descricao';
+  inherited;
+
+end;
+
+procedure TfrmConCategoria.grdPesquisaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  //ZEBRAR
+  // Se a linha não estiver selecionada, aplica cor personalizada
+  inherited;
+  frmTelaHeranca.CentralizarColunas(grdPesquisa);
+  if not (gdSelected in State) then
+  begin
+  //verifica se o número da linha é ímpar ou par e da uma cor p cada
+    if Odd(TDBGrid(Sender).DataSource.DataSet.RecNo) then
+      TDBGrid(Sender).Canvas.Brush.Color := $00F2F2F2 // Cinza claro
+    else
+      TDBGrid(Sender).Canvas.Brush.Color := $00E1E1E1; // Cinza escuro
+  end;
+
+  //teste
+   if (gdSelected in State) then
+begin
+  TDBGrid(Sender).Canvas.Brush.Color := $00D6D5ED;
+  TDBGrid(Sender).Canvas.Font.Color  := clBlack;
+end;
+
+  // Aplica a cor no fundo
+  TDBGrid(Sender).Canvas.FillRect(Rect);
+
+  //mostra o texto padrão
+  TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+procedure TfrmConCategoria.mskPesquisaChange(Sender: TObject);
+  begin
+  if not QryListagem.Active then
+    Exit;
+
+  if Trim(mskPesquisa.Text) = '' then
+    Exit;
+
+  QryListagem.Locate(
+    'descricao',
+    mskPesquisa.Text,
+    [loPartialKey]
+  );
+end;
+
+end.

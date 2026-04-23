@@ -120,7 +120,7 @@ end;
 
 procedure TdtmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
 begin
-   TFuncao.CriarRelatorio(TfrmRelCadCliente, oUsuarioLogado, dtmConexao.conexaoDB);
+   TFuncao.CriarRelatorio(TfrmRelCadClienteFicha, oUsuarioLogado, dtmConexao.conexaoDB);
 end;
 
 procedure TdtmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);

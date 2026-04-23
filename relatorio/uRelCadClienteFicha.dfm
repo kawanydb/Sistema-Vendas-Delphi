@@ -912,6 +912,7 @@ object frmRelCadClienteFicha: TfrmRelCadClienteFicha
     Top = 392
   end
   object fdqryQryClientes: TFDQuery
+    Active = True
     Connection = dtmConexao.conexaoDB
     SQL.Strings = (
       'SELECT  clienteId,'
@@ -928,5 +929,57 @@ object frmRelCadClienteFicha: TfrmRelCadClienteFicha
       'ORDER BY clientes.nome')
     Left = 470
     Top = 398
+    object fdtncfldQryClientesclienteId: TFDAutoIncField
+      FieldName = 'clienteId'
+      Origin = 'clienteId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object nQryClientesnome: TStringField
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 60
+    end
+    object nQryClientesendereco: TStringField
+      FieldName = 'endereco'
+      Origin = 'endereco'
+      Size = 60
+    end
+    object nQryClientesbairro: TStringField
+      FieldName = 'bairro'
+      Origin = 'bairro'
+      Size = 40
+    end
+    object nQryClientescidade: TStringField
+      FieldName = 'cidade'
+      Origin = 'cidade'
+      Size = 50
+    end
+    object nQryClientesestado: TStringField
+      FieldName = 'estado'
+      Origin = 'estado'
+      Size = 2
+    end
+    object nQryClientescep: TStringField
+      FieldName = 'cep'
+      Origin = 'cep'
+      OnGetText = nQryClientescepGetText
+      Size = 10
+    end
+    object nQryClientesemail: TStringField
+      FieldName = 'email'
+      Origin = 'email'
+      Size = 100
+    end
+    object nQryClientestelefone: TStringField
+      FieldName = 'telefone'
+      Origin = 'telefone'
+      OnGetText = nQryClientestelefoneGetText
+      Size = 14
+    end
+    object sqltmstmpfldQryClientesdatanascimento: TSQLTimeStampField
+      FieldName = 'datanascimento'
+      Origin = 'datanascimento'
+    end
   end
 end

@@ -9,7 +9,6 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 680
     Height = 346
-    ActivePage = tabManutencao
     ExplicitWidth = 680
     ExplicitHeight = 346
     inherited tabListagem: TTabSheet
@@ -22,6 +21,7 @@ inherited frmProVenda: TfrmProVenda
       inherited grddListagem: TDBGrid
         Width = 672
         Height = 271
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         Columns = <
           item
             Expanded = False
@@ -47,8 +47,6 @@ inherited frmProVenda: TfrmProVenda
     end
     inherited tabManutencao: TTabSheet
       OnShow = tabManutencaoShow
-      ExplicitLeft = 8
-      ExplicitTop = 22
       ExplicitWidth = 672
       ExplicitHeight = 318
       object lbl2: TLabel
@@ -100,6 +98,7 @@ inherited frmProVenda: TfrmProVenda
         ListField = 'nome'
         ListSource = dtmVenda.dtsCliente
         TabOrder = 1
+        OnCloseUp = lkpClienteCloseUp
       end
       object edtDataVenda: TDateEdit
         Left = 487
@@ -334,13 +333,11 @@ inherited frmProVenda: TfrmProVenda
               item
                 Expanded = False
                 FieldName = 'quantidade'
-                Width = 64
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'valorUnitario'
-                Width = 64
                 Visible = True
               end
               item
@@ -485,7 +482,7 @@ inherited frmProVenda: TfrmProVenda
       DisplayLabel = 'Total Venda'
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
-      DisplayFormat = '#,##0.00'
+      DisplayFormat = 'R$#,##0.00'
       Precision = 18
       Size = 5
     end

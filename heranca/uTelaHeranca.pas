@@ -53,6 +53,7 @@ type
       EstadoDoCadastro:TEstadoDoCadastro;
   private
     { Private declarations }
+    FGridCarregado: Boolean;
     SelectOriginal:String;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
       btnGravar, btnApagar:TBitBtn; Navegador: TDBNavigator;
@@ -62,6 +63,8 @@ type
     procedure ExibirLabelIndice(Campo:string; aLabel:TLabel);
     function ExisteCampoObrigatorio: Boolean;
     procedure DesabilitarEditPK;
+    procedure SalvarGrid;
+    procedure CarregarGrid;
   public
     { Public declarations }
     grdListagem: TDBGrid;
@@ -141,8 +144,6 @@ begin
    end;
 end;
 
-
-
 procedure TfrmTelaHeranca.LimparEdits;
 var i: Integer;
 begin
@@ -159,9 +160,9 @@ begin
       else if (Components[i]is TDBLookupComboBox) then
         TDBLookupComboBox(Components[i]).keyValue:= Null
       else if (Components[i]is TCurrencyEdit) then
-        TCurrencyEdit(Components[i]).Text:= ''
-      else if (Components[i]is TDateEdit) then
-        TDateEdit(Components[i]).Date:=0;
+        TCurrencyEdit(Components[i]).Text:= '';
+//      else if (Components[i]is TDateEdit) then
+//        TDateEdit(Components[i]).Date:=0;
   end;
 end;
 
@@ -470,43 +471,20 @@ end;
 
 procedure TfrmTelaHeranca.btnnFecharClick(Sender: TObject);
 begin
+  FormClose(Self, TCloseAction(nil^));
   Close;
 end;
 
+
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
-var
-  Ini: TIniFile;
-  i: Integer;
-  NomeCampo: string;
 begin
-  QryListagem.Close;
-
-  Ini := TIniFile.Create(
-    ExtractFilePath(Application.ExeName) +
-    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
-
-  try
-    for i := 0 to grddListagem.Columns.Count - 1 do
-    begin
-      NomeCampo := grddListagem.Columns[i].FieldName;
-
-      // SALVANDO
-      Ini.WriteInteger('Grid', NomeCampo + '_Width',
-        grddListagem.Columns[i].Width);
-
-      Ini.WriteInteger('Grid', NomeCampo + '_Index',
-        grddListagem.Columns[i].Index);
-    end;
-
-    Ini.UpdateFile; // garante salvar
-  finally
-    Ini.Free;
-  end;
+  SalvarGrid;
 end;
 
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
 begin
   CentralizarColunas(grddListagem);
+  FGridCarregado := False;
 
   QryListagem.Connection:=dtmConexao.conexaoDB;
   dtsListagem.DataSet:=QryListagem;
@@ -519,49 +497,34 @@ begin
 end;
 
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
-var
- Ini: TIniFile;
- i, Posicao: Integer;
- NomeCampo: string;
-//FormShow é um evento executado toda vez q o formulário aparece na tela
 begin
-   if(QryListagem.SQL.Text<>EmptyStr) then begin
-     QryListagem.IndexFieldNames:= IndiceAtual;
-     ExibirLabelIndice(IndiceAtual, lbl1);
-     SelectOriginal:=QryListagem.SQL.Text;
-     QryListagem.Open;
-   end;
-   ControlarIndiceTab(pgcPrincipal, 0);
-     DesabilitarEditPK;
-     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
-     btnApagar, btnNavigator, true);
-
-  // SALVA E RECUPERA A POSIÇÃO DAS TABELAS!!!!!!
-  Ini := TIniFile.Create(
-    ExtractFilePath(Application.ExeName) +
-    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
-
-    try
-    for i := 0 to grddListagem.Columns.Count - 1 do
+  if (QryListagem.SQL.Text <> EmptyStr) then
   begin
-    NomeCampo := grddListagem.Columns[i].FieldName;
-
-    // largura
-    grddListagem.Columns[i].Width :=
-      Ini.ReadInteger('Grid', NomeCampo + '_Width',
-      grddListagem.Columns[i].Width);
-
-    // posição
-    Posicao :=
-      Ini.ReadInteger('Grid', NomeCampo + '_Index', i);
-
-    //CORREÇÃO AQUI
-    if (Posicao >= 0) and (Posicao < grddListagem.Columns.Count) then
-      grddListagem.Columns[i].Index := Posicao;
+    QryListagem.IndexFieldNames := IndiceAtual;
+    ExibirLabelIndice(IndiceAtual, lbl1);
+    SelectOriginal := QryListagem.SQL.Text;
+    QryListagem.Open;
   end;
-  finally
-    Ini.Free;
+
+  //garante que garregue a função
+  if not FGridCarregado then
+  begin
+    CarregarGrid;
+    FGridCarregado := True;
   end;
+
+  ControlarIndiceTab(pgcPrincipal, 0);
+  DesabilitarEditPK;
+
+  ControlarBotoes(
+    btnNovo,
+    btnAlterar,
+    btnCancelar,
+    btnGravar,
+    btnApagar,
+    btnNavigator,
+    True
+  );
 end;
 
 function TfrmTelaHeranca.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
@@ -597,15 +560,18 @@ end;
 procedure TfrmTelaHeranca.mskPesquisarChange(Sender: TObject);
 var Date:TDateTime;
 begin
-
+  //verifica se esta vazio
   if(trim(TMaskEdit(Sender).Text) = '')then
     Exit;
 
+  //verifica se o campo selecionado é tipo string
   if(QryListagem.FieldByName(IndiceAtual).DataType in [ftString, ftWideString] )then
   begin
+  //encontra até se digitar pela metade
     QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [loPartialKey])
   end
 
+  //verifica se o campo selecionado é tipo float
   else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftFloat, ftCurrency, ftFMTBcd] )then
   begin
    try
@@ -615,6 +581,7 @@ begin
    end;
   end
 
+  //verifica se o campo selecionado é tipo data
   else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftDate, ftDateTime, ftTimeStamp] )then
   begin
    if TryStrToDate(TMaskEdit(Sender).Text, Date) then
@@ -622,7 +589,7 @@ begin
      QryListagem.Locate(IndiceAtual, Date, []);
    end
   end
-
+  //se ele não for nenhum dos tipos acima
   else
      QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
 end;
@@ -650,12 +617,12 @@ begin
       TDBGrid(Sender).Canvas.Brush.Color := $00E1E1E1; // Cinza escuro
   end;
 
-  //teste
+
    if (gdSelected in State) then
-begin
-  TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
-  TDBGrid(Sender).Canvas.Font.Color  := clBlack;
-end;
+  begin
+    TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE; //cor da linha selecionada
+    TDBGrid(Sender).Canvas.Font.Color  := clBlack; //texto preto
+  end;
 
   // Aplica a cor no fundo
   TDBGrid(Sender).Canvas.FillRect(Rect);
@@ -684,28 +651,32 @@ var
 begin
   Result := False;
 
-  Qry := TFDQuery.Create(nil);
+  Qry := TFDQuery.Create(nil); //qry temporária
   try
     Qry.Connection := dtmConexao.conexaoDB;
 
-    // CLIENTES
+    //procura na tabela clientes
     Qry.SQL.Text :=
       'SELECT 1 ' +
       'FROM clientes ' +
       'WHERE cpf_cnpj = :doc ' +
       'AND clienteId <> :id';
 
+    //envia o cpf/cpnj digitado
     Qry.ParamByName('doc').AsString := SomenteNumeros(Valor);
+
+    //envia o id do cadastro
     Qry.ParamByName('id').AsInteger := AIdAtual;
     Qry.Open;
 
+    //verifica se encontrou algum registro
     if not Qry.IsEmpty then
     begin
       Result := True;
       Exit;
     end;
 
-    // FORNECEDORES
+    // mesma coisa os fornecedores
     Qry.Close;
     Qry.SQL.Text :=
       'SELECT 1 ' +
@@ -719,6 +690,92 @@ begin
 
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TfrmTelaHeranca.SalvarGrid;
+var
+  Ini: TIniFile;
+  i: Integer;
+  Secao: string;
+begin
+  Secao := Self.Name; //pega o nome da tela atual
+
+  //cria um arquivo diferente pra cada usuário
+  Ini := TIniFile.Create(
+    ExtractFilePath(Application.ExeName) +
+    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
+
+  try
+    for i := 0 to grddListagem.Columns.Count - 1 do
+    begin
+    //salva o nome da coluna
+      Ini.WriteString(
+        Secao,
+        'Campo' + IntToStr(i),
+        grddListagem.Columns[i].FieldName
+      );
+
+    //salva a largura
+      Ini.WriteInteger(
+        Secao,
+        'Width' + IntToStr(i),
+        grddListagem.Columns[i].Width
+      );
+    end;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TfrmTelaHeranca.CarregarGrid;
+var
+  Ini: TIniFile;
+  i, j: Integer;
+  Campo: string;
+  Secao: string;
+begin
+  Secao := Self.Name;
+
+  Ini := TIniFile.Create(
+    ExtractFilePath(Application.ExeName) +
+    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
+
+  try
+    for i := 0 to grddListagem.Columns.Count - 1 do
+    begin
+      //lê o nome da coluna salva
+      Campo := Ini.ReadString(
+        Secao,
+        'Campo' + IntToStr(i),
+        ''
+      );
+
+      //procura onde esta a coluna
+      for j := 0 to grddListagem.Columns.Count - 1 do
+      begin
+        //encontra a coluna
+        if SameText(
+          grddListagem.Columns[j].FieldName,
+          Campo
+        ) then
+        begin
+          grddListagem.Columns[j].Index := i; //move a coluna pra posição salva
+
+          //restaura a largura
+          grddListagem.Columns[j].Width :=
+            Ini.ReadInteger(
+              Secao,
+              'Width' + IntToStr(i),
+              grddListagem.Columns[j].Width
+            );
+
+          Break;
+        end;
+      end;
+    end;
+  finally
+    Ini.Free;
   end;
 end;
 
