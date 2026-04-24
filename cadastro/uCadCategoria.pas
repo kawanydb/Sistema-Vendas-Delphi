@@ -15,6 +15,7 @@ type
     strngfldQryListagemdescricao: TStringField;
     edtCategoriaId: TLabeledEdit;
     edtDescricao: TLabeledEdit;
+    lbl15: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);

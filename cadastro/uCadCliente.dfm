@@ -1,10 +1,10 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 361
-  ClientWidth = 665
+  ClientHeight = 532
+  ClientWidth = 654
   OnActivate = FormActivate
-  ExplicitWidth = 671
-  ExplicitHeight = 390
+  ExplicitWidth = 660
+  ExplicitHeight = 561
   PixelsPerInch = 96
   TextHeight = 13
   object img1: TImage [0]
@@ -14,16 +14,20 @@ inherited frmCadCliente: TfrmCadCliente
     Height = 105
   end
   inherited pgcPrincipal: TPageControl
-    Width = 665
-    Height = 315
-    ExplicitWidth = 665
-    ExplicitHeight = 315
+    Width = 654
+    Height = 486
+    ActivePage = tabManutencao
+    ExplicitWidth = 642
+    ExplicitHeight = 486
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 657
-      ExplicitHeight = 287
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 634
+      ExplicitHeight = 458
       inherited pnlListagemTopo: TPanel
-        Width = 657
-        ExplicitWidth = 657
+        Width = 646
+        ExplicitTop = 0
+        ExplicitWidth = 634
         object img2: TImage [1]
           Left = 303
           Top = 15
@@ -261,8 +265,8 @@ inherited frmCadCliente: TfrmCadCliente
         end
       end
       inherited grddListagem: TDBGrid
-        Width = 657
-        Height = 240
+        Width = 646
+        Height = 411
         Columns = <
           item
             Expanded = False
@@ -276,12 +280,27 @@ inherited frmCadCliente: TfrmCadCliente
           end
           item
             Expanded = False
+            FieldName = 'endereco'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cidade'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'cep'
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'telefone'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'numero'
             Visible = True
           end
           item
@@ -301,59 +320,66 @@ inherited frmCadCliente: TfrmCadCliente
           end
           item
             Expanded = False
+            FieldName = 'complemento'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'pessoaDescricao'
             Visible = True
           end>
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 657
-      ExplicitHeight = 287
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 634
+      ExplicitHeight = 458
       object lbl2: TLabel
-        Left = 13
-        Top = 149
+        Left = 21
+        Top = 215
         Width = 19
         Height = 13
         Caption = 'CEP'
       end
       object lbl3: TLabel
-        Left = 13
-        Top = 235
+        Left = 21
+        Top = 378
         Width = 45
         Height = 13
         Caption = 'Telefone '
       end
       object lbl4: TLabel
-        Left = 338
-        Top = 64
+        Left = 21
+        Top = 136
         Width = 95
         Height = 13
         Caption = 'Data de nascimento'
       end
       object lbl5: TLabel
-        Left = 13
-        Top = 107
+        Left = 139
+        Top = 136
         Width = 57
         Height = 13
         Caption = 'Tipo Pessoa'
       end
       object lblCpfCnpj: TLabel
-        Left = 340
-        Top = 107
+        Left = 341
+        Top = 136
         Width = 19
         Height = 26
         Caption = 'CPF'#13#10
       end
       object lbl7: TLabel
         Left = 340
-        Top = 23
+        Top = 50
         Width = 31
         Height = 13
         Caption = 'Status'
       end
       object lbl12: TLabel
-        Left = 59
-        Top = 237
+        Left = 67
+        Top = 380
         Width = 66
         Height = 10
         Caption = '(celular, fixo, SAC)'
@@ -364,11 +390,50 @@ inherited frmCadCliente: TfrmCadCliente
         Font.Style = []
         ParentFont = False
       end
+      object lbl13: TLabel
+        Left = 21
+        Top = 190
+        Width = 71
+        Height = 21
+        Caption = 'Endere'#231'o'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
+      object lbl14: TLabel
+        Left = 21
+        Top = 351
+        Width = 61
+        Height = 21
+        Caption = 'Contato'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
+      object lbl15: TLabel
+        Left = 21
+        Top = 19
+        Width = 130
+        Height = 21
+        Caption = 'Dados do Cliente'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
       object edtClienteId: TLabeledEdit
         Tag = 1
-        Left = 13
-        Top = 37
-        Width = 287
+        Left = 21
+        Top = 64
+        Width = 300
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -379,9 +444,9 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtNome: TLabeledEdit
         Tag = 2
-        Left = 13
-        Top = 80
-        Width = 287
+        Left = 21
+        Top = 107
+        Width = 596
         Height = 21
         EditLabel.Width = 75
         EditLabel.Height = 13
@@ -390,9 +455,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 2
       end
       object edtEndereco: TLabeledEdit
-        Left = 210
-        Top = 163
-        Width = 331
+        Left = 207
+        Top = 229
+        Width = 410
         Height = 21
         EditLabel.Width = 19
         EditLabel.Height = 13
@@ -401,9 +466,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 7
       end
       object edtBairro: TLabeledEdit
-        Left = 13
-        Top = 208
-        Width = 180
+        Left = 360
+        Top = 274
+        Width = 257
         Height = 21
         EditLabel.Width = 28
         EditLabel.Height = 13
@@ -412,9 +477,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 9
       end
       object edtCidade: TLabeledEdit
-        Left = 210
-        Top = 208
-        Width = 331
+        Left = 21
+        Top = 312
+        Width = 492
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -423,8 +488,8 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 10
       end
       object edtTelefone: TMaskEdit
-        Left = 13
-        Top = 252
+        Left = 21
+        Top = 395
         Width = 219
         Height = 21
         TabOrder = 12
@@ -432,8 +497,8 @@ inherited frmCadCliente: TfrmCadCliente
         OnChange = edtTelefoneChange
       end
       object edtEmail: TLabeledEdit
-        Left = 238
-        Top = 252
+        Left = 246
+        Top = 395
         Width = 371
         Height = 21
         EditLabel.Width = 28
@@ -443,9 +508,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 13
       end
       object edtDataNascimento: TDateEdit
-        Left = 338
-        Top = 80
-        Width = 271
+        Left = 21
+        Top = 153
+        Width = 112
         Height = 21
         ClickKey = 114
         DialogTitle = 'Selecione a data'
@@ -454,20 +519,21 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 3
       end
       object edtEstado: TLabeledEdit
-        Left = 547
-        Top = 208
-        Width = 62
+        Left = 528
+        Top = 314
+        Width = 89
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
         EditLabel.Caption = 'Estado'
         MaxLength = 30
         TabOrder = 11
+        OnChange = edtEstadoChange
       end
       object dblkStatusClientestatusId: TDBLookupComboBox
-        Left = 338
-        Top = 37
-        Width = 271
+        Left = 340
+        Top = 64
+        Width = 277
         Height = 21
         KeyField = 'statusId'
         ListField = 'descricao'
@@ -475,9 +541,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 1
       end
       object dblkStatusClienteTipoPessoa: TDBLookupComboBox
-        Left = 13
-        Top = 122
-        Width = 287
+        Left = 139
+        Top = 153
+        Width = 195
         Height = 21
         KeyField = 'pessoaId'
         ListField = 'descricao'
@@ -486,9 +552,9 @@ inherited frmCadCliente: TfrmCadCliente
         OnCloseUp = dblkStatusClienteTipoPessoaCloseUp
       end
       object edtNumero: TLabeledEdit
-        Left = 547
-        Top = 163
-        Width = 62
+        Left = 21
+        Top = 274
+        Width = 58
         Height = 21
         EditLabel.Width = 37
         EditLabel.Height = 13
@@ -498,8 +564,8 @@ inherited frmCadCliente: TfrmCadCliente
         OnChange = edtNumeroChange
       end
       object edtCEP: TEdit
-        Left = 13
-        Top = 163
+        Left = 21
+        Top = 229
         Width = 180
         Height = 21
         MaxLength = 9
@@ -510,33 +576,44 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtCpfCnpj: TEdit
         Left = 340
-        Top = 122
-        Width = 269
+        Top = 153
+        Width = 277
         Height = 21
         TabOrder = 5
         Text = 'edtCpfCnpj'
         OnChange = edtCpfCnpjChange
       end
+      object edtComplemento: TLabeledEdit
+        Left = 87
+        Top = 274
+        Width = 257
+        Height = 21
+        EditLabel.Width = 65
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Complemento'
+        MaxLength = 30
+        TabOrder = 14
+      end
     end
   end
   inherited pnlRodape: TPanel
-    Top = 315
-    Width = 665
+    Top = 486
+    Width = 654
     Height = 46
-    ExplicitTop = 315
-    ExplicitWidth = 665
+    ExplicitTop = 486
+    ExplicitWidth = 642
     ExplicitHeight = 46
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
-      Left = 597
-      ExplicitLeft = 597
+      Left = 586
+      ExplicitLeft = 574
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 336
-    Top = 153
+    Left = 224
+    Top = 17
   end
   inherited QryListagem: TFDQuery
     SQL.Strings = (
@@ -550,14 +627,15 @@ inherited frmCadCliente: TfrmCadCliente
       '      c.cpf_cnpj,'
       '      c.email,'
       '      c.statusId,'
+      '      c.complemento,'
       '      s.descricao as status,'
       '      p.descricao as pessoaDescricao'
       '  FROM clientes c'
       'LEFT JOIN status s ON s.statusId = c.statusId'
       'LEFT JOIN TipoPessoa p ON p.pessoaId = c.pessoaId'
       'ORDER BY c.nome')
-    Left = 452
-    Top = 145
+    Left = 460
+    Top = 169
     object fdtncfldQryListagemclienteId: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'clienteId'
@@ -620,23 +698,25 @@ inherited frmCadCliente: TfrmCadCliente
       FieldName = 'statusId'
       Origin = 'statusId'
     end
+    object nQryListagemcomplemento: TStringField
+      DisplayLabel = 'Complemento'
+      FieldName = 'complemento'
+      Origin = 'complemento'
+      Size = 100
+    end
     object nQryListagempessoaDescricao: TStringField
       DisplayLabel = 'Tipo Pessoa'
       FieldName = 'pessoaDescricao'
       Origin = 'pessoaDescricao'
       Size = 10
     end
-    object nQryListagemstatus: TStringField
-      FieldName = 'status'
-      Origin = 'status'
-    end
   end
   object QryStatus: TFDQuery
     Connection = dtmConexao.conexaoDB
     SQL.Strings = (
       'SELECT statusId, descricao FROM status')
-    Left = 576
-    Top = 144
+    Left = 584
+    Top = 184
     object intgrfldQryStatusstatusId: TIntegerField
       FieldName = 'statusId'
       Origin = 'statusId'
@@ -650,8 +730,8 @@ inherited frmCadCliente: TfrmCadCliente
   end
   object dtsStatus: TDataSource
     DataSet = QryStatus
-    Left = 624
-    Top = 264
+    Left = 296
+    Top = 32
   end
   object QryTipoPessoa: TFDQuery
     Connection = dtmConexao.conexaoDB
@@ -660,8 +740,8 @@ inherited frmCadCliente: TfrmCadCliente
       '       descricao'
       ' FROM TipoPessoa'
       '  ORDER BY descricao')
-    Left = 628
-    Top = 88
+    Left = 396
+    Top = 8
     object intgrfldQryTipoPessoapessoaId: TIntegerField
       FieldName = 'pessoaId'
       Origin = 'pessoaId'
@@ -677,12 +757,12 @@ inherited frmCadCliente: TfrmCadCliente
   end
   object dtsTipoPessoa: TDataSource
     DataSet = QryTipoPessoa
-    Left = 512
-    Top = 176
+    Left = 320
+    Top = 216
   end
   object ImageList: TImageList
-    Left = 628
-    Top = 200
+    Left = 452
+    Top = 32
     Bitmap = {
       494C010106000900040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020

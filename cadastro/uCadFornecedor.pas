@@ -39,6 +39,9 @@ type
     strngfldQryListagembairro: TStringField;
     strngfldQryListagemcidade: TStringField;
     strngfldQryListagemestado: TStringField;
+    lbl15: TLabel;
+    lbl14: TLabel;
+    lbl16: TLabel;
     procedure btnAlterarClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

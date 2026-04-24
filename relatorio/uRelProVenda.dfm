@@ -337,7 +337,7 @@ object frmRelProVenda: TfrmRelProVenda
           Transparent = False
           object rlbl14: TRLLabel
             Left = 7
-            Top = 3
+            Top = 4
             Width = 78
             Height = 17
             Caption = 'PRODUTOS:'
@@ -365,7 +365,7 @@ object frmRelProVenda: TfrmRelProVenda
           end
           object rlbl16: TRLLabel
             Left = 491
-            Top = 3
+            Top = 4
             Width = 95
             Height = 17
             Caption = 'Valor Unit'#225'rio:'
@@ -378,8 +378,8 @@ object frmRelProVenda: TfrmRelProVenda
             Transparent = False
           end
           object rlbl17: TRLLabel
-            Left = 618
-            Top = 6
+            Left = 619
+            Top = 4
             Width = 94
             Height = 17
             Caption = 'Total Produto:'
@@ -414,7 +414,7 @@ object frmRelProVenda: TfrmRelProVenda
           end
           object rldbtxtprodutoId: TRLDBText
             Left = 81
-            Top = 5
+            Top = 3
             Width = 37
             Height = 17
             DataField = 'nome'

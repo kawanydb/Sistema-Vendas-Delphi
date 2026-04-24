@@ -9,9 +9,13 @@ inherited frmCadUsuario: TfrmCadUsuario
     ActivePage = tabManutencao
     ExplicitWidth = 579
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 571
+      ExplicitHeight = 300
       inherited pnlListagemTopo: TPanel
         Width = 571
+        ExplicitTop = 0
         ExplicitWidth = 571
       end
       inherited grddListagem: TDBGrid
@@ -30,12 +34,28 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 8
+      ExplicitTop = 28
       ExplicitWidth = 571
+      ExplicitHeight = 300
+      object lbl15: TLabel
+        Left = 14
+        Top = 9
+        Width = 135
+        Height = 21
+        Caption = 'Dados do Usu'#225'rio'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
       object edtUsuarioId: TLabeledEdit
         Tag = 1
-        Left = 13
-        Top = 37
-        Width = 287
+        Left = 14
+        Top = 54
+        Width = 331
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -46,9 +66,9 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
       object edtNome: TLabeledEdit
         Tag = 2
-        Left = 13
-        Top = 96
-        Width = 548
+        Left = 14
+        Top = 97
+        Width = 331
         Height = 21
         EditLabel.Width = 36
         EditLabel.Height = 13
@@ -58,9 +78,9 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
       object edtSenha: TLabeledEdit
         Tag = 2
-        Left = 13
-        Top = 152
-        Width = 287
+        Left = 14
+        Top = 145
+        Width = 331
         Height = 21
         EditLabel.Width = 30
         EditLabel.Height = 13

@@ -15,7 +15,6 @@ type
     edtProdutoId: TLabeledEdit;
     edtNome: TLabeledEdit;
     edtDescricao: TMemo;
-    lbl2: TLabel;
     edtValor: TCurrencyEdit;
     lbl3: TLabel;
     lbl4: TLabel;
@@ -48,6 +47,8 @@ type
     dtsFornecedor: TDataSource;
     strngfldQryListagemnomeFornecedor: TStringField;
     lbl6: TLabel;
+    lbl15: TLabel;
+    lbl16: TLabel;
     procedure btnAlterarClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -58,6 +59,7 @@ type
     procedure LimparImagem1Click(Sender: TObject);
     procedure CarregarImagem1Click(Sender: TObject);
     procedure grddListagemCellClick(Column: TColumn);
+    procedure imgImagemClick(Sender: TObject);
   private
     { Private declarations }
     oProduto:TProduto;
@@ -145,6 +147,15 @@ begin
   finally
     Stream.Free; //libera memória
   end;
+end;
+
+procedure TfrmCadProduto.imgImagemClick(Sender: TObject);
+  var
+  P: TPoint;
+begin
+  P := Mouse.CursorPos; // pega a posição atual do mouse
+  ppmImagem.Popup(P.X, P.Y);
+
 end;
 
 procedure TfrmCadProduto.LimparImagem1Click(Sender: TObject);

@@ -53,6 +53,10 @@ type
     edtCEP: TEdit;
     edtCpfCnpj: TEdit;
     lbl12: TLabel;
+    lbl13: TLabel;
+    lbl14: TLabel;
+    lbl15: TLabel;
+    edtComplemento: TLabeledEdit;
     fdtncfldQryListagemclienteId: TFDAutoIncField;
     nQryListagemnome: TStringField;
     nQryListagemendereco: TStringField;
@@ -63,8 +67,8 @@ type
     nQryListagemcpf_cnpj: TStringField;
     nQryListagememail: TStringField;
     intgrfldQryListagemstatusId: TIntegerField;
+    nQryListagemcomplemento: TStringField;
     nQryListagempessoaDescricao: TStringField;
-    nQryListagemstatus: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnNovoClick(Sender: TObject);
@@ -82,6 +86,7 @@ type
     procedure strngfldQryListagemcpf_cnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemcepGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure edtNumeroChange(Sender: TObject);
+    procedure edtEstadoChange(Sender: TObject);
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -144,6 +149,7 @@ begin
   oCliente.numero         := SomenteNumeros(edtNumero.Text);
   oCliente.email          := edtEmail.Text;
   oCliente.cpf_cnpj       := SomenteNumeros(edtCpfCnpj.Text);
+  oCliente.complemento    :=edtComplemento.Text;
   oCliente.dataNascimento := edtDataNascimento.Date;
   oCliente.statusId       := dblkStatusClientestatusId.KeyValue;
   oCliente.pessoaId       := dblkStatusClienteTipoPessoa.KeyValue;
@@ -186,6 +192,7 @@ begin
      edtNumero.Text                       :=oCliente.numero;
      edtEmail.Text                        :=oCliente.email;
      edtCpfCnpj.Text                      := oCliente.cpf_cnpj;
+     edtComplemento.Text                  := oCliente.complemento;
      edtDataNascimento.Date               :=oCliente.dataNascimento;
      dblkStatusClienteTipoPessoa.KeyValue := oCliente.pessoaId;
      dblkStatusClientestatusId.KeyValue   := oCliente.statusId;
@@ -305,6 +312,12 @@ begin
   edtCpfCnpj.SelStart := Length(Texto);
 
   edtCpfCnpj.OnChange := edtCpfCnpjChange;
+end;
+
+procedure TfrmCadCliente.edtEstadoChange(Sender: TObject);
+begin
+  inherited;
+
 end;
 
 //não permite digitar a,e ou qual coisa sem ser número

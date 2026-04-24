@@ -1,11 +1,28 @@
 inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
   Caption = 'Cadastro Fornecedor'
+  ClientHeight = 501
+  ClientWidth = 565
+  ExplicitTop = -57
+  ExplicitWidth = 571
+  ExplicitHeight = 530
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
+    Width = 565
+    Height = 460
     ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 589
+      ExplicitHeight = 300
+      inherited pnlListagemTopo: TPanel
+        Width = 557
+        ExplicitTop = 0
+      end
       inherited grddListagem: TDBGrid
+        Width = 557
+        Height = 385
         Columns = <
           item
             Expanded = False
@@ -46,30 +63,34 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 8
+      ExplicitTop = 28
+      ExplicitWidth = 603
+      ExplicitHeight = 414
       object lbl2: TLabel
-        Left = 9
-        Top = 111
+        Left = 29
+        Top = 203
         Width = 19
         Height = 13
         Caption = 'CEP'
       end
       object lbl3: TLabel
-        Left = 9
-        Top = 197
+        Left = 29
+        Top = 364
         Width = 45
         Height = 13
         Caption = 'Telefone '
       end
       object lblCpfCnpj: TLabel
-        Left = 311
-        Top = 65
+        Left = 29
+        Top = 125
         Width = 25
         Height = 13
         Caption = 'CNPJ'
       end
       object lbl12: TLabel
-        Left = 55
-        Top = 199
+        Left = 75
+        Top = 366
         Width = 38
         Height = 10
         Caption = '(fixo, SAC)'
@@ -81,8 +102,8 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         ParentFont = False
       end
       object lbl13: TLabel
-        Left = 252
-        Top = 112
+        Left = 271
+        Top = 203
         Width = 45
         Height = 10
         Caption = '(rua,avenida)'
@@ -93,11 +114,50 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         Font.Style = []
         ParentFont = False
       end
+      object lbl15: TLabel
+        Left = 28
+        Top = 15
+        Width = 162
+        Height = 21
+        Caption = 'Dados do Fornecedor'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
+      object lbl14: TLabel
+        Left = 28
+        Top = 176
+        Width = 71
+        Height = 21
+        Caption = 'Endere'#231'o'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
+      object lbl16: TLabel
+        Left = 29
+        Top = 338
+        Width = 61
+        Height = 21
+        Caption = 'Contato'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
       object edtClienteId: TLabeledEdit
         Tag = 1
-        Left = 9
-        Top = 37
-        Width = 287
+        Left = 29
+        Top = 57
+        Width = 418
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -108,9 +168,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       end
       object edtNome: TLabeledEdit
         Tag = 2
-        Left = 9
-        Top = 81
-        Width = 287
+        Left = 29
+        Top = 101
+        Width = 418
         Height = 21
         EditLabel.Width = 86
         EditLabel.Height = 13
@@ -119,8 +179,8 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 1
       end
       object edtEndereco: TLabeledEdit
-        Left = 202
-        Top = 125
+        Left = 222
+        Top = 217
         Width = 311
         Height = 21
         EditLabel.Width = 45
@@ -130,9 +190,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 4
       end
       object edtBairro: TLabeledEdit
-        Left = 9
-        Top = 170
-        Width = 180
+        Left = 166
+        Top = 257
+        Width = 367
         Height = 21
         EditLabel.Width = 28
         EditLabel.Height = 13
@@ -141,9 +201,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 6
       end
       object edtCidade: TLabeledEdit
-        Left = 202
-        Top = 170
-        Width = 311
+        Left = 29
+        Top = 298
+        Width = 379
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -152,8 +212,8 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 7
       end
       object edtTelefone: TMaskEdit
-        Left = 9
-        Top = 216
+        Left = 29
+        Top = 383
         Width = 180
         Height = 21
         TabOrder = 9
@@ -161,9 +221,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         OnChange = edtTelefoneChange
       end
       object edtEmail: TLabeledEdit
-        Left = 202
-        Top = 214
-        Width = 377
+        Left = 223
+        Top = 383
+        Width = 311
         Height = 21
         EditLabel.Width = 28
         EditLabel.Height = 13
@@ -172,9 +232,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 10
       end
       object edtEstado: TLabeledEdit
-        Left = 525
-        Top = 170
-        Width = 54
+        Left = 414
+        Top = 298
+        Width = 119
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -183,9 +243,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 8
       end
       object edtNumero: TLabeledEdit
-        Left = 525
-        Top = 125
-        Width = 54
+        Left = 29
+        Top = 257
+        Width = 118
         Height = 21
         EditLabel.Width = 37
         EditLabel.Height = 13
@@ -195,8 +255,8 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         OnChange = edtNumeroChange
       end
       object edtCEP: TEdit
-        Left = 9
-        Top = 125
+        Left = 29
+        Top = 217
         Width = 180
         Height = 21
         MaxLength = 9
@@ -205,9 +265,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         OnExit = edtCEPExit
       end
       object edtCnpj: TEdit
-        Left = 310
-        Top = 81
-        Width = 269
+        Left = 29
+        Top = 140
+        Width = 418
         Height = 21
         TabOrder = 2
         OnChange = edtCnpjChange
@@ -215,8 +275,13 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
     end
   end
   inherited pnlRodape: TPanel
+    Top = 460
+    Width = 565
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
+    end
+    inherited btnnFechar: TBitBtn
+      Left = 497
     end
   end
   inherited dtsListagem: TDataSource

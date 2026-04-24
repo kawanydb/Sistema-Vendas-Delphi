@@ -34,10 +34,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     TabOrder = 0
     object tabListagem: TTabSheet
       Caption = 'Listagem'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
@@ -45,10 +41,11 @@ object frmTelaHeranca: TfrmTelaHeranca
         Height = 47
         Align = alTop
         BiDiMode = bdRightToLeft
-        Color = 15855351
+        Color = 16446715
         ParentBiDiMode = False
         ParentBackground = False
         TabOrder = 0
+        ExplicitTop = -6
         object lbl1: TLabel
           Left = 15
           Top = 3
@@ -124,7 +121,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         Width = 589
         Height = 253
         Align = alClient
-        Color = 15855351
+        Color = 16446715
         DataSource = dtsListagem
         DrawingStyle = gdsClassic
         FixedColor = clGray
@@ -168,10 +165,6 @@ object frmTelaHeranca: TfrmTelaHeranca
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
   object pnlRodape: TPanel
@@ -180,7 +173,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     Width = 597
     Height = 41
     Align = alBottom
-    Color = 16249591
+    Color = 16446715
     ParentBackground = False
     TabOrder = 1
     DesignSize = (

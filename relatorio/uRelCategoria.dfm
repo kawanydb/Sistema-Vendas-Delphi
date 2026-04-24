@@ -219,7 +219,7 @@ object frmRelCategoria: TfrmRelCategoria
       end
       object rlbl6: TRLLabel
         Left = 13
-        Top = 4
+        Top = 6
         Width = 48
         Height = 17
         Caption = 'C'#243'digo'

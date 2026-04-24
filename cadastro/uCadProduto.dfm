@@ -1,11 +1,27 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produto'
+  ClientHeight = 444
+  ClientWidth = 593
+  ExplicitWidth = 599
+  ExplicitHeight = 473
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
+    Width = 593
+    Height = 403
+    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 589
+      ExplicitHeight = 300
+      inherited pnlListagemTopo: TPanel
+        Width = 585
+        ExplicitTop = 0
+      end
       inherited grddListagem: TDBGrid
-        Width = 440
+        Width = 436
+        Height = 328
         OnCellClick = grddListagemCellClick
         Columns = <
           item
@@ -52,19 +68,21 @@ inherited frmCadProduto: TfrmCadProduto
           end>
       end
       object pnl1: TPanel
-        Left = 440
+        Left = 436
         Top = 47
         Width = 149
-        Height = 253
+        Height = 328
         Align = alRight
         Color = clWindow
         ParentBackground = False
         TabOrder = 2
+        ExplicitLeft = 440
+        ExplicitHeight = 253
         object Image1: TImage
           Left = 1
           Top = 1
           Width = 147
-          Height = 251
+          Height = 326
           Align = alClient
           Proportional = True
           Stretch = True
@@ -76,37 +94,34 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      object lbl2: TLabel
-        Left = 13
-        Top = 113
-        Width = 46
-        Height = 13
-        Caption = 'Descri'#231#227'o'
-      end
+      ExplicitLeft = 8
+      ExplicitTop = 22
+      ExplicitWidth = 585
+      ExplicitHeight = 375
       object lbl3: TLabel
-        Left = 13
-        Top = 223
+        Left = 14
+        Top = 304
         Width = 64
         Height = 13
         Caption = 'Valor Unit'#225'rio'
       end
       object lbl4: TLabel
-        Left = 153
-        Top = 223
+        Left = 185
+        Top = 304
         Width = 56
         Height = 13
         Caption = 'Quantidade'
       end
       object lbl5: TLabel
-        Left = 205
-        Top = 63
+        Left = 185
+        Top = 128
         Width = 47
         Height = 13
         Caption = 'Categoria'
       end
       object btnIncluirCategoria: TSpeedButton
-        Left = 366
-        Top = 79
+        Left = 336
+        Top = 145
         Width = 23
         Height = 22
         Glyph.Data = {
@@ -139,8 +154,8 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnIncluirCategoriaClick
       end
       object btnPesquisarCategoria: TSpeedButton
-        Left = 395
-        Top = 79
+        Left = 364
+        Top = 145
         Width = 23
         Height = 22
         Glyph.Data = {
@@ -173,30 +188,56 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnPesquisarCategoriaClick
       end
       object lbl12: TLabel
-        Left = 492
-        Top = 104
-        Width = 16
-        Height = 11
+        Left = 477
+        Top = 154
+        Width = 20
+        Height = 13
         Caption = 'foto'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
-        Font.Height = -9
+        Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
       end
       object lbl6: TLabel
-        Left = 205
-        Top = 21
+        Left = 13
+        Top = 128
         Width = 55
         Height = 13
         Caption = 'Fornecedor'
       end
+      object lbl15: TLabel
+        Left = 13
+        Top = 11
+        Width = 138
+        Height = 21
+        Caption = 'Dados do Produto'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
+      object lbl16: TLabel
+        Left = 14
+        Top = 186
+        Width = 164
+        Height = 21
+        Caption = 'Descri'#231#227'o do Produto'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
       object edtProdutoId: TLabeledEdit
         Tag = 1
         Left = 13
-        Top = 37
-        Width = 180
+        Top = 58
+        Width = 373
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -208,8 +249,8 @@ inherited frmCadProduto: TfrmCadProduto
       object edtNome: TLabeledEdit
         Tag = 2
         Left = 13
-        Top = 80
-        Width = 180
+        Top = 101
+        Width = 373
         Height = 21
         EditLabel.Width = 27
         EditLabel.Height = 13
@@ -218,9 +259,9 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 2
       end
       object edtDescricao: TMemo
-        Left = 13
-        Top = 132
-        Width = 564
+        Left = 14
+        Top = 219
+        Width = 544
         Height = 77
         Lines.Strings = (
           'edtDescricao')
@@ -228,17 +269,17 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 4
       end
       object edtValor: TCurrencyEdit
-        Left = 13
-        Top = 242
-        Width = 121
+        Left = 14
+        Top = 323
+        Width = 137
         Height = 21
         DisplayFormat = ' R$ ,0.00;R$ ,0.00'
         TabOrder = 5
       end
       object lkpCategoria: TDBLookupComboBox
-        Left = 207
-        Top = 80
-        Width = 146
+        Left = 185
+        Top = 146
+        Width = 147
         Height = 21
         KeyField = 'categoriaId'
         ListField = 'descricao'
@@ -246,36 +287,36 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 3
       end
       object edtQuantidade: TCurrencyEdit
-        Left = 154
-        Top = 242
-        Width = 121
+        Left = 185
+        Top = 323
+        Width = 147
         Height = 21
         DisplayFormat = ' ,0.00; ,0.00'
         TabOrder = 6
       end
       object pnlImagem: TPanel
-        Left = 445
-        Top = 16
-        Width = 116
-        Height = 85
+        Left = 413
+        Top = 58
+        Width = 145
+        Height = 98
         BorderStyle = bsSingle
         TabOrder = 7
         object imgImagem: TImage
           Left = 1
           Top = 1
-          Width = 110
-          Height = 79
+          Width = 139
+          Height = 92
           Align = alClient
           PopupMenu = ppmImagem
-          ExplicitTop = 0
-          ExplicitWidth = 114
-          ExplicitHeight = 83
+          OnClick = imgImagemClick
+          ExplicitTop = -2
+          ExplicitHeight = 94
         end
       end
       object dblkFornecedor: TDBLookupComboBox
-        Left = 207
-        Top = 37
-        Width = 146
+        Left = 14
+        Top = 146
+        Width = 155
         Height = 21
         KeyField = 'fornecedorId'
         ListField = 'nomeFornecedor'
@@ -285,13 +326,18 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited pnlRodape: TPanel
+    Top = 403
+    Width = 593
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
+    inherited btnnFechar: TBitBtn
+      Left = 525
+    end
   end
   inherited dtsListagem: TDataSource
-    Left = 416
-    Top = 297
+    Left = 336
+    Top = 65
   end
   inherited QryListagem: TFDQuery
     SQL.Strings = (
@@ -312,8 +358,8 @@ inherited frmCadProduto: TfrmCadProduto
       ''
       'LEFT JOIN categorias c'
       '  ON c.categoriaId = p.categoriaId')
-    Left = 316
-    Top = 193
+    Left = 380
+    Top = 17
     object fdtncfldQryListagemprodutoId: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
@@ -370,8 +416,8 @@ inherited frmCadProduto: TfrmCadProduto
     Connection = dtmConexao.conexaoDB
     SQL.Strings = (
       'Select categoriaId, descricao from categorias')
-    Left = 380
-    Top = 224
+    Left = 332
+    Top = 16
     object fdtncfldQryCategoriacategoriaId: TFDAutoIncField
       FieldName = 'categoriaId'
       Origin = 'categoriaId'
@@ -386,12 +432,13 @@ inherited frmCadProduto: TfrmCadProduto
   end
   object dsCategoria: TDataSource
     DataSet = QryCategoria
-    Left = 300
-    Top = 288
+    Left = 284
+    Top = 24
   end
   object ppmImagem: TPopupMenu
-    Left = 505
-    Top = 72
+    TrackButton = tbLeftButton
+    Left = 481
+    Top = 120
     object CarregarImagem1: TMenuItem
       Caption = 'Carregar Imagem'
       OnClick = CarregarImagem1Click
@@ -407,12 +454,12 @@ inherited frmCadProduto: TfrmCadProduto
       'SELECT fornecedorId, nomeFornecedor'
       'FROM fornecedor'
       'ORDER BY nomeFornecedor')
-    Left = 468
-    Top = 232
+    Left = 236
+    Top = 24
   end
   object dtsFornecedor: TDataSource
     DataSet = QryFornecedor
-    Left = 532
-    Top = 272
+    Left = 180
+    Top = 24
   end
 end

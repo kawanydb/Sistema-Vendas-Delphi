@@ -5,7 +5,7 @@ object frmSelecionarData: TfrmSelecionarData
   Caption = 'Selecionar Data'
   ClientHeight = 121
   ClientWidth = 249
-  Color = 15921906
+  Color = 15855351
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -19,16 +19,28 @@ object frmSelecionarData: TfrmSelecionarData
   object lbl4: TLabel
     Left = 8
     Top = 17
-    Width = 51
+    Width = 61
     Height = 13
     Caption = 'Data Inicio'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lbl41: TLabel
     Left = 128
     Top = 17
-    Width = 48
+    Width = 56
     Height = 13
     Caption = 'Data Final'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object edtDataInicio: TDateEdit
     Left = 8

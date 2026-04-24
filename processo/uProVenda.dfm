@@ -9,6 +9,7 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 680
     Height = 346
+    ActivePage = tabManutencao
     ExplicitWidth = 680
     ExplicitHeight = 346
     inherited tabListagem: TTabSheet
@@ -16,11 +17,13 @@ inherited frmProVenda: TfrmProVenda
       ExplicitHeight = 318
       inherited pnlListagemTopo: TPanel
         Width = 672
+        ExplicitTop = 0
         ExplicitWidth = 672
       end
       inherited grddListagem: TDBGrid
         Width = 672
         Height = 271
+        Font.Charset = ANSI_CHARSET
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         Columns = <
           item
@@ -303,11 +306,11 @@ inherited frmProVenda: TfrmProVenda
             DataSource = dtmVenda.dtsItensVenda
             DrawingStyle = gdsClassic
             FixedColor = clGray
-            Font.Charset = DEFAULT_CHARSET
+            Font.Charset = ANSI_CHARSET
             Font.Color = clBlack
             Font.Height = -11
             Font.Name = 'Tahoma'
-            Font.Style = []
+            Font.Style = [fsBold]
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleHotTrack]
             ParentFont = False
             TabOrder = 0
@@ -333,11 +336,13 @@ inherited frmProVenda: TfrmProVenda
               item
                 Expanded = False
                 FieldName = 'quantidade'
+                Width = 64
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'valorUnitario'
+                Width = 64
                 Visible = True
               end
               item

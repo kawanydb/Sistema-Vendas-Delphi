@@ -212,6 +212,10 @@ begin
 
     //atualiza a barra de status
   StbPrincipal.Panels[0].Text := 'USUÁRIO: ' + oUsuarioLogado.nome;
+  StbPrincipal.Font.Name := 'Segoe UI';
+  StbPrincipal.Font.Style := [fsBold];
+  StbPrincipal.Font.Size := 10; // opcional
+
   ColorirPie(dbcht2);
   ColorirPie(dbcht4);
 end;

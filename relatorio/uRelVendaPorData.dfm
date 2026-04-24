@@ -223,7 +223,7 @@ object frmRelVendaPorData: TfrmRelVendaPorData
         end
         object rldbtxtDescricaoCategoria: TRLDBText
           Left = 51
-          Top = 3
+          Top = 4
           Width = 66
           Height = 16
           DataField = 'dataVenda'
@@ -242,7 +242,7 @@ object frmRelVendaPorData: TfrmRelVendaPorData
         ParentColor = False
         Transparent = False
         object rlbl5: TRLLabel
-          Left = 123
+          Left = 121
           Top = 4
           Width = 108
           Height = 17

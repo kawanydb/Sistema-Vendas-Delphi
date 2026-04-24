@@ -5,6 +5,13 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pgcPrincipal: TPageControl
     ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 589
+      ExplicitHeight = 300
+      inherited pnlListagemTopo: TPanel
+        ExplicitTop = 0
+      end
       inherited grddListagem: TDBGrid
         Columns = <
           item
@@ -20,15 +27,28 @@ inherited frmCadCategoria: TfrmCadCategoria
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
+      ExplicitLeft = 2
+      ExplicitTop = 22
       ExplicitWidth = 589
       ExplicitHeight = 300
+      object lbl15: TLabel
+        Left = 13
+        Top = 11
+        Width = 130
+        Height = 21
+        Caption = 'Dados Cadastrais'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
       object edtCategoriaId: TLabeledEdit
         Tag = 1
         Left = 13
-        Top = 24
-        Width = 138
+        Top = 54
+        Width = 229
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -40,7 +60,7 @@ inherited frmCadCategoria: TfrmCadCategoria
       object edtDescricao: TLabeledEdit
         Tag = 2
         Left = 13
-        Top = 80
+        Top = 110
         Width = 229
         Height = 21
         EditLabel.Width = 92

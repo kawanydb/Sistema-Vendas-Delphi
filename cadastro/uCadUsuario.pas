@@ -17,6 +17,7 @@ type
     fdtncfldQryListagemusuarioId: TFDAutoIncField;
     strngfldQryListagemnome: TStringField;
     strngfldQryListagemsenha: TStringField;
+    lbl15: TLabel;
     procedure btnGravarClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

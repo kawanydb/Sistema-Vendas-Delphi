@@ -9,6 +9,7 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   inherited pgcPrincipal: TPageControl
     Width = 574
     Height = 331
+    ActivePage = tabManutencao
     ExplicitWidth = 574
     ExplicitHeight = 331
     inherited tabListagem: TTabSheet
@@ -18,6 +19,7 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       ExplicitHeight = 303
       inherited pnlListagemTopo: TPanel
         Width = 566
+        ExplicitTop = 0
         ExplicitWidth = 566
       end
       inherited grddListagem: TDBGrid
@@ -49,10 +51,23 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       ExplicitTop = 24
       ExplicitWidth = 566
       ExplicitHeight = 303
+      object lbl15: TLabel
+        Left = 13
+        Top = 11
+        Width = 157
+        Height = 21
+        Caption = 'Criar A'#231#227'o de Acesso'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold, fsUnderline]
+        ParentFont = False
+      end
       object edtAcaoAcessoId: TLabeledEdit
         Tag = 1
         Left = 13
-        Top = 24
+        Top = 56
         Width = 138
         Height = 21
         EditLabel.Width = 33
@@ -65,7 +80,7 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       object edtDescricao: TLabeledEdit
         Tag = 2
         Left = 13
-        Top = 80
+        Top = 105
         Width = 444
         Height = 21
         EditLabel.Width = 46
@@ -77,7 +92,7 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       object edtChave: TLabeledEdit
         Tag = 2
         Left = 13
-        Top = 136
+        Top = 157
         Width = 444
         Height = 21
         EditLabel.Width = 31

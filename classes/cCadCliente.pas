@@ -36,6 +36,7 @@ type
     F_PessoaId: Integer;
     F_numero: string;
     F_CPF_CNPJ : string;
+    F_Complemento: string;
 
   public
     constructor Create(aConexao:TFDConnection); //metodo create recebe uma conexao
@@ -60,6 +61,7 @@ type
     property statusId      : Integer   read F_StatusId       write F_StatusId;
     property pessoaId      : Integer   read F_PessoaId       write F_PessoaId;
     property cpf_cnpj      : string    read F_CPF_CNPJ       write F_CPF_CNPJ;
+    property complemento   : string    read F_Complemento    write F_Complemento;
   end;
 
 implementation
@@ -136,6 +138,7 @@ begin
                 '       ,numero         =:numero '+
                 '       ,email          =:email '+
                 '       ,cpf_cnpj       =:cpf_cnpj '+
+                '       ,complemento    =:complemento '+
                 '       ,dataNascimento =:dataNascimento '+
                 '       ,statusId       =:statusId '+
                 '       ,pessoaId       =:pessoaId '+
@@ -152,6 +155,7 @@ begin
     Qry.ParamByName('numero').AsString           :=Self.F_numero;
     Qry.ParamByName('email').AsString            :=Self.F_email;
     Qry.ParamByName('cpf_cnpj').AsString         :=Self.F_CPF_CNPJ;
+    Qry.ParamByName('complemento').AsString      :=Self.F_Complemento;
     Qry.ParamByName('dataNascimento').AsDateTime :=Self.F_dataNascimento;
     Qry.ParamByName('statusId').AsInteger        :=Self.F_StatusId;
     Qry.ParamByName('pessoaId').AsInteger        :=Self.F_PessoaId;
@@ -193,6 +197,7 @@ begin
                 '                      numero, '+
                 '                      email, '+
                 '                      cpf_cnpj, '+
+                '                      complemento, '+
                 '                      datanascimento, '+
                 '                      statusId, '+
                 '                      pessoaId) ' +
@@ -206,6 +211,7 @@ begin
                 '                      :numero, '+
                 '                      :email, '+
                 '                      :cpf_cnpj, '+
+                '                      :complemento, '+
                 '                      :datanascimento, '+
                 '                      :statusId, '+
                 '                      :pessoaId)' );
@@ -220,6 +226,7 @@ begin
     Qry.ParamByName('numero').AsString           :=Self.F_numero;
     Qry.ParamByName('email').AsString            :=Self.F_email;
     Qry.ParamByName('cpf_cnpj').AsString         :=Self.F_CPF_CNPJ;
+    Qry.ParamByName('complemento').AsString      :=Self.F_Complemento;
     Qry.ParamByName('dataNascimento').AsDateTime :=Self.F_dataNascimento;
     Qry.ParamByName('statusId').AsInteger        := Self.F_StatusId;
     Qry.ParamByName('pessoaId').AsInteger        := Self.F_PessoaId;
@@ -261,6 +268,7 @@ begin
                 '       numero, '+
                 '       email, '+
                 '       cpf_cnpj,'+
+                '       complemento,'+
                 '       datanascimento, ' +
                 '       statusId, ' +
                 '       pessoaId ' +
@@ -283,6 +291,7 @@ begin
       Self.F_numero        := Qry.FieldByName('numero').AsString;
       Self.F_email         := Qry.FieldByName('email').AsString;
       Self.F_CPF_CNPJ      := Qry.FieldByName('cpf_cnpj').AsString;
+      Self.F_Complemento   := Qry.FieldByName('complemento').AsString;
       Self.F_dataNascimento:= Qry.FieldByName('dataNascimento').AsDateTime;
       Self.F_StatusId      := Qry.FieldByName('statusId').AsInteger;
       Self.F_PessoaId      := Qry.FieldByName('pessoaId').AsInteger;
