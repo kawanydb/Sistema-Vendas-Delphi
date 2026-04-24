@@ -53,6 +53,7 @@ type
       EstadoDoCadastro:TEstadoDoCadastro;
   private
     { Private declarations }
+    FGridCarregado: Boolean;
     SelectOriginal:String;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
       btnGravar, btnApagar:TBitBtn; Navegador: TDBNavigator;
@@ -62,6 +63,8 @@ type
     procedure ExibirLabelIndice(Campo:string; aLabel:TLabel);
     function ExisteCampoObrigatorio: Boolean;
     procedure DesabilitarEditPK;
+    procedure SalvarGrid;
+    procedure CarregarGrid;
   public
     { Public declarations }
     grdListagem: TDBGrid;
@@ -468,58 +471,20 @@ end;
 
 procedure TfrmTelaHeranca.btnnFecharClick(Sender: TObject);
 begin
+  FormClose(Self, TCloseAction(nil^));
   Close;
 end;
 
+
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
-var
-  Ini: TIniFile;
-  i: Integer;
-  NomeCampo: string;
 begin
-  Ini := TIniFile.Create(
-    ExtractFilePath(Application.ExeName) +
-    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini'
-  );
-
-  try
-    // salva largura e posição das colunas
-    for i := 0 to grddListagem.Columns.Count - 1 do
-    begin
-      NomeCampo := grddListagem.Columns[i].FieldName;
-
-      // se não tiver nome de campo, usa o índice
-      if Trim(NomeCampo) = '' then
-        NomeCampo := 'Coluna_' + IntToStr(i);
-
-      // salva largura
-      Ini.WriteInteger(
-        'Grid',
-        NomeCampo + '_Width',
-        grddListagem.Columns[i].Width
-      );
-
-      // salva posição
-      Ini.WriteInteger(
-        'Grid',
-        NomeCampo + '_Index',
-        grddListagem.Columns[i].Index
-      );
-    end;
-
-    Ini.UpdateFile;
-
-  finally
-    Ini.Free;
-  end;
-
-  if QryListagem.Active then
-    QryListagem.Close;
+  SalvarGrid;
 end;
 
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
 begin
   CentralizarColunas(grddListagem);
+  FGridCarregado := False;
 
   QryListagem.Connection:=dtmConexao.conexaoDB;
   dtsListagem.DataSet:=QryListagem;
@@ -532,13 +497,7 @@ begin
 end;
 
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
-var
-  Ini: TIniFile;
-  i, Posicao: Integer;
-  NomeCampo: string;
 begin
-  // FormShow é executado toda vez que o formulário aparece
-
   if (QryListagem.SQL.Text <> EmptyStr) then
   begin
     QryListagem.IndexFieldNames := IndiceAtual;
@@ -547,8 +506,16 @@ begin
     QryListagem.Open;
   end;
 
+  //garante que garregue a função
+  if not FGridCarregado then
+  begin
+    CarregarGrid;
+    FGridCarregado := True;
+  end;
+
   ControlarIndiceTab(pgcPrincipal, 0);
   DesabilitarEditPK;
+
   ControlarBotoes(
     btnNovo,
     btnAlterar,
@@ -558,57 +525,6 @@ begin
     btnNavigator,
     True
   );
-
-  // carrega largura e posição das colunas
-  Ini := TIniFile.Create(
-    ExtractFilePath(Application.ExeName) +
-    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini'
-  );
-
-  try
-    // largura das colunas
-    for i := 0 to grddListagem.Columns.Count - 1 do
-    begin
-      NomeCampo := grddListagem.Columns[i].FieldName;
-
-      // se não tiver FieldName, usa o índice
-      if Trim(NomeCampo) = '' then
-        NomeCampo := 'Coluna_' + IntToStr(i);
-
-      grddListagem.Columns[i].Width :=
-        Ini.ReadInteger(
-          'Grid',
-          NomeCampo + '_Width',
-          grddListagem.Columns[i].Width
-        );
-    end;
-
-    // posição das colunas
-    for i := grddListagem.Columns.Count - 1 downto 0 do
-    begin
-      NomeCampo := grddListagem.Columns[i].FieldName;
-
-      // se não tiver FieldName, usa o índice
-      if Trim(NomeCampo) = '' then
-        NomeCampo := 'Coluna_' + IntToStr(i);
-
-      Posicao :=
-        Ini.ReadInteger(
-          'Grid',
-          NomeCampo + '_Index',
-          i
-        );
-
-      if (Posicao >= 0) and
-         (Posicao < grddListagem.Columns.Count) then
-      begin
-        grddListagem.Columns[i].Index := Posicao;
-      end;
-    end;
-
-  finally
-    Ini.Free;
-  end;
 end;
 
 function TfrmTelaHeranca.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
@@ -774,6 +690,92 @@ begin
 
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TfrmTelaHeranca.SalvarGrid;
+var
+  Ini: TIniFile;
+  i: Integer;
+  Secao: string;
+begin
+  Secao := Self.Name; //pega o nome da tela atual
+
+  //cria um arquivo diferente pra cada usuário
+  Ini := TIniFile.Create(
+    ExtractFilePath(Application.ExeName) +
+    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
+
+  try
+    for i := 0 to grddListagem.Columns.Count - 1 do
+    begin
+    //salva o nome da coluna
+      Ini.WriteString(
+        Secao,
+        'Campo' + IntToStr(i),
+        grddListagem.Columns[i].FieldName
+      );
+
+    //salva a largura
+      Ini.WriteInteger(
+        Secao,
+        'Width' + IntToStr(i),
+        grddListagem.Columns[i].Width
+      );
+    end;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TfrmTelaHeranca.CarregarGrid;
+var
+  Ini: TIniFile;
+  i, j: Integer;
+  Campo: string;
+  Secao: string;
+begin
+  Secao := Self.Name;
+
+  Ini := TIniFile.Create(
+    ExtractFilePath(Application.ExeName) +
+    'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
+
+  try
+    for i := 0 to grddListagem.Columns.Count - 1 do
+    begin
+      //lê o nome da coluna salva
+      Campo := Ini.ReadString(
+        Secao,
+        'Campo' + IntToStr(i),
+        ''
+      );
+
+      //procura onde esta a coluna
+      for j := 0 to grddListagem.Columns.Count - 1 do
+      begin
+        //encontra a coluna
+        if SameText(
+          grddListagem.Columns[j].FieldName,
+          Campo
+        ) then
+        begin
+          grddListagem.Columns[j].Index := i; //move a coluna pra posição salva
+
+          //restaura a largura
+          grddListagem.Columns[j].Width :=
+            Ini.ReadInteger(
+              Secao,
+              'Width' + IntToStr(i),
+              grddListagem.Columns[j].Width
+            );
+
+          Break;
+        end;
+      end;
+    end;
+  finally
+    Ini.Free;
   end;
 end;
 

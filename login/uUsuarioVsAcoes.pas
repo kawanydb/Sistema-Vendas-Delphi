@@ -61,34 +61,52 @@ begin
   QryAcoes.Open;
 end;
 
-
 procedure TfrmUsuarioVsAcoes.dbgrdACoesDblClick(Sender: TObject);
-var Qry:TFDQuery;
-    bmRegistroAtual:TBookmark;
+var
+  Qry: TFDQuery;
+  vAcaoAcessoId: Integer;
 begin
   try
-    bmRegistroAtual := QryAcoes.GetBookmark;
-    Qry:=TFDQuery.Create(nil);
-    Qry.Connection:=dtmConexao.ConexaoDB;
+    // salva o ID atual
+    vAcaoAcessoId := QryAcoes.FieldByName('acaoAcessoId').AsInteger;
+
+    Qry := TFDQuery.Create(nil);
+    Qry.Connection := dtmConexao.ConexaoDB;
+
     Qry.SQL.Clear;
-    Qry.SQL.Add('UPDATE usuariosAcaoAcesso '+
-                '   SET ativo=:ativo '+
-                ' WHERE usuarioId=:usuarioId '+
-                '   AND acaoAcessoId=:acaoAcessoId ');
-    Qry.ParamByName('usuarioId').AsInteger    :=QryAcoes.FieldByName('usuarioId').AsInteger;
-    Qry.ParamByName('acaoAcessoId').AsInteger :=QryAcoes.FieldByName('acaoAcessoId').AsInteger;
-    Qry.ParamByName('ativo').AsBoolean        :=not QryAcoes.FieldByName('ativo').AsBoolean;
+    Qry.SQL.Add(
+      'UPDATE usuariosAcaoAcesso ' +
+      '   SET ativo = :ativo ' +
+      ' WHERE usuarioId = :usuarioId ' +
+      '   AND acaoAcessoId = :acaoAcessoId '
+    );
+
+    Qry.ParamByName('usuarioId').AsInteger :=
+      QryAcoes.FieldByName('usuarioId').AsInteger;
+
+    Qry.ParamByName('acaoAcessoId').AsInteger :=
+      vAcaoAcessoId;
+
+    Qry.ParamByName('ativo').AsBoolean :=
+      not QryAcoes.FieldByName('ativo').AsBoolean;
+
     try
       dtmConexao.ConexaoDB.StartTransaction;
       Qry.ExecSQL;
       dtmConexao.ConexaoDB.Commit;
     except
       dtmConexao.ConexaoDB.Rollback;
+      raise;
     end;
+
   finally
     SelecionarAcoesAcessoPorUsuario;
-    QryAcoes.GotoBookMark(bmRegistroAtual);
-    if Assigned(Qry) then FreeAndNil(Qry);
+
+    // volta para o mesmo registro
+    QryAcoes.Locate('acaoAcessoId', vAcaoAcessoId, []);
+
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
   end;
 end;
 

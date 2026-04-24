@@ -78,7 +78,7 @@ object frmTelaHeranca: TfrmTelaHeranca
           Left = 143
           Top = 16
           Width = 75
-          Height = 25
+          Height = 21
           Caption = '&Pesquisar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

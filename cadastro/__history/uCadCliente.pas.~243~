@@ -50,20 +50,21 @@ type
     intgrfldQryStatusstatusId: TIntegerField;
     strngfldQryStatusdescricao: TStringField;
     edtNumero: TLabeledEdit;
-    fdtncfldQryListagemclienteId: TFDAutoIncField;
-    strngfldQryListagemnome: TStringField;
-    strngfldQryListagemendereco: TStringField;
-    strngfldQryListagemcidade: TStringField;
-    strngfldQryListagemcep: TStringField;
-    strngfldQryListagemtelefone: TStringField;
-    strngfldQryListagemnumero: TStringField;
-    strngfldQryListagemcpf_cnpj: TStringField;
-    strngfldQryListagememail: TStringField;
-    intgrfldQryListagemstatusId: TIntegerField;
-    strngfldQryListagempessoaDescricao: TStringField;
     edtCEP: TEdit;
     edtCpfCnpj: TEdit;
     lbl12: TLabel;
+    fdtncfldQryListagemclienteId: TFDAutoIncField;
+    nQryListagemnome: TStringField;
+    nQryListagemendereco: TStringField;
+    nQryListagemcidade: TStringField;
+    nQryListagemcep: TStringField;
+    nQryListagemtelefone: TStringField;
+    nQryListagemnumero: TStringField;
+    nQryListagemcpf_cnpj: TStringField;
+    nQryListagememail: TStringField;
+    intgrfldQryListagemstatusId: TIntegerField;
+    nQryListagempessoaDescricao: TStringField;
+    nQryListagemstatus: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnNovoClick(Sender: TObject);
@@ -154,15 +155,11 @@ begin
     Exit;
   end;
 
-  // valida CPF/CNPJ
-  if not ValidarCpfCnpj(edtCpfCnpj.Text) then
-  begin
-    ShowMessage('CPF/CNPJ inválido!');
-    Exit;
-  end;
 
   // verifica duplicado
-  if frmTelaHeranca.DocumentoJaCadastrado(edtCpfCnpj.Text) then
+  if frmTelaHeranca.DocumentoJaCadastrado(
+    edtCpfCnpj.Text,
+    QryListagem.FieldByName('clienteId').AsInteger) then
   begin
     ShowMessage('CPF/CNPJ já cadastrado!');
     Exit;
@@ -178,8 +175,6 @@ begin
 
 
 end;
-
-
 
 {$ENDREGION}
 
@@ -320,6 +315,7 @@ begin
   edtCpfCnpj.OnChange := edtCpfCnpjChange;
 end;
 
+//não permite digitar a,e ou qual coisa sem ser número
  procedure TfrmCadCliente.edtNumeroChange(Sender: TObject);
 var
   Num: string;
@@ -396,6 +392,9 @@ begin
   Result := False;
 
   Num := SomenteNumeros(Valor); //limpa o valor, removendo a máscara
+
+  if (Num = '') or (Num = StringOfChar(Num[1], Length(Num))) then
+  Exit;
 
   // se tiver 11 digitos trata como CPF
   if Length(Num) = 11 then

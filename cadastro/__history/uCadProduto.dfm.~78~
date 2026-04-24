@@ -40,6 +40,11 @@ inherited frmCadProduto: TfrmCadProduto
           end
           item
             Expanded = False
+            FieldName = 'foto'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'nomeFornecedor'
             Visible = True
           end>
@@ -208,7 +213,7 @@ inherited frmCadProduto: TfrmCadProduto
         EditLabel.Height = 13
         EditLabel.Caption = 'Nome'
         MaxLength = 60
-        TabOrder = 1
+        TabOrder = 2
       end
       object edtDescricao: TMemo
         Left = 13
@@ -218,7 +223,7 @@ inherited frmCadProduto: TfrmCadProduto
         Lines.Strings = (
           'edtDescricao')
         MaxLength = 255
-        TabOrder = 3
+        TabOrder = 4
       end
       object edtValor: TCurrencyEdit
         Left = 13
@@ -226,7 +231,7 @@ inherited frmCadProduto: TfrmCadProduto
         Width = 121
         Height = 21
         DisplayFormat = ' R$ ,0.00;R$ ,0.00'
-        TabOrder = 4
+        TabOrder = 5
       end
       object lkpCategoria: TDBLookupComboBox
         Left = 207
@@ -236,7 +241,7 @@ inherited frmCadProduto: TfrmCadProduto
         KeyField = 'categoriaId'
         ListField = 'descricao'
         ListSource = dsCategoria
-        TabOrder = 2
+        TabOrder = 3
       end
       object edtQuantidade: TCurrencyEdit
         Left = 154
@@ -244,7 +249,7 @@ inherited frmCadProduto: TfrmCadProduto
         Width = 121
         Height = 21
         DisplayFormat = ' ,0.00; ,0.00'
-        TabOrder = 5
+        TabOrder = 6
       end
       object pnlImagem: TPanel
         Left = 445
@@ -252,7 +257,7 @@ inherited frmCadProduto: TfrmCadProduto
         Width = 116
         Height = 85
         BorderStyle = bsSingle
-        TabOrder = 6
+        TabOrder = 7
         object imgImagem: TImage
           Left = 1
           Top = 1
@@ -273,7 +278,7 @@ inherited frmCadProduto: TfrmCadProduto
         KeyField = 'fornecedorId'
         ListField = 'nomeFornecedor'
         ListSource = dtsFornecedor
-        TabOrder = 7
+        TabOrder = 1
       end
     end
   end
@@ -305,7 +310,8 @@ inherited frmCadProduto: TfrmCadProduto
       ''
       'LEFT JOIN categorias c'
       '  ON c.categoriaId = p.categoriaId')
-    Top = 177
+    Left = 316
+    Top = 193
     object fdtncfldQryListagemprodutoId: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
@@ -399,8 +405,8 @@ inherited frmCadProduto: TfrmCadProduto
       'SELECT fornecedorId, nomeFornecedor'
       'FROM fornecedor'
       'ORDER BY nomeFornecedor')
-    Left = 476
-    Top = 264
+    Left = 468
+    Top = 232
   end
   object dtsFornecedor: TDataSource
     DataSet = QryFornecedor

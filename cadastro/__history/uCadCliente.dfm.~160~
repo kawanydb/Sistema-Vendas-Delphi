@@ -16,12 +16,9 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 665
     Height = 315
-    ActivePage = tabManutencao
     ExplicitWidth = 665
     ExplicitHeight = 315
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 657
       ExplicitHeight = 287
       inherited pnlListagemTopo: TPanel
@@ -279,6 +276,11 @@ inherited frmCadCliente: TfrmCadCliente
           end
           item
             Expanded = False
+            FieldName = 'cep'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'telefone'
             Visible = True
           end
@@ -396,7 +398,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Rua'
         MaxLength = 30
-        TabOrder = 6
+        TabOrder = 7
       end
       object edtBairro: TLabeledEdit
         Left = 13
@@ -407,7 +409,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Bairro'
         MaxLength = 30
-        TabOrder = 8
+        TabOrder = 9
       end
       object edtCidade: TLabeledEdit
         Left = 210
@@ -418,14 +420,14 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Cidade'
         MaxLength = 30
-        TabOrder = 9
+        TabOrder = 10
       end
       object edtTelefone: TMaskEdit
         Left = 13
         Top = 252
         Width = 219
         Height = 21
-        TabOrder = 11
+        TabOrder = 12
         Text = ''
         OnChange = edtTelefoneChange
       end
@@ -438,7 +440,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'E-mail'
         MaxLength = 30
-        TabOrder = 12
+        TabOrder = 13
       end
       object edtDataNascimento: TDateEdit
         Left = 338
@@ -460,7 +462,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Estado'
         MaxLength = 30
-        TabOrder = 10
+        TabOrder = 11
       end
       object dblkStatusClientestatusId: TDBLookupComboBox
         Left = 338
@@ -492,7 +494,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'N'#250'mero'
         MaxLength = 30
-        TabOrder = 7
+        TabOrder = 8
         OnChange = edtNumeroChange
       end
       object edtCEP: TEdit
@@ -501,7 +503,7 @@ inherited frmCadCliente: TfrmCadCliente
         Width = 180
         Height = 21
         MaxLength = 9
-        TabOrder = 5
+        TabOrder = 6
         Text = 'edtCEP'
         OnChange = edtCEPChange
         OnExit = edtCEPExit
@@ -511,7 +513,7 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 122
         Width = 269
         Height = 21
-        TabOrder = 13
+        TabOrder = 5
         Text = 'edtCpfCnpj'
         OnChange = edtCpfCnpjChange
       end
@@ -533,29 +535,29 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 432
-    Top = 9
+    Left = 336
+    Top = 153
   end
   inherited QryListagem: TFDQuery
     SQL.Strings = (
       'SELECT c.clienteId,'
-      '       c.nome,'
-      '       c.endereco,'
-      '       c.cidade,'
-      '       c.cep,'
-      '       c.telefone,'
-      '       c.numero,'
-      '       c.cpf_cnpj,'
-      '       c.email,'
-      '       c.statusId,'
-      '       s.descricao as status,'
-      '       p.descricao as pessoaDescricao'
-      'FROM clientes c'
+      '      c.nome,'
+      '      c.endereco,'
+      '      c.cidade,'
+      '      c.cep,'
+      '      c.telefone,'
+      '      c.numero,'
+      '      c.cpf_cnpj,'
+      '      c.email,'
+      '      c.statusId,'
+      '      s.descricao as status,'
+      '      p.descricao as pessoaDescricao'
+      '  FROM clientes c'
       'LEFT JOIN status s ON s.statusId = c.statusId'
       'LEFT JOIN TipoPessoa p ON p.pessoaId = c.pessoaId'
       'ORDER BY c.nome')
-    Left = 500
-    Top = 65529
+    Left = 452
+    Top = 145
     object fdtncfldQryListagemclienteId: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'clienteId'
@@ -563,51 +565,51 @@ inherited frmCadCliente: TfrmCadCliente
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = True
     end
-    object strngfldQryListagemnome: TStringField
+    object nQryListagemnome: TStringField
       DisplayLabel = 'Nome'
       FieldName = 'nome'
       Origin = 'nome'
       Size = 60
     end
-    object strngfldQryListagemendereco: TStringField
+    object nQryListagemendereco: TStringField
       DisplayLabel = 'Endere'#231'o'
       FieldName = 'endereco'
       Origin = 'endereco'
       Size = 60
     end
-    object strngfldQryListagemcidade: TStringField
+    object nQryListagemcidade: TStringField
       DisplayLabel = 'Cidade'
       FieldName = 'cidade'
       Origin = 'cidade'
       Size = 50
     end
-    object strngfldQryListagemcep: TStringField
+    object nQryListagemcep: TStringField
       DisplayLabel = 'CEP'
       FieldName = 'cep'
       Origin = 'cep'
       OnGetText = strngfldQryListagemcepGetText
       Size = 10
     end
-    object strngfldQryListagemtelefone: TStringField
+    object nQryListagemtelefone: TStringField
       DisplayLabel = 'Telefone'
       FieldName = 'telefone'
       Origin = 'telefone'
       OnGetText = strngfldQryListagemtelefoneGetText
       Size = 14
     end
-    object strngfldQryListagemnumero: TStringField
+    object nQryListagemnumero: TStringField
       DisplayLabel = 'N'#250'mero'
       FieldName = 'numero'
       Origin = 'numero'
       Size = 10
     end
-    object strngfldQryListagemcpf_cnpj: TStringField
+    object nQryListagemcpf_cnpj: TStringField
       DisplayLabel = 'CPF/CNPJ'
       FieldName = 'cpf_cnpj'
       Origin = 'cpf_cnpj'
       OnGetText = strngfldQryListagemcpf_cnpjGetText
     end
-    object strngfldQryListagememail: TStringField
+    object nQryListagememail: TStringField
       DisplayLabel = 'E-mail'
       FieldName = 'email'
       Origin = 'email'
@@ -618,19 +620,23 @@ inherited frmCadCliente: TfrmCadCliente
       FieldName = 'statusId'
       Origin = 'statusId'
     end
-    object strngfldQryListagempessoaDescricao: TStringField
+    object nQryListagempessoaDescricao: TStringField
       DisplayLabel = 'Tipo Pessoa'
       FieldName = 'pessoaDescricao'
       Origin = 'pessoaDescricao'
       Size = 10
+    end
+    object nQryListagemstatus: TStringField
+      FieldName = 'status'
+      Origin = 'status'
     end
   end
   object QryStatus: TFDQuery
     Connection = dtmConexao.conexaoDB
     SQL.Strings = (
       'SELECT statusId, descricao FROM status')
-    Left = 616
-    Top = 24
+    Left = 576
+    Top = 144
     object intgrfldQryStatusstatusId: TIntegerField
       FieldName = 'statusId'
       Origin = 'statusId'
@@ -671,8 +677,8 @@ inherited frmCadCliente: TfrmCadCliente
   end
   object dtsTipoPessoa: TDataSource
     DataSet = QryTipoPessoa
-    Left = 568
-    Top = 16
+    Left = 512
+    Top = 176
   end
   object ImageList: TImageList
     Left = 628

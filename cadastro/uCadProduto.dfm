@@ -3,12 +3,7 @@ inherited frmCadProduto: TfrmCadProduto
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 589
-      ExplicitHeight = 300
       inherited grddListagem: TDBGrid
         Width = 440
         OnCellClick = grddListagemCellClick
@@ -16,36 +11,43 @@ inherited frmCadProduto: TfrmCadProduto
           item
             Expanded = False
             FieldName = 'produtoId'
+            Width = 26
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'nome'
+            Width = 88
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'descricao'
+            Width = 67
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'valor'
+            Width = 26
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'quantidade'
+            Width = 24
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'DescricaoCategoria'
+            Width = 24
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'nomeFornecedor'
+            Width = 31
             Visible = True
           end>
       end
@@ -74,10 +76,6 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 589
-      ExplicitHeight = 300
       object lbl2: TLabel
         Left = 13
         Top = 113

@@ -161,8 +161,6 @@ begin
         TDBLookupComboBox(Components[i]).keyValue:= Null
       else if (Components[i]is TCurrencyEdit) then
         TCurrencyEdit(Components[i]).Text:= '';
-//      else if (Components[i]is TDateEdit) then
-//        TDateEdit(Components[i]).Date:=0;
   end;
 end;
 
@@ -193,7 +191,7 @@ begin
           if(TLabeledEdit(Components[i]).Tag = 2) and
             (TLabeledEdit(Components[i]).Text='') then begin
             MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption +
-            'é um campo obrigatório', mtInformation, [mbOk],0);
+            ' é um campo obrigatório', mtInformation, [mbOk],0);
             TLabeledEdit(Components[i]).SetFocus;
             Result:=True;
             Break;
@@ -219,8 +217,6 @@ end;
 
 procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
 begin
-// ShowMessage(Self.Name+'_'+TBitBtn(Sender).Name);
-
   if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
   begin
     MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
@@ -238,6 +234,8 @@ var
   I: Integer; //usada no for
   TipoCampo: TFieldType; //" o tipo do campo
   NomeCampo: string; //" o nome real do campo no banco
+
+//variaveis criadas pra montar o sql sem quebrar o select original
   WhereOrAnd: string; //" se ta sendo usado where or and
   CondicaoSQL: string; //"  condição da pesquisa (like%a%)
   SQLSemOrder: string; //"o sql original sem o order by
@@ -248,7 +246,7 @@ begin
   if QryListagem.State in [dsEdit, dsInsert] then
     QryListagem.Cancel;
 
-  //verifica se o usuário tem permissão de acesso se não tiver para e exibe a mensagem
+  //verifica se o usuário tem permissão de acesso e se não tiver para e exibe a mensagem
   if not TUsuariologado.TenhoAcesso(
     oUsuarioLogado.codigo,
     Self.Name + '_' + TBitBtn(Sender).Name,
@@ -607,7 +605,6 @@ procedure TfrmTelaHeranca.grddListagemDrawColumnCell(Sender: TObject; const Rect
   Grid: TDBGrid;
 begin
   //ZEBRAR
-  // Se a linha não estiver selecionada, aplica cor personalizada
   if not (gdSelected in State) then
   begin
   //verifica se o número da linha é ímpar ou par e da uma cor p cada
@@ -617,11 +614,11 @@ begin
       TDBGrid(Sender).Canvas.Brush.Color := $00E1E1E1; // Cinza escuro
   end;
 
-
+  //cor pra linha selecionada
    if (gdSelected in State) then
   begin
-    TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE; //cor da linha selecionada
-    TDBGrid(Sender).Canvas.Font.Color  := clBlack; //texto preto
+    TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
+    TDBGrid(Sender).Canvas.Font.Color  := clBlack;
   end;
 
   // Aplica a cor no fundo

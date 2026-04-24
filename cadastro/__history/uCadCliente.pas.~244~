@@ -50,20 +50,21 @@ type
     intgrfldQryStatusstatusId: TIntegerField;
     strngfldQryStatusdescricao: TStringField;
     edtNumero: TLabeledEdit;
-    fdtncfldQryListagemclienteId: TFDAutoIncField;
-    strngfldQryListagemnome: TStringField;
-    strngfldQryListagemendereco: TStringField;
-    strngfldQryListagemcidade: TStringField;
-    strngfldQryListagemcep: TStringField;
-    strngfldQryListagemtelefone: TStringField;
-    strngfldQryListagemnumero: TStringField;
-    strngfldQryListagemcpf_cnpj: TStringField;
-    strngfldQryListagememail: TStringField;
-    intgrfldQryListagemstatusId: TIntegerField;
-    strngfldQryListagempessoaDescricao: TStringField;
     edtCEP: TEdit;
     edtCpfCnpj: TEdit;
     lbl12: TLabel;
+    fdtncfldQryListagemclienteId: TFDAutoIncField;
+    nQryListagemnome: TStringField;
+    nQryListagemendereco: TStringField;
+    nQryListagemcidade: TStringField;
+    nQryListagemcep: TStringField;
+    nQryListagemtelefone: TStringField;
+    nQryListagemnumero: TStringField;
+    nQryListagemcpf_cnpj: TStringField;
+    nQryListagememail: TStringField;
+    intgrfldQryListagemstatusId: TIntegerField;
+    nQryListagempessoaDescricao: TStringField;
+    nQryListagemstatus: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnNovoClick(Sender: TObject);
@@ -81,13 +82,11 @@ type
     procedure strngfldQryListagemcpf_cnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemcepGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure edtNumeroChange(Sender: TObject);
-//    procedure btnGravarClick(Sender: TObject);
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
     function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; override;
   public
-    { Public declarations }
     function ValidarCpfCnpj(const Valor: string): Boolean;
     function FormatarCEP(const Valor: string): string;
     procedure BuscarCEP(const CEP: string);
@@ -154,15 +153,11 @@ begin
     Exit;
   end;
 
-  // valida CPF/CNPJ
-  if not ValidarCpfCnpj(edtCpfCnpj.Text) then
-  begin
-    ShowMessage('CPF/CNPJ inválido!');
-    Exit;
-  end;
 
   // verifica duplicado
-  if frmTelaHeranca.DocumentoJaCadastrado(edtCpfCnpj.Text) then
+  if frmTelaHeranca.DocumentoJaCadastrado(
+    edtCpfCnpj.Text,
+    QryListagem.FieldByName('clienteId').AsInteger) then
   begin
     ShowMessage('CPF/CNPJ já cadastrado!');
     Exit;

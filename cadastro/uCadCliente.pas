@@ -82,13 +82,11 @@ type
     procedure strngfldQryListagemcpf_cnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemcepGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure edtNumeroChange(Sender: TObject);
-//    procedure btnGravarClick(Sender: TObject);
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
     function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; override;
   public
-    { Public declarations }
     function ValidarCpfCnpj(const Valor: string): Boolean;
     function FormatarCEP(const Valor: string): string;
     procedure BuscarCEP(const CEP: string);
@@ -147,6 +145,8 @@ begin
   oCliente.email          := edtEmail.Text;
   oCliente.cpf_cnpj       := SomenteNumeros(edtCpfCnpj.Text);
   oCliente.dataNascimento := edtDataNascimento.Date;
+  oCliente.statusId       := dblkStatusClientestatusId.KeyValue;
+  oCliente.pessoaId       := dblkStatusClienteTipoPessoa.KeyValue;
 
     if VarIsNull(dblkStatusClientestatusId.KeyValue) then
   begin
@@ -155,8 +155,6 @@ begin
     Exit;
   end;
 
-
-  // verifica duplicado
   if frmTelaHeranca.DocumentoJaCadastrado(
     edtCpfCnpj.Text,
     QryListagem.FieldByName('clienteId').AsInteger) then
@@ -165,15 +163,10 @@ begin
     Exit;
   end;
 
-  oCliente.statusId := dblkStatusClientestatusId.KeyValue;
-  oCliente.pessoaId := dblkStatusClienteTipoPessoa.KeyValue;
-
   if (EstadoDoCadastro=ecInserir) then
     Result:=oCliente.Inserir
   else if (EstadoDoCadastro=ecAlterar) then
     Result:=oCliente.Atualizar;
-
-
 end;
 
 {$ENDREGION}
@@ -182,19 +175,18 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
 begin
   QryListagem.Edit;
   if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then begin
-     edtClienteId.Text:=IntToStr(oCliente.codigo);
-     edtNome.Text     :=oCliente.nome;
-     edtCEP.Text      :=oCliente.cep;
-     edtEndereco.Text :=oCliente.endereco;
-     edtEstado.Text   :=oCliente.estado;
-     edtBairro.Text   :=oCliente.bairro;
-     edtCidade.Text   :=oCliente.cidade;
-     edtTelefone.Text :=oCliente.telefone;
-     edtNumero.Text   :=oCliente.numero;
-     edtEmail.Text    :=oCliente.email;
-     edtCpfCnpj.Text  := oCliente.cpf_cnpj;
-     edtDataNascimento.Date:=oCliente.dataNascimento;
-
+     edtClienteId.Text                    :=IntToStr(oCliente.codigo);
+     edtNome.Text                         :=oCliente.nome;
+     edtCEP.Text                          :=oCliente.cep;
+     edtEndereco.Text                     :=oCliente.endereco;
+     edtEstado.Text                       :=oCliente.estado;
+     edtBairro.Text                       :=oCliente.bairro;
+     edtCidade.Text                       :=oCliente.cidade;
+     edtTelefone.Text                     :=oCliente.telefone;
+     edtNumero.Text                       :=oCliente.numero;
+     edtEmail.Text                        :=oCliente.email;
+     edtCpfCnpj.Text                      := oCliente.cpf_cnpj;
+     edtDataNascimento.Date               :=oCliente.dataNascimento;
      dblkStatusClienteTipoPessoa.KeyValue := oCliente.pessoaId;
      dblkStatusClientestatusId.KeyValue   := oCliente.statusId;
   end
