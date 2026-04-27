@@ -58,9 +58,7 @@ type
     bcdfldQryVendaTotalVenda: TBCDField;
     procedure FormDestroy(Sender: TObject);
   private
-    { Private declarations }
   public
-    { Public declarations }
   end;
 
 var

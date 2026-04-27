@@ -2,7 +2,6 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
   Caption = 'Cadastro Fornecedor'
   ClientHeight = 501
   ClientWidth = 565
-  ExplicitTop = -57
   ExplicitWidth = 571
   ExplicitHeight = 530
   PixelsPerInch = 96
@@ -11,14 +10,17 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
     Width = 565
     Height = 460
     ActivePage = tabManutencao
+    ExplicitWidth = 565
+    ExplicitHeight = 460
     inherited tabListagem: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
-      ExplicitWidth = 589
-      ExplicitHeight = 300
+      ExplicitWidth = 557
+      ExplicitHeight = 432
       inherited pnlListagemTopo: TPanel
         Width = 557
         ExplicitTop = 0
+        ExplicitWidth = 557
       end
       inherited grddListagem: TDBGrid
         Width = 557
@@ -64,9 +66,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
     end
     inherited tabManutencao: TTabSheet
       ExplicitLeft = 8
-      ExplicitTop = 28
-      ExplicitWidth = 603
-      ExplicitHeight = 414
+      ExplicitTop = 22
+      ExplicitWidth = 557
+      ExplicitHeight = 432
       object lbl2: TLabel
         Left = 29
         Top = 203
@@ -91,25 +93,25 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       object lbl12: TLabel
         Left = 75
         Top = 366
-        Width = 38
-        Height = 10
-        Caption = '(fixo, SAC)'
+        Width = 75
+        Height = 11
+        Caption = '(celular,fixo, SAC)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
-        Font.Height = -8
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
       end
       object lbl13: TLabel
-        Left = 271
-        Top = 203
-        Width = 45
-        Height = 10
-        Caption = '(rua,avenida)'
+        Left = 245
+        Top = 202
+        Width = 71
+        Height = 11
+        Caption = '(avenida,rua,via)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
-        Font.Height = -8
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -183,9 +185,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         Top = 217
         Width = 311
         Height = 21
-        EditLabel.Width = 45
+        EditLabel.Width = 19
         EditLabel.Height = 13
-        EditLabel.Caption = 'Endere'#231'o'
+        EditLabel.Caption = 'Rua'
         MaxLength = 30
         TabOrder = 4
       end
@@ -236,9 +238,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         Top = 298
         Width = 119
         Height = 21
-        EditLabel.Width = 33
+        EditLabel.Width = 13
         EditLabel.Height = 13
-        EditLabel.Caption = 'Estado'
+        EditLabel.Caption = 'UF'
         MaxLength = 30
         TabOrder = 8
       end
@@ -277,11 +279,14 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
   inherited pnlRodape: TPanel
     Top = 460
     Width = 565
+    ExplicitTop = 460
+    ExplicitWidth = 565
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
       Left = 497
+      ExplicitLeft = 497
     end
   end
   inherited dtsListagem: TDataSource

@@ -35,7 +35,7 @@ uses
   cAtualizacaoTabelaMSSQL in 'classes\cAtualizacaoTabelaMSSQL.pas',
   cAtualizacaoCampoMSSQL in 'classes\cAtualizacaoCampoMSSQL.pas',
   cArquivoIni in 'classes\cArquivoIni.pas',
-  cAcaoAcesso in 'cAcaoAcesso.pas',
+  cAcaoAcesso in 'classes\cAcaoAcesso.pas',
   uCadAcaoAcesso in 'cadastro\uCadAcaoAcesso.pas' {frmCadAcaoAcesso},
   uUsuarioVsAcoes in 'login\uUsuarioVsAcoes.pas' {frmUsuarioVsAcoes},
   uDTMGrafico in 'datamodule\uDTMGrafico.pas' {DTMGrafico: TDataModule},

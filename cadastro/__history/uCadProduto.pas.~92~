@@ -1,0 +1,253 @@
+unit uCadProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.ComCtrls, RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uDTMConexao,
+  uCadCategoria, cFuncao, uConCategoria, Vcl.Menus, Vcl.Imaging.jpeg;
+
+type
+  TfrmCadProduto = class(TfrmTelaHeranca)
+    edtProdutoId: TLabeledEdit;
+    edtNome: TLabeledEdit;
+    edtDescricao: TMemo;
+    edtValor: TCurrencyEdit;
+    lbl3: TLabel;
+    lbl4: TLabel;
+    lkpCategoria: TDBLookupComboBox;
+    QryCategoria: TFDQuery;
+    dsCategoria: TDataSource;
+    edtQuantidade: TCurrencyEdit;
+    lbl5: TLabel;
+    btnIncluirCategoria: TSpeedButton;
+    btnPesquisarCategoria: TSpeedButton;
+    pnlImagem: TPanel;
+    imgImagem: TImage;
+    ppmImagem: TPopupMenu;
+    CarregarImagem1: TMenuItem;
+    LimparImagem1: TMenuItem;
+    fdtncfldQryCategoriacategoriaId: TFDAutoIncField;
+    strngfldQryCategoriadescricao: TStringField;
+    pnl1: TPanel;
+    Image1: TImage;
+    fdtncfldQryListagemprodutoId: TFDAutoIncField;
+    strngfldQryListagemnome: TStringField;
+    strngfldQryListagemdescricao: TStringField;
+    fmtbcdfldQryListagemvalor: TFMTBCDField;
+    intgrfldQryListagemquantidade: TIntegerField;
+    QryListagemfoto: TBlobField;
+    strngfldQryListagemDescricaoCategoria: TStringField;
+    lbl12: TLabel;
+    dblkFornecedor: TDBLookupComboBox;
+    QryFornecedor: TFDQuery;
+    dtsFornecedor: TDataSource;
+    strngfldQryListagemnomeFornecedor: TStringField;
+    lbl6: TLabel;
+    lbl15: TLabel;
+    lbl16: TLabel;
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnIncluirCategoriaClick(Sender: TObject);
+    procedure btnPesquisarCategoriaClick(Sender: TObject);
+    procedure LimparImagem1Click(Sender: TObject);
+    procedure CarregarImagem1Click(Sender: TObject);
+    procedure grddListagemCellClick(Column: TColumn);
+    procedure imgImagemClick(Sender: TObject);
+  private
+    { Private declarations }
+    oProduto:TProduto;
+    function  Apagar:Boolean; override;
+    function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadProduto: TfrmCadProduto;
+
+implementation
+
+uses uPrincipal;
+{$R *.dfm}
+
+
+{$REGION 'Override'}
+function TfrmCadProduto.Apagar: Boolean;
+begin
+  //verifica se existe no selecionar e se existir apaga
+  if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then begin
+    Result:=oProduto.Apagar;
+  end;
+end;
+
+function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  if edtProdutoId.Text<>EmptyStr then
+     oProduto.codigo:=StrToInt(edtProdutoId.Text)
+  else
+     oProduto.codigo:=0;
+
+  oProduto.nome           :=edtNome.Text;
+  oProduto.descricao      :=edtDescricao.Text;
+  oProduto.categoriaId    :=lkpCategoria.KeyValue;
+  oProduto.valor := StrToFloatDef(SomenteNumeros(edtValor.Text), 0);
+  oProduto.quantidade     := StrToIntDef(SomenteNumeros(edtQuantidade.Text), 0);
+  oProduto.foto.Assign(imgImagem.Picture.Graphic);
+  oProduto.fornecedorId := dblkFornecedor.KeyValue;
+
+  if (EstadoDoCadastro=ecInserir) then
+     Result:=oProduto.Inserir
+  else if (EstadoDoCadastro=ecAlterar) then
+     Result:=oProduto.Atualizar;
+end;
+
+procedure TfrmCadProduto.grddListagemCellClick(Column: TColumn);
+var
+  Blob: TBlobField;
+  Stream: TMemoryStream;
+begin
+//verifica se tem dados
+  if dtsListagem.DataSet.IsEmpty then Exit;
+
+  //esconde o panel e limpa a imagem
+  pnl1.Visible := False;
+  Image1.Picture := nil;
+
+  //procura o campo foto no dataset e converte pra TBlobField
+  Blob := dtsListagem.DataSet.FieldByName('foto') as TBlobField;
+
+  // Verifica se é nulo ou se o tamanho é zero (blob vazio)
+  if Blob.IsNull or (Blob.BlobSize = 0) then Exit;
+
+  //cria um espaço na memória pra manipular dados
+  Stream := TMemoryStream.Create;
+
+  try
+  //pega a imagem do banco e joga dentro do stream
+    Blob.SaveToStream(Stream);
+
+    //se estiver vazio, ele sai
+    if Stream.Size = 0 then Exit;
+
+    //volta pro inicio da stream
+    Stream.Position := 0;
+
+    //carrega a imagem
+    Image1.Picture.LoadFromStream(Stream);
+
+    //mostra se tiver imagem
+    pnl1.Visible := True;
+  finally
+    Stream.Free; //libera memória
+  end;
+end;
+
+procedure TfrmCadProduto.imgImagemClick(Sender: TObject);
+  var
+  P: TPoint;
+begin
+  P := Mouse.CursorPos; // pega a posição atual do mouse
+  ppmImagem.Popup(P.X, P.Y);
+
+end;
+
+procedure TfrmCadProduto.LimparImagem1Click(Sender: TObject);
+begin
+  inherited;
+  TFuncao.LimparImagem(imgImagem);
+end;
+
+procedure TfrmCadProduto.CarregarImagem1Click(Sender: TObject);
+begin
+  inherited;
+  TFuncao.CarregarImagem(imgImagem);
+end;
+
+{$ENDREGION}
+
+procedure TfrmCadProduto.btnIncluirCategoriaClick(Sender: TObject);
+begin
+  inherited;
+  TFuncao.CriarForm(TfrmCadCategoria, oUsuarioLogado, dtmConexao.conexaoDB);
+  QryCategoria.Refresh;
+end;
+
+procedure TfrmCadProduto.btnAlterarClick(Sender: TObject);
+begin
+  if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then begin
+    edtProdutoId.Text      :=IntToStr(oProduto.codigo);
+    edtNome.Text           :=oProduto.nome;
+    edtDescricao.Text      :=oProduto.descricao;
+    lkpCategoria.KeyValue  :=oProduto.categoriaId;
+    edtValor.value         :=oProduto.valor;
+    edtQuantidade.Value    :=oProduto.quantidade;
+    imgImagem.Picture.Assign(oProduto.foto);
+    dblkFornecedor.KeyValue  :=oProduto.fornecedorId;
+  end
+  else begin
+    btnCancelar.Click;
+    Abort
+  end;
+  inherited;
+
+end;
+
+procedure TfrmCadProduto.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  edtNome.SetFocus;
+end;
+
+procedure TfrmCadProduto.btnPesquisarCategoriaClick(Sender: TObject);
+begin
+  inherited;
+  try
+    frmConCategoria:=TfrmConCategoria.Create(Self);
+
+    if lkpCategoria.KeyValue<>null then
+       frmConCategoria.aIniciarPesquisaId:=lkpCategoria.KeyValue;
+
+    frmConCategoria.ShowModal;
+
+    if frmConCategoria.aRetornarIdSelecionado<>UnAssigned then //Não atribuido
+       lkpCategoria.KeyValue:=frmConCategoria.aRetornarIdSelecionado;
+
+  finally
+    frmConCategoria.Release;
+  end;
+end;
+
+
+procedure TfrmCadProduto.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  QryCategoria.Close;
+  if Assigned(oProduto) then
+     FreeAndNil(oProduto);
+end;
+
+procedure TfrmCadProduto.FormCreate(Sender: TObject);
+begin
+  inherited;
+  oProduto:=TProduto.Create(dtmConexao.conexaoDB);
+
+  Indiceatual:='nome';
+
+  pnl1.Visible := False;  // o painel começa escondido
+end;
+
+procedure TfrmCadProduto.FormShow(Sender: TObject);
+begin
+  inherited;
+  QryCategoria.Open;
+  QryFornecedor.Open;
+end;
+
+end.

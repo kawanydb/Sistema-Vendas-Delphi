@@ -1,10 +1,11 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 532
-  ClientWidth = 654
+  ClientHeight = 507
+  ClientWidth = 649
   OnActivate = FormActivate
-  ExplicitWidth = 660
-  ExplicitHeight = 561
+  ExplicitTop = -63
+  ExplicitWidth = 655
+  ExplicitHeight = 536
   PixelsPerInch = 96
   TextHeight = 13
   object img1: TImage [0]
@@ -14,20 +15,20 @@ inherited frmCadCliente: TfrmCadCliente
     Height = 105
   end
   inherited pgcPrincipal: TPageControl
-    Width = 654
-    Height = 486
+    Width = 649
+    Height = 461
     ActivePage = tabManutencao
-    ExplicitWidth = 642
-    ExplicitHeight = 486
+    ExplicitWidth = 649
+    ExplicitHeight = 461
     inherited tabListagem: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
-      ExplicitWidth = 634
-      ExplicitHeight = 458
+      ExplicitWidth = 641
+      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
-        Width = 646
+        Width = 641
         ExplicitTop = 0
-        ExplicitWidth = 634
+        ExplicitWidth = 641
         object img2: TImage [1]
           Left = 303
           Top = 15
@@ -265,8 +266,8 @@ inherited frmCadCliente: TfrmCadCliente
         end
       end
       inherited grddListagem: TDBGrid
-        Width = 646
-        Height = 411
+        Width = 641
+        Height = 386
         Columns = <
           item
             Expanded = False
@@ -331,10 +332,10 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 634
-      ExplicitHeight = 458
+      ExplicitLeft = 8
+      ExplicitTop = 22
+      ExplicitWidth = 641
+      ExplicitHeight = 433
       object lbl2: TLabel
         Left = 21
         Top = 215
@@ -380,12 +381,12 @@ inherited frmCadCliente: TfrmCadCliente
       object lbl12: TLabel
         Left = 67
         Top = 380
-        Width = 66
-        Height = 10
+        Width = 78
+        Height = 11
         Caption = '(celular, fixo, SAC)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
-        Font.Height = -8
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -429,6 +430,19 @@ inherited frmCadCliente: TfrmCadCliente
         Font.Style = [fsBold, fsUnderline]
         ParentFont = False
       end
+      object lbl16: TLabel
+        Left = 230
+        Top = 217
+        Width = 71
+        Height = 11
+        Caption = '(avenida,rua,via)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
       object edtClienteId: TLabeledEdit
         Tag = 1
         Left = 21
@@ -456,7 +470,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtEndereco: TLabeledEdit
         Left = 207
-        Top = 229
+        Top = 231
         Width = 410
         Height = 21
         EditLabel.Width = 19
@@ -523,9 +537,9 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 314
         Width = 89
         Height = 21
-        EditLabel.Width = 33
+        EditLabel.Width = 13
         EditLabel.Height = 13
-        EditLabel.Caption = 'Estado'
+        EditLabel.Caption = 'UF'
         MaxLength = 30
         TabOrder = 11
         OnChange = edtEstadoChange
@@ -597,18 +611,18 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited pnlRodape: TPanel
-    Top = 486
-    Width = 654
+    Top = 461
+    Width = 649
     Height = 46
-    ExplicitTop = 486
-    ExplicitWidth = 642
+    ExplicitTop = 461
+    ExplicitWidth = 649
     ExplicitHeight = 46
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
-      Left = 586
-      ExplicitLeft = 574
+      Left = 581
+      ExplicitLeft = 581
     end
   end
   inherited dtsListagem: TDataSource
@@ -757,8 +771,8 @@ inherited frmCadCliente: TfrmCadCliente
   end
   object dtsTipoPessoa: TDataSource
     DataSet = QryTipoPessoa
-    Left = 320
-    Top = 216
+    Left = 432
+    Top = 104
   end
   object ImageList: TImageList
     Left = 452

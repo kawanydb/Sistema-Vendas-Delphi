@@ -1,0 +1,106 @@
+object dtmVenda: TdtmVenda
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  Height = 345
+  Width = 404
+  object QryCliente: TFDQuery
+    Connection = dtmConexao.conexaoDB
+    SQL.Strings = (
+      'SELECT clienteId,'
+      '       nome'
+      'FROM clientes')
+    Left = 40
+    Top = 24
+    object fdtncfldQryClienteclienteId: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'clienteId'
+      Origin = 'clienteId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object strngfldQryClientenome: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 60
+    end
+  end
+  object QryProdutos: TFDQuery
+    Connection = dtmConexao.conexaoDB
+    SQL.Strings = (
+      'SELECT produtoId,'
+      '       nome,'
+      '       valor,'
+      '       quantidade'
+      '  FROM produtos')
+    Left = 120
+    Top = 24
+    object fdtncfldQryProdutosprodutoId: TFDAutoIncField
+      FieldName = 'produtoId'
+      Origin = 'produtoId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object strngfldQryProdutosnome: TStringField
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 60
+    end
+    object fmtbcdfldQryProdutosvalor: TFMTBCDField
+      FieldName = 'valor'
+      Origin = 'valor'
+      Precision = 18
+      Size = 5
+    end
+    object intgrfldQryProdutosquantidade: TIntegerField
+      FieldName = 'quantidade'
+      Origin = 'quantidade'
+      Required = True
+    end
+  end
+  object cdsItensVenda: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 200
+    Top = 24
+    object intgrfldItensVendaprodutoId: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'produtoId'
+    end
+    object strngfldItensVendaNomeProduto: TStringField
+      DisplayLabel = 'Nome do Produto'
+      FieldName = 'NomeProduto'
+    end
+    object fltfldItensVendaquantidade: TFloatField
+      DisplayLabel = 'Quantidade'
+      FieldName = 'quantidade'
+      DisplayFormat = '#,##0.00'
+    end
+    object fltfldItensVendavalorUnitario: TFloatField
+      DisplayLabel = 'Valor Unit'#225'rio'
+      FieldName = 'valorUnitario'
+      DisplayFormat = 'R$#,##0.00'
+    end
+    object fltfldItensVendavalorTotalProduto: TFloatField
+      DisplayLabel = 'Total do Produto'
+      FieldName = 'valorTotalProduto'
+      DisplayFormat = 'R$#,##0.00'
+    end
+  end
+  object dtsCliente: TDataSource
+    DataSet = QryCliente
+    Left = 40
+    Top = 80
+  end
+  object dtsProdutos: TDataSource
+    DataSet = QryProdutos
+    Left = 120
+    Top = 80
+  end
+  object dtsItensVenda: TDataSource
+    DataSet = cdsItensVenda
+    Left = 200
+    Top = 80
+  end
+end

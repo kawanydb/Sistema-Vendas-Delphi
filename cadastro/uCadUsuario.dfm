@@ -6,16 +6,11 @@ inherited frmCadUsuario: TfrmCadUsuario
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
     Width = 579
-    ActivePage = tabManutencao
     ExplicitWidth = 579
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 571
-      ExplicitHeight = 300
       inherited pnlListagemTopo: TPanel
         Width = 571
-        ExplicitTop = 0
         ExplicitWidth = 571
       end
       inherited grddListagem: TDBGrid
@@ -34,10 +29,7 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 8
-      ExplicitTop = 28
       ExplicitWidth = 571
-      ExplicitHeight = 300
       object lbl15: TLabel
         Left = 14
         Top = 9

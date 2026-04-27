@@ -2,7 +2,6 @@ unit uTelaHeranca;
 
 interface
 
-//chama alguma coisa pra usar
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
@@ -52,7 +51,6 @@ type
   protected
       EstadoDoCadastro:TEstadoDoCadastro;
   private
-    { Private declarations }
     FGridCarregado: Boolean;
     SelectOriginal:String;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
@@ -66,7 +64,6 @@ type
     procedure SalvarGrid;
     procedure CarregarGrid;
   public
-    { Public declarations }
     grdListagem: TDBGrid;
     IndiceAtual:string;
     function Apagar:Boolean; virtual;
@@ -182,22 +179,34 @@ end;
 //Verifica se algum campo marcado como obrigatório (Tag=1) está vazio.
 //Se estiver, exibe mensagem, foca o campo e retorna True.
 
-function TfrmTelaHeranca.ExisteCampoObrigatorio:Boolean;
-var i: Integer;
+function TfrmTelaHeranca.ExisteCampoObrigatorio: Boolean;
+var
+  i: Integer;
 begin
-   Result:=False;
-   for i := 0 to ComponentCount -1 do begin
-      if(Components[i] is TLabeledEdit) then begin
-          if(TLabeledEdit(Components[i]).Tag = 2) and
-            (TLabeledEdit(Components[i]).Text='') then begin
-            MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption +
-            ' é um campo obrigatório', mtInformation, [mbOk],0);
-            TLabeledEdit(Components[i]).SetFocus;
-            Result:=True;
-            Break;
-            end;
+  Result := False;
+
+  for i := 0 to ComponentCount - 1 do
+  begin
+    if (Components[i] is TLabeledEdit) then
+    begin
+      if (TLabeledEdit(Components[i]).Tag = 2) and
+         (TLabeledEdit(Components[i]).Enabled) and
+         (Trim(TLabeledEdit(Components[i]).Text) = '') then
+      begin
+        MessageDlg(
+          TLabeledEdit(Components[i]).EditLabel.Caption +
+          ' é um campo obrigatório',
+          mtInformation,
+          [mbOK],
+          0
+        );
+
+        TLabeledEdit(Components[i]).SetFocus;
+        Result := True;
+        Break;
       end;
-   end;
+    end;
+  end;
 end;
 
 procedure TfrmTelaHeranca.DesabilitarEditPK;  //declara que o desabilitar pertence ao form tela herança
@@ -231,8 +240,8 @@ end;
 
 procedure TfrmTelaHeranca.btnPesquisarClick(Sender: TObject);
 var
-  I: Integer; //usada no for
-  TipoCampo: TFieldType; //" o tipo do campo
+  I: Integer;
+  TipoCampo: TFieldType;
   NomeCampo: string; //" o nome real do campo no banco
 
 //variaveis criadas pra montar o sql sem quebrar o select original
@@ -246,7 +255,7 @@ begin
   if QryListagem.State in [dsEdit, dsInsert] then
     QryListagem.Cancel;
 
-  //verifica se o usuário tem permissão de acesso e se não tiver para e exibe a mensagem
+
   if not TUsuariologado.TenhoAcesso(
     oUsuarioLogado.codigo,
     Self.Name + '_' + TBitBtn(Sender).Name,
@@ -648,39 +657,37 @@ var
 begin
   Result := False;
 
-  Qry := TFDQuery.Create(nil); //qry temporária
+  Qry := TFDQuery.Create(nil);
   try
     Qry.Connection := dtmConexao.conexaoDB;
 
-    //procura na tabela clientes
+    // CLIENTES
     Qry.SQL.Text :=
       'SELECT 1 ' +
       'FROM clientes ' +
       'WHERE cpf_cnpj = :doc ' +
       'AND clienteId <> :id';
 
-    //envia o cpf/cpnj digitado
     Qry.ParamByName('doc').AsString := SomenteNumeros(Valor);
-
-    //envia o id do cadastro
     Qry.ParamByName('id').AsInteger := AIdAtual;
     Qry.Open;
 
-    //verifica se encontrou algum registro
     if not Qry.IsEmpty then
     begin
       Result := True;
       Exit;
     end;
 
-    // mesma coisa os fornecedores
+    // FORNECEDOR
     Qry.Close;
     Qry.SQL.Text :=
       'SELECT 1 ' +
       'FROM fornecedor ' +
-      'WHERE cnpj = :doc';
+      'WHERE cnpj = :doc ' +
+      'AND fornecedorId <> :id';
 
     Qry.ParamByName('doc').AsString := SomenteNumeros(Valor);
+    Qry.ParamByName('id').AsInteger := AIdAtual;
     Qry.Open;
 
     Result := not Qry.IsEmpty;

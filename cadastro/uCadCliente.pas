@@ -69,6 +69,7 @@ type
     intgrfldQryListagemstatusId: TIntegerField;
     nQryListagemcomplemento: TStringField;
     nQryListagempessoaDescricao: TStringField;
+    lbl16: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnNovoClick(Sender: TObject);

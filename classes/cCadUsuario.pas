@@ -106,30 +106,41 @@ begin
   end;
 end;
 
-function TUsuario.Atualizar:Boolean;
-var Qry:TFDQuery;
+function TUsuario.Atualizar: Boolean;
+var
+  Qry: TFDQuery;
 begin
   try
-    Result:=True;
-    //faz toda a conexão com o banco e qry
-    Qry:=TFDQuery.Create(nil);
-    Qry.Connection:=conexaoDB;
-    //limpa a qry
-    Qry.SQL.Clear;
-    //monta um update e dá a eles seus parametros (oq a ele pertence)
-    Qry.SQL.Add('UPDATE usuarios '+
-                '   SET nome            =:nome '+
-                '       ,senha          =:senha '+
-                ' WHERE usuarioId=:usuarioId ');
+    Result := True;
 
-    Qry.ParamByName('usuarioId').AsInteger       :=Self.F_usuarioId;
-    Qry.ParamByName('nome').AsString             :=Self.F_nome;
-    Qry.ParamByName('senha').AsString            :=Self.F_senha;
-    //executo, se der problema resulta falso; senão retorna ele lá em cima como true
+    Qry := TFDQuery.Create(nil);
+    Qry.Connection := conexaoDB;
+    Qry.SQL.Clear;
+
+    // só atualiza senha se ela tiver sido informada
+    if Trim(Self.F_senha) <> '' then
+    begin
+      Qry.SQL.Add('UPDATE usuarios ' +
+                  '   SET nome = :nome, ' +
+                  '       senha = :senha ' +
+                  ' WHERE usuarioId = :usuarioId');
+
+      Qry.ParamByName('senha').AsString := Self.F_senha;
+    end
+    else
+    begin
+      Qry.SQL.Add('UPDATE usuarios ' +
+                  '   SET nome = :nome ' +
+                  ' WHERE usuarioId = :usuarioId');
+    end;
+
+    Qry.ParamByName('usuarioId').AsInteger := Self.F_usuarioId;
+    Qry.ParamByName('nome').AsString := Self.F_nome;
+
     try
       Qry.ExecSQL;
     except
-      Result:=False;
+      Result := False;
     end;
 
   finally

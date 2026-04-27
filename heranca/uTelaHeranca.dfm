@@ -45,7 +45,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         ParentBiDiMode = False
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = -6
         object lbl1: TLabel
           Left = 15
           Top = 3

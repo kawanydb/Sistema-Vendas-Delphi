@@ -57,11 +57,10 @@ type
     procedure btnAlterarClienteClick(Sender: TObject);
     procedure tabManutencaoShow(Sender: TObject);
     procedure lkpClienteCloseUp(Sender: TObject);
-   // procedure grddListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
-      //State: TGridDrawState);
-//    procedure edtValorTotalChange(Sender: TObject);
+    procedure lkpClienteEnter(Sender: TObject);
+
   private
-    { Private declarations }
+    FClienteAnterior: Variant;
     dtmVenda:TdtmVenda;
     oVenda:TVenda;
     function TotalizarProduto(valorUnitario, Quantidade: Double): Double;
@@ -73,7 +72,6 @@ type
     procedure AtualizarStatusCliente(ClienteId, StatusId: Integer);
 
   public
-    { Public declarations }
      function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
      function Apagar:Boolean; override;
   end;
@@ -182,19 +180,22 @@ begin
       0
     ) = mrNo then
     begin
-      // mantém o cliente anterior
-      lkpCliente.KeyValue := QryListagem.FieldByName('clienteId').AsInteger;
+      // volta para o cliente anterior
+      lkpCliente.KeyValue := FClienteAnterior;
       Exit;
     end;
 
-    // se confirmou, limpa os itens da venda
+    // confirmou, então limpa tudo
     LimparCds;
     LimparComponenteItem;
     LimparEdits;
-
-    // opcional: zerar valores totais
     edtValorTotal.Value := 0;
   end;
+end;
+
+procedure TfrmProVenda.lkpClienteEnter(Sender: TObject);
+begin
+  FClienteAnterior := lkpCliente.KeyValue;
 end;
 
 procedure TfrmProVenda.lkpProdutoExit(Sender: TObject);
@@ -382,8 +383,6 @@ end;
   // Aplica a cor no fundo
   TDBGrid(Sender).Canvas.FillRect(Rect);
 
-
-
   //mostra o texto padrão
   TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State)
 end;
@@ -419,6 +418,9 @@ begin
   dtmVenda :=TdtmVenda.Create(Self);
   oVenda:=TVenda.Create(dtmConexao.conexaoDB);
   IndiceAtual:='clienteId';
+
+//  cdsItensVenda.FieldByName('valorUnitario').DisplayFormat := 'R$ #,##0.00';
+//  cdsItensVenda.FieldByName('totalProduto').DisplayFormat := 'R$ #,##0.00';
 end;
 
 procedure TfrmProVenda.CarregarRegistroSelecionado;

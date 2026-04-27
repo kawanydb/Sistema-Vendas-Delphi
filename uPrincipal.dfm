@@ -30,8 +30,6 @@ object dtmPrincipal: TdtmPrincipal
       item
         Width = 150
       end>
-    ExplicitLeft = 1
-    ExplicitTop = 414
   end
   object pnl1: TPanel
     Left = 0
@@ -52,18 +50,19 @@ object dtmPrincipal: TdtmPrincipal
       Left = 4
       Top = 4
       Width = 574
-      Height = 27
+      Height = 32
       Align = alTop
       Alignment = taCenter
       Caption = 'Dashboard'
       Color = 16711422
       Font.Charset = ANSI_CHARSET
       Font.Color = 6767557
-      Font.Height = -19
+      Font.Height = -24
       Font.Name = 'Segoe UI Black'
-      Font.Style = [fsBold]
+      Font.Style = [fsBold, fsUnderline]
       ParentColor = False
       ParentFont = False
+      ExplicitWidth = 126
     end
   end
   object a1: TGridPanel
@@ -172,8 +171,6 @@ object dtmPrincipal: TdtmPrincipal
       Align = alClient
       Color = 16711422
       TabOrder = 1
-      ExplicitLeft = 297
-      ExplicitTop = 6
       DefaultCanvas = 'TGDIPlusCanvas'
       PrintMargins = (
         15
@@ -457,7 +454,7 @@ object dtmPrincipal: TdtmPrincipal
   end
   object tmrAtualizacaoDashBoard: TTimer
     Interval = 60000
-    Left = 416
-    Top = 32
+    Left = 528
+    Top = 24
   end
 end

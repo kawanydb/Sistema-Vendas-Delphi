@@ -60,6 +60,7 @@ type
     procedure CarregarImagem1Click(Sender: TObject);
     procedure grddListagemCellClick(Column: TColumn);
     procedure imgImagemClick(Sender: TObject);
+
   private
     { Private declarations }
     oProduto:TProduto;
@@ -216,7 +217,7 @@ begin
 
     frmConCategoria.ShowModal;
 
-    if frmConCategoria.aRetornarIdSelecionado<>UnAssigned then //Não atribuido
+    if frmConCategoria.aRetornarIdSelecionado<>UnAssigned then
        lkpCategoria.KeyValue:=frmConCategoria.aRetornarIdSelecionado;
 
   finally

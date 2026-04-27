@@ -74,22 +74,25 @@ end;
 
 procedure TfrmCadUsuario.btnGravarClick(Sender: TObject);
 begin
-//verifica se o usuário já existe e se existir exibe uma mensagem
-  if oUsuario.UsuarioExiste(edtNome.Text) then begin
-    MessageDlg('Usuário já cadastrado', mtInformation, [mbok],0);
+  // verifica se o usuário já existe
+  if oUsuario.UsuarioExiste(edtNome.Text) and (edtUsuarioId.Text = '') then
+  begin
+    MessageDlg('Usuário já cadastrado', mtInformation, [mbOK], 0);
     edtNome.SetFocus;
     Abort;
   end;
 
-//se estiver diferente de vazio eu sei que existe um usuário
-  if edtUsuarioId.Text<>EmptyStr then
-     oUsuario.codigo:=StrToInt(edtUsuarioId.Text)
+  if edtUsuarioId.Text <> EmptyStr then
+    oUsuario.codigo := StrToInt(edtUsuarioId.Text)
   else
-  //se tiver vazio ele recebe 0 no codigo
-    oUsuario.codigo:=0;
-  //manda oq o usuário digitou na tela
-  oUsuario.nome :=edtNome.Text;
-  oUsuario.senha:=edtSenha.Text;
+    oUsuario.codigo := 0;
+
+  oUsuario.nome := edtNome.Text;
+
+  // só envia senha se realmente foi digitada
+  if edtSenha.Enabled and (Trim(edtSenha.Text) <> '') then
+    oUsuario.senha := edtSenha.Text;
+
   inherited;
 end;
 

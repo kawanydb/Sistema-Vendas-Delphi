@@ -193,7 +193,7 @@
         <DCCReference Include="classes\cAtualizacaoTabelaMSSQL.pas"/>
         <DCCReference Include="classes\cAtualizacaoCampoMSSQL.pas"/>
         <DCCReference Include="classes\cArquivoIni.pas"/>
-        <DCCReference Include="cAcaoAcesso.pas"/>
+        <DCCReference Include="classes\cAcaoAcesso.pas"/>
         <DCCReference Include="cadastro\uCadAcaoAcesso.pas">
             <Form>frmCadAcaoAcesso</Form>
             <FormType>dfm</FormType>

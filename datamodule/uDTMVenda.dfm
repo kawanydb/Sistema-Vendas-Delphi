@@ -75,14 +75,17 @@ object dtmVenda: TdtmVenda
     object fltfldItensVendaquantidade: TFloatField
       DisplayLabel = 'Quantidade'
       FieldName = 'quantidade'
+      DisplayFormat = '#,##0.00'
     end
     object fltfldItensVendavalorUnitario: TFloatField
       DisplayLabel = 'Valor Unit'#225'rio'
       FieldName = 'valorUnitario'
+      DisplayFormat = 'R$ #,##0.00'
     end
     object fltfldItensVendavalorTotalProduto: TFloatField
       DisplayLabel = 'Total do Produto'
       FieldName = 'valorTotalProduto'
+      DisplayFormat = 'R$ #,##0.00'
     end
   end
   object dtsCliente: TDataSource

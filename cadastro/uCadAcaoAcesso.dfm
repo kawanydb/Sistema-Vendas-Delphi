@@ -83,9 +83,9 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
         Top = 105
         Width = 444
         Height = 21
-        EditLabel.Width = 46
+        EditLabel.Width = 88
         EditLabel.Height = 13
-        EditLabel.Caption = 'Descri'#231#227'o'
+        EditLabel.Caption = 'Descri'#231#227'o da A'#231#227'o'
         MaxLength = 100
         TabOrder = 1
       end
