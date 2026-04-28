@@ -57,6 +57,7 @@ object frmTelaHeranca: TfrmTelaHeranca
           Top = 16
           Width = 122
           Height = 21
+          Cursor = crIBeam
           Alignment = taRightJustify
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -75,6 +76,7 @@ object frmTelaHeranca: TfrmTelaHeranca
           Top = 16
           Width = 75
           Height = 21
+          Cursor = crHandPoint
           Caption = '&Pesquisar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -184,6 +186,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Top = 6
       Width = 62
       Height = 23
+      Cursor = crHandPoint
       Caption = '&NOVO'
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -220,6 +223,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Top = 6
       Width = 112
       Height = 23
+      Cursor = crHandPoint
       DataSource = dtsListagem
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
       TabOrder = 2
@@ -230,6 +234,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Top = 6
       Width = 62
       Height = 23
+      Cursor = crHandPoint
       Caption = '&ALTERAR'
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -266,6 +271,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Top = 6
       Width = 84
       Height = 23
+      Cursor = crHandPoint
       Caption = '&CANCELAR'
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -303,6 +309,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Top = 6
       Width = 62
       Height = 23
+      Cursor = crHandPoint
       Caption = '&GRAVAR'
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -340,6 +347,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Top = 6
       Width = 62
       Height = 23
+      Cursor = crHandPoint
       Caption = 'APAGA&R'
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -376,6 +384,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Top = 6
       Width = 62
       Height = 23
+      Cursor = crHandPoint
       Anchors = [akTop, akRight]
       Caption = '&FECHAR'
       Glyph.Data = {

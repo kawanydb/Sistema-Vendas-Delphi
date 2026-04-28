@@ -98,10 +98,10 @@ begin
   oProduto.nome           :=edtNome.Text;
   oProduto.descricao      :=edtDescricao.Text;
   oProduto.categoriaId    :=lkpCategoria.KeyValue;
-  oProduto.valor := StrToFloatDef(SomenteNumeros(edtValor.Text), 0);
+  oProduto.valor          := StrToFloatDef(SomenteNumeros(edtValor.Text), 0);
   oProduto.quantidade     := StrToIntDef(SomenteNumeros(edtQuantidade.Text), 0);
   oProduto.foto.Assign(imgImagem.Picture.Graphic);
-  oProduto.fornecedorId := dblkFornecedor.KeyValue;
+  oProduto.fornecedorId   := dblkFornecedor.KeyValue;
 
   if (EstadoDoCadastro=ecInserir) then
      Result:=oProduto.Inserir
@@ -179,6 +179,7 @@ begin
   TFuncao.CriarForm(TfrmCadCategoria, oUsuarioLogado, dtmConexao.conexaoDB);
   QryCategoria.Refresh;
 end;
+
 
 procedure TfrmCadProduto.btnAlterarClick(Sender: TObject);
 begin

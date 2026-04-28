@@ -9,6 +9,7 @@ inherited frmCadProduto: TfrmCadProduto
   inherited pgcPrincipal: TPageControl
     Width = 593
     Height = 403
+    ActivePage = tabManutencao
     ExplicitWidth = 593
     ExplicitHeight = 403
     inherited tabListagem: TTabSheet
@@ -251,7 +252,7 @@ inherited frmCadProduto: TfrmCadProduto
         EditLabel.Height = 13
         EditLabel.Caption = 'Nome do Produto'
         MaxLength = 60
-        TabOrder = 2
+        TabOrder = 1
       end
       object edtDescricao: TMemo
         Left = 14
@@ -264,6 +265,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 4
       end
       object edtValor: TCurrencyEdit
+        Tag = 2
         Left = 14
         Top = 323
         Width = 137
@@ -272,8 +274,8 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 5
       end
       object lkpCategoria: TDBLookupComboBox
-        Left = 185
-        Top = 146
+        Left = 183
+        Top = 147
         Width = 147
         Height = 21
         KeyField = 'categoriaId'
@@ -282,6 +284,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 3
       end
       object edtQuantidade: TCurrencyEdit
+        Tag = 2
         Left = 185
         Top = 323
         Width = 147
@@ -316,7 +319,7 @@ inherited frmCadProduto: TfrmCadProduto
         KeyField = 'fornecedorId'
         ListField = 'nomeFornecedor'
         ListSource = dtsFornecedor
-        TabOrder = 1
+        TabOrder = 2
       end
     end
   end
@@ -356,8 +359,8 @@ inherited frmCadProduto: TfrmCadProduto
       ''
       'LEFT JOIN categorias c'
       '  ON c.categoriaId = p.categoriaId')
-    Left = 380
-    Top = 17
+    Left = 388
+    Top = 161
     object fdtncfldQryListagemprodutoId: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
@@ -381,7 +384,7 @@ inherited frmCadProduto: TfrmCadProduto
       DisplayLabel = 'Valor'
       FieldName = 'valor'
       Origin = 'valor'
-      DisplayFormat = '#,##0.00'
+      DisplayFormat = 'R$#,##0.00'
       Precision = 18
       Size = 5
     end
@@ -452,12 +455,12 @@ inherited frmCadProduto: TfrmCadProduto
       'SELECT fornecedorId, nomeFornecedor'
       'FROM fornecedor'
       'ORDER BY nomeFornecedor')
-    Left = 236
-    Top = 24
+    Left = 204
+    Top = 168
   end
   object dtsFornecedor: TDataSource
     DataSet = QryFornecedor
-    Left = 180
-    Top = 24
+    Left = 116
+    Top = 144
   end
 end

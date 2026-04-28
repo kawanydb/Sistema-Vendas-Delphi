@@ -175,10 +175,6 @@ begin
   aLabel.Caption:=RetornarCampoTraduzido(Campo);
 end;
 
-
-//Verifica se algum campo marcado como obrigatório (Tag=1) está vazio.
-//Se estiver, exibe mensagem, foca o campo e retorna True.
-
 function TfrmTelaHeranca.ExisteCampoObrigatorio: Boolean;
 var
   i: Integer;
@@ -187,6 +183,7 @@ begin
 
   for i := 0 to ComponentCount - 1 do
   begin
+    // valida TLabeledEdit
     if (Components[i] is TLabeledEdit) then
     begin
       if (TLabeledEdit(Components[i]).Tag = 2) and
@@ -204,6 +201,46 @@ begin
         TLabeledEdit(Components[i]).SetFocus;
         Result := True;
         Break;
+      end;
+    end;
+
+    // valida TCurrencyEdit
+    if (Components[i] is TCurrencyEdit) then
+    begin
+      if (TCurrencyEdit(Components[i]).Tag = 2) and
+         (TCurrencyEdit(Components[i]).Enabled) and
+         (TCurrencyEdit(Components[i]).Value <= 0) then
+      begin
+        MessageDlg(
+          'Todos os campos devem ser preenchidos!',
+          mtInformation,
+          [mbOK],
+          0
+        );
+
+        TCurrencyEdit(Components[i]).SetFocus;
+        Result := True;
+        Break;
+      end;
+    end;
+
+    // TMaskEdit
+    if (Components[i] is TMaskEdit) then
+    begin
+      if (TMaskEdit(Components[i]).Tag = 2) and
+         (TMaskEdit(Components[i]).Enabled) and
+         (Trim(TMaskEdit(Components[i]).Text) = '') then
+      begin
+        MessageDlg(
+          'Preencha todos os campos.',
+          mtWarning,
+          [mbOK],
+          0
+        );
+
+        TMaskEdit(Components[i]).SetFocus;
+        Result := True;
+        Exit;
       end;
     end;
   end;

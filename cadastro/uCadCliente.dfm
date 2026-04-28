@@ -1,10 +1,11 @@
 inherited frmCadCliente: TfrmCadCliente
+  Tag = 2
   Caption = 'Cadastro de Cliente'
   ClientHeight = 507
-  ClientWidth = 649
+  ClientWidth = 655
   OnActivate = FormActivate
-  ExplicitTop = -63
-  ExplicitWidth = 655
+  ExplicitTop = -13
+  ExplicitWidth = 661
   ExplicitHeight = 536
   PixelsPerInch = 96
   TextHeight = 13
@@ -15,19 +16,15 @@ inherited frmCadCliente: TfrmCadCliente
     Height = 105
   end
   inherited pgcPrincipal: TPageControl
-    Width = 649
+    Width = 655
     Height = 461
-    ActivePage = tabManutencao
     ExplicitWidth = 649
     ExplicitHeight = 461
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 641
       ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
-        Width = 641
-        ExplicitTop = 0
+        Width = 647
         ExplicitWidth = 641
         object img2: TImage [1]
           Left = 303
@@ -266,7 +263,7 @@ inherited frmCadCliente: TfrmCadCliente
         end
       end
       inherited grddListagem: TDBGrid
-        Width = 641
+        Width = 647
         Height = 386
         Columns = <
           item
@@ -381,9 +378,9 @@ inherited frmCadCliente: TfrmCadCliente
       object lbl12: TLabel
         Left = 67
         Top = 380
-        Width = 78
+        Width = 84
         Height = 11
-        Caption = '(celular, fixo, SAC)'
+        Caption = '(Celular, Fixo, SAC)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
         Font.Height = -9
@@ -433,9 +430,22 @@ inherited frmCadCliente: TfrmCadCliente
       object lbl16: TLabel
         Left = 230
         Top = 217
-        Width = 71
+        Width = 77
         Height = 11
-        Caption = '(avenida,rua,via)'
+        Caption = '(Avenida,Rua,Via)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl17: TLabel
+        Left = 155
+        Top = 259
+        Width = 44
+        Height = 11
+        Caption = '(Opcional!)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
         Font.Height = -9
@@ -469,6 +479,7 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 2
       end
       object edtEndereco: TLabeledEdit
+        Tag = 2
         Left = 207
         Top = 231
         Width = 410
@@ -480,6 +491,7 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 7
       end
       object edtBairro: TLabeledEdit
+        Tag = 2
         Left = 360
         Top = 274
         Width = 257
@@ -488,9 +500,10 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Bairro'
         MaxLength = 30
-        TabOrder = 9
+        TabOrder = 10
       end
       object edtCidade: TLabeledEdit
+        Tag = 2
         Left = 21
         Top = 312
         Width = 492
@@ -499,14 +512,15 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Cidade'
         MaxLength = 30
-        TabOrder = 10
+        TabOrder = 11
       end
       object edtTelefone: TMaskEdit
+        Tag = 2
         Left = 21
         Top = 395
         Width = 219
         Height = 21
-        TabOrder = 12
+        TabOrder = 13
         Text = ''
         OnChange = edtTelefoneChange
       end
@@ -519,7 +533,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'E-mail'
         MaxLength = 30
-        TabOrder = 13
+        TabOrder = 14
       end
       object edtDataNascimento: TDateEdit
         Left = 21
@@ -533,6 +547,7 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 3
       end
       object edtEstado: TLabeledEdit
+        Tag = 2
         Left = 528
         Top = 314
         Width = 89
@@ -541,7 +556,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'UF'
         MaxLength = 30
-        TabOrder = 11
+        TabOrder = 12
         OnChange = edtEstadoChange
       end
       object dblkStatusClientestatusId: TDBLookupComboBox
@@ -578,6 +593,7 @@ inherited frmCadCliente: TfrmCadCliente
         OnChange = edtNumeroChange
       end
       object edtCEP: TEdit
+        Tag = 2
         Left = 21
         Top = 229
         Width = 180
@@ -606,13 +622,13 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Complemento'
         MaxLength = 30
-        TabOrder = 14
+        TabOrder = 9
       end
     end
   end
   inherited pnlRodape: TPanel
     Top = 461
-    Width = 649
+    Width = 655
     Height = 46
     ExplicitTop = 461
     ExplicitWidth = 649
@@ -621,7 +637,7 @@ inherited frmCadCliente: TfrmCadCliente
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
-      Left = 581
+      Left = 587
       ExplicitLeft = 581
     end
   end

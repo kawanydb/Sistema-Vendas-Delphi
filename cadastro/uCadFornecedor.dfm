@@ -13,13 +13,10 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
     ExplicitWidth = 565
     ExplicitHeight = 460
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 557
       ExplicitHeight = 432
       inherited pnlListagemTopo: TPanel
         Width = 557
-        ExplicitTop = 0
         ExplicitWidth = 557
       end
       inherited grddListagem: TDBGrid
@@ -65,8 +62,6 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 8
-      ExplicitTop = 22
       ExplicitWidth = 557
       ExplicitHeight = 432
       object lbl2: TLabel
@@ -93,9 +88,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       object lbl12: TLabel
         Left = 75
         Top = 366
-        Width = 75
+        Width = 81
         Height = 11
-        Caption = '(celular,fixo, SAC)'
+        Caption = '(Celular,Fixo, SAC)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
         Font.Height = -9
@@ -106,9 +101,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       object lbl13: TLabel
         Left = 245
         Top = 202
-        Width = 71
+        Width = 77
         Height = 11
-        Caption = '(avenida,rua,via)'
+        Caption = '(Avenida,Rua,Via)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
         Font.Height = -9
@@ -181,6 +176,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 1
       end
       object edtEndereco: TLabeledEdit
+        Tag = 2
         Left = 222
         Top = 217
         Width = 311
@@ -192,6 +188,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 4
       end
       object edtBairro: TLabeledEdit
+        Tag = 2
         Left = 166
         Top = 257
         Width = 367
@@ -203,6 +200,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 6
       end
       object edtCidade: TLabeledEdit
+        Tag = 2
         Left = 29
         Top = 298
         Width = 379
@@ -214,6 +212,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 7
       end
       object edtTelefone: TMaskEdit
+        Tag = 2
         Left = 29
         Top = 383
         Width = 180
@@ -223,6 +222,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         OnChange = edtTelefoneChange
       end
       object edtEmail: TLabeledEdit
+        Tag = 2
         Left = 223
         Top = 383
         Width = 311
@@ -234,6 +234,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         TabOrder = 10
       end
       object edtEstado: TLabeledEdit
+        Tag = 2
         Left = 414
         Top = 298
         Width = 119
@@ -257,6 +258,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         OnChange = edtNumeroChange
       end
       object edtCEP: TEdit
+        Tag = 2
         Left = 29
         Top = 217
         Width = 180
@@ -267,6 +269,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         OnExit = edtCEPExit
       end
       object edtCnpj: TEdit
+        Tag = 2
         Left = 29
         Top = 140
         Width = 418

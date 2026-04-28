@@ -419,8 +419,7 @@ begin
   oVenda:=TVenda.Create(dtmConexao.conexaoDB);
   IndiceAtual:='clienteId';
 
-//  cdsItensVenda.FieldByName('valorUnitario').DisplayFormat := 'R$ #,##0.00';
-//  cdsItensVenda.FieldByName('totalProduto').DisplayFormat := 'R$ #,##0.00';
+  edtValorUnitario.ReadOnly := True;
 end;
 
 procedure TfrmProVenda.CarregarRegistroSelecionado;

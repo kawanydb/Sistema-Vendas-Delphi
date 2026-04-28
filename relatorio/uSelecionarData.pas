@@ -42,7 +42,7 @@ begin
     Abort;
   end;
 
-  Close;
+  ModalResult := mrOk;
 end;
 
 procedure TfrmSelecionarData.FormShow(Sender: TObject);

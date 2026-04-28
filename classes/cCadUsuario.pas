@@ -95,7 +95,6 @@ begin
     except
       on E: Exception do
       begin
-        ShowMessage('Erro real: ' + E.Message);
         Result := False;
       end;
     end;

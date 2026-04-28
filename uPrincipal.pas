@@ -291,27 +291,45 @@ end;
 
 procedure TdtmPrincipal.VENDAPORDATA1Click(Sender: TObject);
 begin
-  try
-    frmSelecionarData:=TfrmSelecionarData.Create(Self);
-    if TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, TfrmRelVendaPorData.ClassName, dtmConexao.conexaoDB) then
-    begin
-      frmSelecionarData.ShowModal;
+  frmSelecionarData := nil;
+  frmRelVendaPorData := nil;
 
-      frmRelVendaPorData:=TfrmRelVendaPorData.Create(Self);
-      frmRelVendaPorData.QryVenda.Close;
-      frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate:=frmSelecionarData.edtDataInicio.Date;
-      frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate:=frmSelecionarData.edtDataFinal.Date;
-      frmRelVendaPorData.QryVenda.Open;
-      frmRelVendaPorData.Relatorio.PreviewModal;
+  try
+    frmSelecionarData := TfrmSelecionarData.Create(Self);
+
+    if TUsuarioLogado.TenhoAcesso(
+      oUsuarioLogado.codigo,
+      TfrmRelVendaPorData.ClassName,
+      dtmConexao.conexaoDB
+    ) then
+    begin
+      if frmSelecionarData.ShowModal = mrOk then
+      begin
+        frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
+
+        frmRelVendaPorData.QryVenda.Close;
+        frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate :=
+          frmSelecionarData.edtDataInicio.Date;
+        frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate :=
+          frmSelecionarData.edtDataFinal.Date;
+        frmRelVendaPorData.QryVenda.Open;
+        frmRelVendaPorData.Relatorio.PreviewModal;
+      end;
     end
-    else begin
-      MessageDlg('Usuário: '+oUsuarioLogado.nome+', não tem permissão de acesso',mtWarning,[mbOK],0);
+    else
+    begin
+      MessageDlg(
+        'Usuário: ' + oUsuarioLogado.nome +
+        ', não tem permissão de acesso',
+        mtWarning,
+        [mbOK],
+        0
+      );
     end;
+
   finally
-    if Assigned(frmSelecionarData) then
-       frmSelecionarData.Release;
-    if Assigned(frmRelVendaPorData) then
-      frmRelVendaPorData.Release;
+    FreeAndNil(frmSelecionarData);
+    FreeAndNil(frmRelVendaPorData);
   end;
 end;
 

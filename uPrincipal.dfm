@@ -145,7 +145,7 @@ object dtmPrincipal: TdtmPrincipal
         Marks.RoundSize = 14
         Marks.Visible = False
         DataSource = DTMGrafico.QryProdutoEstoque
-        SeriesColor = 11111866
+        SeriesColor = 9863890
         Title = 'ProdutoEstoque'
         XLabelsSource = 'Label'
         XValues.Name = 'X'
@@ -328,10 +328,10 @@ object dtmPrincipal: TdtmPrincipal
       ColorPaletteIndex = 13
       object fstlnsrsSeries1: TFastLineSeries
         DataSource = DTMGrafico.QryVendasUltimaSemana
-        SeriesColor = 11111866
+        SeriesColor = 9863890
         Title = 'VendasDaUltimaSemana'
         XLabelsSource = 'Label'
-        LinePen.Color = 11111866
+        LinePen.Color = 9863890
         XValues.Name = 'X'
         XValues.Order = loAscending
         YValues.Name = 'Y'

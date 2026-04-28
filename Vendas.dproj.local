@@ -168,6 +168,7 @@
     <File Path="classes\cProVenda.pas"/>
     <File Path="classes\cUsuarioLogado.pas"/>
     <File Path="classes\cCadFornecedor.pas"/>
+    <File Path="classes\cAcaoAcesso.pas"/>
     <File Path="consulta"/>
     <File Path="consulta\uConCategoria.pas"/>
     <File Path="consulta\uConCategoria.dfm"/>
@@ -212,7 +213,6 @@
     <File Path="relatorio\uRelVendaPorData.dfm"/>
     <File Path="relatorio\uSelecionarData.pas"/>
     <File Path="relatorio\uSelecionarData.dfm"/>
-    <File Path="cAcaoAcesso.pas"/>
     <File Path="uPrincipal.pas"/>
     <File Path="uPrincipal.dfm"/>
     <File Path="uTelaHerancaConsulta.pas"/>

@@ -65,9 +65,9 @@ object frmSelecionarData: TfrmSelecionarData
     TabOrder = 1
   end
   object btn1: TBitBtn
-    Left = 24
+    Left = 18
     Top = 80
-    Width = 193
+    Width = 200
     Height = 25
     Caption = 'OK'
     Font.Charset = ANSI_CHARSET
