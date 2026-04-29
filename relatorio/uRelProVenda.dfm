@@ -247,7 +247,7 @@ object frmRelProVenda: TfrmRelProVenda
         end
         object rldbtxtvendaId: TRLDBText
           Left = 618
-          Top = 3
+          Top = 4
           Width = 66
           Height = 16
           DataField = 'dataVenda'

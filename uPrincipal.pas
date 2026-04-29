@@ -97,7 +97,6 @@ implementation
 uses uLogin, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico;
 
 
-// quando o usuário clica em categoria cria um formulário de cadastro
 procedure TdtmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
    TFuncao.CriarForm(TfrmCadCategoria, oUsuarioLogado, dtmConexao.conexaoDB);
@@ -125,7 +124,6 @@ end;
 
 procedure TdtmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-//limpa a memória do dtmconexao e dtmgrafico
   if Assigned(dtmConexao) then
     FreeAndNil(dtmConexao);
   if Assigned(DTMGrafico) then
@@ -187,7 +185,6 @@ begin
 
    uFrmmAtualizaDB.Free;
 
-     // no final do FormCreate, depois de tudo inicializado:
   frmLogin := TfrmLogin.Create(Self);
   try
     frmLogin.ShowModal;
@@ -206,15 +203,15 @@ end;
 
 procedure TdtmPrincipal.FormShow(Sender: TObject);
 begin
-//se o usuariologado não existe ele cria uma instância de TUsuariologado
+  //se o usuariologado não existe ele cria uma instância de TUsuariologado
   if not Assigned(oUsuarioLogado) then
     oUsuarioLogado := TUsuariologado.Create;
 
-    //atualiza a barra de status
+  //atualiza a barra de status
   StbPrincipal.Panels[0].Text := 'USUÁRIO: ' + oUsuarioLogado.nome;
   StbPrincipal.Font.Name := 'Segoe UI';
   StbPrincipal.Font.Style := [fsBold];
-  StbPrincipal.Font.Size := 10; // opcional
+  StbPrincipal.Font.Size := 10;
 
   ColorirPie(dbcht2);
   ColorirPie(dbcht4);
@@ -300,8 +297,8 @@ begin
     if TUsuarioLogado.TenhoAcesso(
       oUsuarioLogado.codigo,
       TfrmRelVendaPorData.ClassName,
-      dtmConexao.conexaoDB
-    ) then
+      dtmConexao.conexaoDB )
+    then
     begin
       if frmSelecionarData.ShowModal = mrOk then
       begin
@@ -343,11 +340,10 @@ begin
   TFuncao.CriarForm(TfrmCadAcaoAcesso, oUsuarioLogado, dtmConexao.conexaoDB);
 end;
 
-procedure TdtmPrincipal.AtualizacaobancoDados(aForm:TufrmmAtualizaDB); //recebe o formulario TufrmmAtualizaDB
+procedure TdtmPrincipal.AtualizacaobancoDados(aForm:TufrmmAtualizaDB);
 var oAtualizarMSSQL:TAtualizaBancoDadosMSSQL;
 begin
   aForm.Refresh;
-
   try
     oAtualizarMSSQL:=TAtualizaBancoDadosMSSQL.Create(dtmConexao.conexaoDB);
     oAtualizarMSSQL.AtualizaBancoDadosMSSQL;
@@ -374,7 +370,6 @@ begin
     if DTMGrafico.QryVendasUltimaSemana.Active then
        DTMGrafico.QryVendasUltimaSemana.Close;
 
-       //abre
     DTMGrafico.QryProdutoEstoque.Open;
     DTMGrafico.QryVendaValorPorCliente.Open;
     DTMGrafico.Qry10ProdutosMaisVendidos.Open;
@@ -384,7 +379,6 @@ begin
   end;
 end;
 
-//cores dos gráficos
 procedure TdtmPrincipal.ColorirPie(Grafico: TDBChart);
 var
   i: Integer;

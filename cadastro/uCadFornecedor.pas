@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
   Vcl.ExtCtrls, Vcl.ComCtrls, RxToolEdit, cCadCliente, uEnum, uDTMConexao, System.ImageList, Vcl.ImgList,IdHTTP, IdSSLOpenSSL,
-   System.JSON, cCadFornecedor, uCadCliente;
+   System.JSON, cCadFornecedor, uCadCliente, cFuncao;
 
 type
   TfrmCadFornecedorProduto = class(TfrmTelaHeranca)
@@ -53,6 +53,9 @@ type
     procedure edtNumeroChange(Sender: TObject);
     procedure strngfldQryListagemcnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemtelefoneGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+    procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
+    procedure edtBairroKeyPress(Sender: TObject; var Key: Char);
+    procedure edtCidadeKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     oFornecedor: TFornecedor;
@@ -185,6 +188,11 @@ begin
   edtNome.SetFocus;
 end;
 
+procedure TfrmCadFornecedorProduto.edtBairroKeyPress(Sender: TObject; var Key: Char);
+begin
+  TFuncao.SomenteLetras(Key);
+end;
+
 procedure TfrmCadFornecedorProduto.edtCEPChange(Sender: TObject);
 var
   TextoFormatado: string;
@@ -222,6 +230,11 @@ begin
   end;
 end;
 
+procedure TfrmCadFornecedorProduto.edtCidadeKeyPress(Sender: TObject; var Key: Char);
+begin
+  TFuncao.SomenteLetras(Key);
+end;
+
 procedure TfrmCadFornecedorProduto.edtCnpjChange(Sender: TObject);
 var
   Num, Texto: string;
@@ -250,6 +263,11 @@ begin
   edtCnpj.SelStart := Length(Texto);
 
   edtCnpj.OnChange := edtCnpjChange;
+end;
+
+procedure TfrmCadFornecedorProduto.edtEstadoKeyPress(Sender: TObject; var Key: Char);
+begin
+  TFuncao.SomenteLetras(Key);
 end;
 
 procedure TfrmCadFornecedorProduto.edtNumeroChange(Sender: TObject);

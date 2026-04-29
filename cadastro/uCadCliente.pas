@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
   Vcl.ExtCtrls, Vcl.ComCtrls, RxToolEdit, cCadCliente, uEnum, uDTMConexao, System.ImageList, Vcl.ImgList,IdHTTP, IdSSLOpenSSL,
-   System.JSON;
+   System.JSON, cFuncao;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -88,7 +88,10 @@ type
     procedure strngfldQryListagemcpf_cnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemcepGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure edtNumeroChange(Sender: TObject);
-    procedure edtEstadoChange(Sender: TObject);
+    procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
+    procedure edtBairroKeyPress(Sender: TObject; var Key: Char);
+    procedure edtCidadeKeyPress(Sender: TObject; var Key: Char);
+    procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -181,6 +184,7 @@ end;
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
 begin
+  inherited;
   QryListagem.Edit;
   if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then begin
      edtClienteId.Text                    :=IntToStr(oCliente.codigo);
@@ -203,7 +207,6 @@ begin
     btnCancelar.Click;
     Abort;
   end;
-inherited;
 end;
 
 
@@ -230,21 +233,17 @@ begin
   IndiceAtual:= 'nome';
 end;
 
-
 procedure TfrmCadCliente.FormShow(Sender: TObject);
 begin
   inherited;
-
   QryStatus.Close;
   QryStatus.Open;
 
   QryTipoPessoa.Close;
   QryTipoPessoa.Open;
-
 end;
 
 {$REGION 'PARTE DOS DESAFIOS'}
-
 procedure TfrmCadCliente.dblkStatusClienteTipoPessoaCloseUp(Sender: TObject);
 begin
   inherited;
@@ -275,7 +274,6 @@ begin
 
   edtCpfCnpj.OnChange := nil;
 
-  //cpf
   if Length(Num) <= 11 then
   begin
     // CPF
@@ -312,18 +310,21 @@ begin
 
   edtCpfCnpj.Text := Texto;
   edtCpfCnpj.SelStart := Length(Texto);
-
   edtCpfCnpj.OnChange := edtCpfCnpjChange;
 end;
 
-procedure TfrmCadCliente.edtEstadoChange(Sender: TObject);
+procedure TfrmCadCliente.edtEstadoKeyPress(Sender: TObject; var Key: Char);
 begin
-  inherited;
-
+  TFuncao.SomenteLetras(Key);
 end;
 
 //não permite digitar a,e ou qual coisa sem ser número
- procedure TfrmCadCliente.edtNumeroChange(Sender: TObject);
+ procedure TfrmCadCliente.edtNomeKeyPress(Sender: TObject; var Key: Char);
+begin
+  TFuncao.SomenteLetras(Key);
+end;
+
+procedure TfrmCadCliente.edtNumeroChange(Sender: TObject);
 var
   Num: string;
 begin
@@ -333,7 +334,7 @@ begin
   begin
     edtNumero.OnChange := nil; // evita loop, desligando o evento temporariamente
     try
-      edtNumero.Text := Num; //tudo digitado é igual a num
+      edtNumero.Text := Num; //tudo digitado é igual a num;
       edtNumero.SelStart := Length(Num); // mantém cursor no final
     finally
       edtNumero.OnChange := edtNumeroChange; //liga o evento e volta a funcionar
@@ -351,7 +352,7 @@ begin
   edtTelefone.OnChange := nil; //desligando o  evento temporariamente
 
   //tipo 0400,0800 e etc
-  if (Length(Num) >= 4) and (Num[1] = '0') then
+  if (Length(Num) >= 4) and (Num[1] = '0') and (Num[2] in ['1'..'9']) and (Num[3] = '0') and (Num[4] = '0') then
   begin
     if Length(Num) >= 1 then
       Texto := Copy(Num,1,4);
@@ -483,6 +484,11 @@ begin
     Result := Num
   else
     Result := Copy(Num,1,5) + '-' + Copy(Num,6,3);
+end;
+
+procedure TfrmCadCliente.edtBairroKeyPress(Sender: TObject; var Key: Char);
+begin
+  TFuncao.SomenteLetras(Key);
 end;
 
 procedure TfrmCadCliente.edtCEPChange(Sender: TObject);
@@ -630,14 +636,20 @@ begin
     BuscarCEP(SomenteNumeros(edtCEP.Text));
 end;
 
-function TfrmCadCliente.FormatarTelefone(const Valor: string): string;
+
+procedure TfrmCadCliente.edtCidadeKeyPress(Sender: TObject; var Key: Char);
+begin
+  TFuncao.SomenteLetras(Key);
+end;
+
+function TfrmCadCliente.FormatarTelefone(const Valor: string): string;
 var
   Num, Texto: string;
 begin
   Num := SomenteNumeros(Valor);
   Texto := '';
 
-  if (Length(Num) >= 4) and (Num[1] = '0') then
+  if (Length(Num) >= 4) and (Num[1] = '0') and (Num[2] in ['1'..'9']) and (Num[3] = '0') and (Num[4] = '0') then
   begin
     if Length(Num) >= 1 then
       Texto := Copy(Num,1,4);
@@ -719,7 +731,6 @@ end;
     (Pos('.', Email) > Pos('@', Email)) and
     (Pos(' ', Email) = 0);
 end;
-
-{$ENDREGION}
+{$ENDREGION}
 
 end.

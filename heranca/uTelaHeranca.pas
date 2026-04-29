@@ -104,12 +104,10 @@ begin
   end;
 end;
 
-//procedimento de controle de tela
 procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
       btnGravar, btnApagar:TBitBtn; Navegador: TDBNavigator;
       Flag:Boolean);
-//configurando botões e desabilitando uns  quando outros
-//forem clicados
+//configurando botões e desabilitando uns  quando outros forem clicados
  begin
     btnNovo.Enabled :=Flag;
     btnApagar.Enabled :=Flag;
@@ -120,14 +118,11 @@ procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
     btnGravar.Enabled :=not(Flag);
  end;
 
-//procedures são funções que não retornam valores
-//configuração das ações que os botões realizam
 procedure TfrmTelaHeranca.ControlarIndiceTab(pgcPrincipal: TPageControl; Indice: Integer);
 begin
    if(pgcPrincipal.Pages[Indice].TabVisible) then
    pgcPrincipal.TabIndex:=Indice;
 end;
-
 
 //função que retorna uma string
 function TfrmTelaHeranca.RetornarCampoTraduzido(Campo:String):String;
@@ -161,6 +156,88 @@ begin
   end;
 end;
 
+function TfrmTelaHeranca.DocumentoJaCadastrado(Valor: string; AIdAtual: Integer ): Boolean;
+var
+  Qry: TFDQuery;
+begin
+  Result := False;
+
+  Qry := TFDQuery.Create(nil);
+  try
+    Qry.Connection := dtmConexao.conexaoDB;
+
+    // CLIENTES
+    Qry.SQL.Text :=
+      'SELECT 1 ' +
+      'FROM clientes ' +
+      'WHERE cpf_cnpj = :doc ' +
+      'AND clienteId <> :id';
+
+    Qry.ParamByName('doc').AsString := SomenteNumeros(Valor);
+    Qry.ParamByName('id').AsInteger := AIdAtual;
+    Qry.Open;
+
+    if not Qry.IsEmpty then
+    begin
+      Result := True;
+      Exit;
+    end;
+
+    // FORNECEDOR
+    Qry.Close;
+    Qry.SQL.Text :=
+      'SELECT 1 ' +
+      'FROM fornecedor ' +
+      'WHERE cnpj = :doc ' +
+      'AND fornecedorId <> :id';
+
+    Qry.ParamByName('doc').AsString := SomenteNumeros(Valor);
+    Qry.ParamByName('id').AsInteger := AIdAtual;
+    Qry.Open;
+
+    Result := not Qry.IsEmpty;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TfrmTelaHeranca.grddListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+  var
+  Grid: TDBGrid;
+begin
+  //ZEBRAR
+  if not (gdSelected in State) then
+  begin
+  //verifica se o número da linha é ímpar ou par e da uma cor p cada
+    if Odd(TDBGrid(Sender).DataSource.DataSet.RecNo) then
+      TDBGrid(Sender).Canvas.Brush.Color := $00F2F2F2 // Cinza claro
+    else
+      TDBGrid(Sender).Canvas.Brush.Color := $00E1E1E1; // Cinza escuro
+  end;
+
+  //cor pra linha selecionada
+   if (gdSelected in State) then
+  begin
+    TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
+    TDBGrid(Sender).Canvas.Font.Color  := clBlack;
+  end;
+
+  // Aplica a cor no fundo
+  TDBGrid(Sender).Canvas.FillRect(Rect);
+
+  //mostra o texto padrão
+  TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+procedure TfrmTelaHeranca.grddListagemTitleClick(Column: TColumn);
+begin
+    IndiceAtual := Column.FieldName;
+    QryListagem.IndexFieldNames:=IndiceAtual;
+    lbl1.Caption :=RetornarCampoTraduzido(IndiceAtual);
+    ExibirLabelIndice(IndiceAtual, lbl1);
+end;
+
 {$ENDREGION}
 
 {$REGION 'MÉTODOS VIRTUAIS'}
@@ -173,6 +250,16 @@ end;
 procedure TfrmTelaHeranca.ExibirLabelIndice(Campo:string; aLabel:TLabel);
 begin
   aLabel.Caption:=RetornarCampoTraduzido(Campo);
+end;
+
+function TfrmTelaHeranca.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  Result := True;
+//mensagens para o usuário saber se a ação aconteceu
+     if(EstadoDoCadastro=ecInserir) then
+        showMessage('Inserir')
+      else if (EstadoDoCadastro=ecAlterar) then
+        ShowMessage('Alterado');
 end;
 
 function TfrmTelaHeranca.ExisteCampoObrigatorio: Boolean;
@@ -261,6 +348,7 @@ end;
 
 {$ENDREGION}
 
+{$REGION 'Botões'}
 procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
 begin
   if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
@@ -275,6 +363,150 @@ begin
    LimparEdits;
 end;
 
+procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
+begin
+  if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    Abort;
+  end;
+
+   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
+   btnApagar, btnNavigator, false);
+   EstadoDoCadastro:=ecAlterar;
+end;
+
+procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
+begin
+if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    Abort;
+  end;
+
+  try
+     if (Apagar) then begin
+     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
+                    btnApagar, btnNavigator, true);
+     ControlarIndiceTab(pgcPrincipal, 0);
+     LimparEdits;
+     QryListagem.Refresh;
+     end
+     else begin
+        MessageDlg('Erro na exclusão', mtError, [mbok],0);
+     end;
+   finally
+    EstadoDoCadastro:=ecNenhum;
+   end;
+end;
+
+procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
+begin
+   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
+   btnApagar, btnNavigator, true);
+   ControlarIndiceTab(pgcPrincipal, 0);
+   EstadoDoCadastro:=ecNenhum;
+   LimparEdits;
+end;
+
+procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
+begin
+  if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    Abort;
+  end;
+
+  if (ExisteCampoObrigatorio) then
+      Abort;
+
+   Try
+   if Gravar(EstadoDoCadastro) then begin
+     QryListagem.Close;
+     QryListagem.Open;
+
+     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
+                    btnApagar, btnNavigator, true);
+     ControlarIndiceTab(pgcPrincipal, 0);
+     EstadoDoCadastro:=ecNenhum;
+     LimparEdits;
+     QryListagem.Refresh;
+   end
+   else begin
+      MessageDlg('Erro na gravação', mtError, [mbok],0);
+   end;
+   finally
+   End;
+end;
+
+procedure TfrmTelaHeranca.btnnFecharClick(Sender: TObject);
+begin
+  FormClose(Self, TCloseAction(nil^));
+  Close;
+end;
+
+
+procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SalvarGrid;
+end;
+{$ENDREGION}
+
+procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
+begin
+  CentralizarColunas(grddListagem);
+  FGridCarregado := False;
+
+  QryListagem.Connection:=dtmConexao.conexaoDB;
+  dtsListagem.DataSet:=QryListagem;
+  grddListagem.DataSource:=dtsListagem;
+  grddListagem.Options:=[dgTitles,dgIndicator,dgColumnResize,
+                         dgColLines,dgRowLines,dgTabs,
+                         dgCancelOnExit,dgTitleClick,dgTitleHotTrack];
+end;
+
+procedure TfrmTelaHeranca.FormShow(Sender: TObject);
+begin
+  if (QryListagem.SQL.Text <> EmptyStr) then
+  begin
+    QryListagem.IndexFieldNames := IndiceAtual;
+    ExibirLabelIndice(IndiceAtual, lbl1);
+    SelectOriginal := QryListagem.SQL.Text;
+    QryListagem.Open;
+  end;
+
+  //garante que garregue a função
+  if not FGridCarregado then
+  begin
+    CarregarGrid;
+    FGridCarregado := True;
+  end;
+
+  ControlarIndiceTab(pgcPrincipal, 0);
+  DesabilitarEditPK;
+
+  ControlarBotoes(
+    btnNovo,
+    btnAlterar,
+    btnCancelar,
+    btnGravar,
+    btnApagar,
+    btnNavigator,
+    True
+  );
+end;
+
+procedure TfrmTelaHeranca.grddListagemDblClick(Sender: TObject);
+begin
+     btnAlterar.Click;
+end;
+
+procedure TfrmTelaHeranca.grddListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  BloqueiaCTRL_DEL_DBGrid(Key,Shift);
+end;
+
+{$REGION 'Pesquisar'}
 procedure TfrmTelaHeranca.btnPesquisarClick(Sender: TObject);
 var
   I: Integer;
@@ -437,170 +669,6 @@ begin
   mskPesquisar.SetFocus;
 end;
 
-procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
-begin
-  if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
-  begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
-    Abort;
-  end;
-
-   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
-   btnApagar, btnNavigator, false);
-   EstadoDoCadastro:=ecAlterar;
-end;
-
-procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
-begin
-if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
-  begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
-    Abort;
-  end;
-
-  try
-     if (Apagar) then begin
-     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
-                    btnApagar, btnNavigator, true);
-     ControlarIndiceTab(pgcPrincipal, 0);
-     LimparEdits;
-     QryListagem.Refresh;
-     end
-     else begin
-        MessageDlg('Erro na exclusão', mtError, [mbok],0);
-     end;
-   finally
-    EstadoDoCadastro:=ecNenhum;
-   end;
-end;
-
-procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
-begin
-   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
-   btnApagar, btnNavigator, true);
-   ControlarIndiceTab(pgcPrincipal, 0);
-   EstadoDoCadastro:=ecNenhum;
-   LimparEdits;
-end;
-
-procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
-begin
-  if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
-  begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
-    Abort;
-  end;
-
-  if (ExisteCampoObrigatorio) then
-      Abort;
-
-   Try
-   if Gravar(EstadoDoCadastro) then begin
-     QryListagem.Close;
-     QryListagem.Open;
-
-     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
-                    btnApagar, btnNavigator, true);
-     ControlarIndiceTab(pgcPrincipal, 0);
-     EstadoDoCadastro:=ecNenhum;
-     LimparEdits;
-     QryListagem.Refresh;
-   end
-   else begin
-      MessageDlg('Erro na gravação', mtError, [mbok],0);
-   end;
-   finally
-   End;
-end;
-
-procedure TfrmTelaHeranca.btnnFecharClick(Sender: TObject);
-begin
-  FormClose(Self, TCloseAction(nil^));
-  Close;
-end;
-
-
-procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  SalvarGrid;
-end;
-
-procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
-begin
-  CentralizarColunas(grddListagem);
-  FGridCarregado := False;
-
-  QryListagem.Connection:=dtmConexao.conexaoDB;
-  dtsListagem.DataSet:=QryListagem;
-  grddListagem.DataSource:=dtsListagem;
-  grddListagem.Options:=[dgTitles,dgIndicator,dgColumnResize,
-                         dgColLines,dgRowLines,dgTabs,dgRowSelect,
-                         dgAlwaysShowSelection,
-                         dgCancelOnExit,dgTitleClick,dgTitleHotTrack];
-
-end;
-
-procedure TfrmTelaHeranca.FormShow(Sender: TObject);
-begin
-  if (QryListagem.SQL.Text <> EmptyStr) then
-  begin
-    QryListagem.IndexFieldNames := IndiceAtual;
-    ExibirLabelIndice(IndiceAtual, lbl1);
-    SelectOriginal := QryListagem.SQL.Text;
-    QryListagem.Open;
-  end;
-
-  //garante que garregue a função
-  if not FGridCarregado then
-  begin
-    CarregarGrid;
-    FGridCarregado := True;
-  end;
-
-  ControlarIndiceTab(pgcPrincipal, 0);
-  DesabilitarEditPK;
-
-  ControlarBotoes(
-    btnNovo,
-    btnAlterar,
-    btnCancelar,
-    btnGravar,
-    btnApagar,
-    btnNavigator,
-    True
-  );
-end;
-
-function TfrmTelaHeranca.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
-begin
-  Result := True;
-//mensagens para o usuário saber se a ação aconteceu
-     if(EstadoDoCadastro=ecInserir) then
-        showMessage('Inserir')
-      else if (EstadoDoCadastro=ecAlterar) then
-        ShowMessage('Alterado');
-end;
-
-
-procedure TfrmTelaHeranca.grddListagemDblClick(Sender: TObject);
-begin
-     btnAlterar.Click;
-end;
-
-
-procedure TfrmTelaHeranca.grddListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  BloqueiaCTRL_DEL_DBGrid(Key,Shift);
-end;
-
-procedure TfrmTelaHeranca.grddListagemTitleClick(Column: TColumn);
-begin
-    IndiceAtual := Column.FieldName;
-    QryListagem.IndexFieldNames:=IndiceAtual;
-    lbl1.Caption :=RetornarCampoTraduzido(IndiceAtual);
-    ExibirLabelIndice(IndiceAtual, lbl1);
-end;
-
 procedure TfrmTelaHeranca.mskPesquisarChange(Sender: TObject);
 var Date:TDateTime;
 begin
@@ -618,11 +686,11 @@ begin
   //verifica se o campo selecionado é tipo float
   else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftFloat, ftCurrency, ftFMTBcd] )then
   begin
-   try
-     QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
-   except
+     try
+       QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
+     except
 
-   end;
+     end;
   end
 
   //verifica se o campo selecionado é tipo data
@@ -644,96 +712,9 @@ begin
   if(Shift = [ssCtrl]) and (Key = 46) then
     Key:=0;
 end;
+{$ENDREGION}
 
-procedure TfrmTelaHeranca.grddListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
-  State: TGridDrawState);
-  var
-  Grid: TDBGrid;
-begin
-  //ZEBRAR
-  if not (gdSelected in State) then
-  begin
-  //verifica se o número da linha é ímpar ou par e da uma cor p cada
-    if Odd(TDBGrid(Sender).DataSource.DataSet.RecNo) then
-      TDBGrid(Sender).Canvas.Brush.Color := $00F2F2F2 // Cinza claro
-    else
-      TDBGrid(Sender).Canvas.Brush.Color := $00E1E1E1; // Cinza escuro
-  end;
-
-  //cor pra linha selecionada
-   if (gdSelected in State) then
-  begin
-    TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
-    TDBGrid(Sender).Canvas.Font.Color  := clBlack;
-  end;
-
-  // Aplica a cor no fundo
-  TDBGrid(Sender).Canvas.FillRect(Rect);
-
-  //mostra o texto padrão
-  TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
-end;
-
-procedure TfrmTelaHeranca.CentralizarColunas(aGrid: TDBGrid);
-var
-  I: Integer;
-begin
-  for I := 0 to aGrid.Columns.Count - 1 do
-  begin
-    aGrid.Columns[I].Alignment := taCenter;        // centraliza conteúdo
-    aGrid.Columns[I].Title.Alignment := taCenter; // centraliza título
-  end;
-end;
-
-function TfrmTelaHeranca.DocumentoJaCadastrado(
-  Valor: string;
-  AIdAtual: Integer
-): Boolean;
-var
-  Qry: TFDQuery;
-begin
-  Result := False;
-
-  Qry := TFDQuery.Create(nil);
-  try
-    Qry.Connection := dtmConexao.conexaoDB;
-
-    // CLIENTES
-    Qry.SQL.Text :=
-      'SELECT 1 ' +
-      'FROM clientes ' +
-      'WHERE cpf_cnpj = :doc ' +
-      'AND clienteId <> :id';
-
-    Qry.ParamByName('doc').AsString := SomenteNumeros(Valor);
-    Qry.ParamByName('id').AsInteger := AIdAtual;
-    Qry.Open;
-
-    if not Qry.IsEmpty then
-    begin
-      Result := True;
-      Exit;
-    end;
-
-    // FORNECEDOR
-    Qry.Close;
-    Qry.SQL.Text :=
-      'SELECT 1 ' +
-      'FROM fornecedor ' +
-      'WHERE cnpj = :doc ' +
-      'AND fornecedorId <> :id';
-
-    Qry.ParamByName('doc').AsString := SomenteNumeros(Valor);
-    Qry.ParamByName('id').AsInteger := AIdAtual;
-    Qry.Open;
-
-    Result := not Qry.IsEmpty;
-
-  finally
-    Qry.Free;
-  end;
-end;
-
+{$REGION 'Salvar Posição e Largura das Colunas'}
 procedure TfrmTelaHeranca.SalvarGrid;
 var
   Ini: TIniFile;
@@ -781,7 +762,6 @@ begin
   Ini := TIniFile.Create(
     ExtractFilePath(Application.ExeName) +
     'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
-
   try
     for i := 0 to grddListagem.Columns.Count - 1 do
     begin
@@ -789,17 +769,14 @@ begin
       Campo := Ini.ReadString(
         Secao,
         'Campo' + IntToStr(i),
-        ''
-      );
+        '');
 
       //procura onde esta a coluna
       for j := 0 to grddListagem.Columns.Count - 1 do
       begin
         //encontra a coluna
         if SameText(
-          grddListagem.Columns[j].FieldName,
-          Campo
-        ) then
+          grddListagem.Columns[j].FieldName, Campo) then
         begin
           grddListagem.Columns[j].Index := i; //move a coluna pra posição salva
 
@@ -807,10 +784,7 @@ begin
           grddListagem.Columns[j].Width :=
             Ini.ReadInteger(
               Secao,
-              'Width' + IntToStr(i),
-              grddListagem.Columns[j].Width
-            );
-
+              'Width' + IntToStr(i),grddListagem.Columns[j].Width);
           Break;
         end;
       end;
@@ -820,4 +794,15 @@ begin
   end;
 end;
 
+procedure TfrmTelaHeranca.CentralizarColunas(aGrid: TDBGrid);
+var
+  I: Integer;
+begin
+  for I := 0 to aGrid.Columns.Count - 1 do
+  begin
+    aGrid.Columns[I].Alignment := taCenter;        // centraliza conteúdo
+    aGrid.Columns[I].Title.Alignment := taCenter; // centraliza título
+  end;
+end;
+{$ENDREGION}
 end.

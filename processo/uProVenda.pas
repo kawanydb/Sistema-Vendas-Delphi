@@ -420,6 +420,14 @@ begin
   IndiceAtual:='clienteId';
 
   edtValorUnitario.ReadOnly := True;
+  edtValorUnitario.TabStop := False;
+
+
+  edtTotalProduto.ReadOnly := True;
+  edtTotalProduto.TabStop := False;
+
+  edtValorTotal.ReadOnly := True;
+  edtValorTotal.TabStop := False;
 end;
 
 procedure TfrmProVenda.CarregarRegistroSelecionado;

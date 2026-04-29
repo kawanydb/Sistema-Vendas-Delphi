@@ -10,13 +10,14 @@ cAcaoAcesso, cUsuarioLogado, RLReport, FireDAC.Stan.Intf, FireDAC.Stan.Option, F
 
 type
   TFuncao = class
-  private
+    private
 
-  public
-  class procedure CriarForm(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
-  class procedure CriarRelatorio(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
-  class procedure CarregarImagem(aImage:TImage); static;
-  class procedure LimparImagem(var aImage:TImage); static;
+    public
+      class procedure CriarForm(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
+      class procedure CriarRelatorio(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection); static;
+      class procedure CarregarImagem(aImage:TImage); static;
+      class procedure LimparImagem(var aImage:TImage); static;
+      class procedure SomenteLetras(var Key: Char); static;
   end;
   implementation
 
@@ -109,7 +110,6 @@ begin
 
 end;
 
-
 class procedure TFuncao.CriarForm(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao: TFDConnection);
 var form: TForm;
 begin
@@ -160,6 +160,18 @@ begin
     if Assigned(form) then
        form.Release;
   end;
+end;
+
+class procedure TFuncao.SomenteLetras (var Key: Char);
+begin
+  if not (Key in [
+    'a'..'z', 'A'..'Z',
+    #8,      // backspace
+    ' ',     // espaço
+    '-',     // hífen
+    ''''     // apóstrofo
+  ]) then
+    Key := #0;
 end;
 
 end.

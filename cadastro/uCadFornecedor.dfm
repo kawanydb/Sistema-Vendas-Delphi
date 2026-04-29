@@ -13,6 +13,8 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
     ExplicitWidth = 565
     ExplicitHeight = 460
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 557
       ExplicitHeight = 432
       inherited pnlListagemTopo: TPanel
@@ -62,6 +64,8 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 8
+      ExplicitTop = 28
       ExplicitWidth = 557
       ExplicitHeight = 432
       object lbl2: TLabel
@@ -189,15 +193,16 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       end
       object edtBairro: TLabeledEdit
         Tag = 2
-        Left = 166
+        Left = 156
         Top = 257
-        Width = 367
+        Width = 378
         Height = 21
         EditLabel.Width = 28
         EditLabel.Height = 13
         EditLabel.Caption = 'Bairro'
         MaxLength = 30
         TabOrder = 6
+        OnKeyPress = edtBairroKeyPress
       end
       object edtCidade: TLabeledEdit
         Tag = 2
@@ -210,6 +215,7 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         EditLabel.Caption = 'Cidade'
         MaxLength = 30
         TabOrder = 7
+        OnKeyPress = edtCidadeKeyPress
       end
       object edtTelefone: TMaskEdit
         Tag = 2
@@ -223,9 +229,9 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
       end
       object edtEmail: TLabeledEdit
         Tag = 2
-        Left = 223
+        Left = 220
         Top = 383
-        Width = 311
+        Width = 313
         Height = 21
         EditLabel.Width = 28
         EditLabel.Height = 13
@@ -239,11 +245,13 @@ inherited frmCadFornecedorProduto: TfrmCadFornecedorProduto
         Top = 298
         Width = 119
         Height = 21
+        CharCase = ecUpperCase
         EditLabel.Width = 13
         EditLabel.Height = 13
         EditLabel.Caption = 'UF'
-        MaxLength = 30
+        MaxLength = 2
         TabOrder = 8
+        OnKeyPress = edtEstadoKeyPress
       end
       object edtNumero: TLabeledEdit
         Left = 29

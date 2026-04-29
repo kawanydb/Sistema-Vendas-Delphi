@@ -4,7 +4,6 @@ inherited frmCadCliente: TfrmCadCliente
   ClientHeight = 507
   ClientWidth = 655
   OnActivate = FormActivate
-  ExplicitTop = -13
   ExplicitWidth = 661
   ExplicitHeight = 536
   PixelsPerInch = 96
@@ -18,14 +17,17 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 655
     Height = 461
-    ExplicitWidth = 649
+    ActivePage = tabManutencao
+    ExplicitWidth = 655
     ExplicitHeight = 461
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 641
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 647
       ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Width = 647
-        ExplicitWidth = 641
+        ExplicitWidth = 647
         object img2: TImage [1]
           Left = 303
           Top = 15
@@ -329,9 +331,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 8
-      ExplicitTop = 22
-      ExplicitWidth = 641
+      ExplicitWidth = 647
       ExplicitHeight = 433
       object lbl2: TLabel
         Left = 21
@@ -477,6 +477,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Caption = 'Nome Completo'
         MaxLength = 30
         TabOrder = 2
+        OnKeyPress = edtNomeKeyPress
       end
       object edtEndereco: TLabeledEdit
         Tag = 2
@@ -501,6 +502,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Caption = 'Bairro'
         MaxLength = 30
         TabOrder = 10
+        OnKeyPress = edtBairroKeyPress
       end
       object edtCidade: TLabeledEdit
         Tag = 2
@@ -513,6 +515,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Caption = 'Cidade'
         MaxLength = 30
         TabOrder = 11
+        OnKeyPress = edtCidadeKeyPress
       end
       object edtTelefone: TMaskEdit
         Tag = 2
@@ -552,12 +555,14 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 314
         Width = 89
         Height = 21
+        CharCase = ecUpperCase
         EditLabel.Width = 13
         EditLabel.Height = 13
         EditLabel.Caption = 'UF'
-        MaxLength = 30
+        MaxLength = 2
         TabOrder = 12
-        OnChange = edtEstadoChange
+        OnChange = edtCpfCnpjChange
+        OnKeyPress = edtEstadoKeyPress
       end
       object dblkStatusClientestatusId: TDBLookupComboBox
         Left = 340
@@ -631,14 +636,14 @@ inherited frmCadCliente: TfrmCadCliente
     Width = 655
     Height = 46
     ExplicitTop = 461
-    ExplicitWidth = 649
+    ExplicitWidth = 655
     ExplicitHeight = 46
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
       Left = 587
-      ExplicitLeft = 581
+      ExplicitLeft = 587
     end
   end
   inherited dtsListagem: TDataSource

@@ -58,7 +58,7 @@ begin
   //teste
    if (gdSelected in State) then
 begin
-  TDBGrid(Sender).Canvas.Brush.Color := $00D6D5ED;
+  TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
   TDBGrid(Sender).Canvas.Font.Color  := clBlack;
 end;
 
