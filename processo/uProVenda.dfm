@@ -13,8 +13,6 @@ inherited frmProVenda: TfrmProVenda
     ExplicitWidth = 680
     ExplicitHeight = 346
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 672
       ExplicitHeight = 318
       inherited pnlListagemTopo: TPanel
@@ -70,7 +68,7 @@ inherited frmProVenda: TfrmProVenda
         Caption = 'Data Venda'
       end
       object lbl7: TLabel
-        Left = 400
+        Left = 405
         Top = 18
         Width = 67
         Height = 12
@@ -109,7 +107,7 @@ inherited frmProVenda: TfrmProVenda
         OnEnter = lkpClienteEnter
       end
       object edtDataVenda: TDateEdit
-        Left = 487
+        Left = 488
         Top = 37
         Width = 161
         Height = 21
@@ -118,7 +116,7 @@ inherited frmProVenda: TfrmProVenda
         Color = 16711422
         DialogTitle = 'Selecione a data'
         NumGlyphs = 2
-        TabOrder = 2
+        TabOrder = 3
       end
       object pnl1: TPanel
         Left = 0
@@ -126,7 +124,7 @@ inherited frmProVenda: TfrmProVenda
         Width = 672
         Height = 236
         Align = alBottom
-        TabOrder = 3
+        TabOrder = 4
         object pnl2: TPanel
           Left = 1
           Top = 1
@@ -136,6 +134,8 @@ inherited frmProVenda: TfrmProVenda
           Color = 15855351
           ParentBackground = False
           TabOrder = 0
+          ExplicitLeft = -7
+          ExplicitTop = -4
           object lbl21: TLabel
             Left = 11
             Top = 4
@@ -144,21 +144,21 @@ inherited frmProVenda: TfrmProVenda
             Caption = 'Produto'
           end
           object lbl41: TLabel
-            Left = 186
-            Top = 4
+            Left = 281
+            Top = 3
             Width = 64
             Height = 13
             Caption = 'Valor Unit'#225'rio'
           end
           object lbl5: TLabel
-            Left = 276
+            Left = 187
             Top = 4
             Width = 56
             Height = 13
             Caption = 'Quantidade'
           end
           object lbl6: TLabel
-            Left = 366
+            Left = 373
             Top = 4
             Width = 80
             Height = 13
@@ -184,8 +184,8 @@ inherited frmProVenda: TfrmProVenda
             OnExit = lkpProdutoExit
           end
           object edtValorUnitario: TCurrencyEdit
-            Left = 186
-            Top = 20
+            Left = 281
+            Top = 19
             Width = 84
             Height = 22
             Color = clBtnFace
@@ -197,10 +197,10 @@ inherited frmProVenda: TfrmProVenda
             Font.Name = 'edtValorUnitario'
             Font.Style = []
             ParentFont = False
-            TabOrder = 1
+            TabOrder = 2
           end
           object edtQuantidade: TCurrencyEdit
-            Left = 277
+            Left = 187
             Top = 20
             Width = 84
             Height = 22
@@ -212,11 +212,11 @@ inherited frmProVenda: TfrmProVenda
             Font.Name = 'edtQuantidade'
             Font.Style = []
             ParentFont = False
-            TabOrder = 2
+            TabOrder = 1
             OnExit = edtQuantidadeExit
           end
           object edtTotalProduto: TCurrencyEdit
-            Left = 369
+            Left = 376
             Top = 19
             Width = 84
             Height = 21
@@ -227,7 +227,7 @@ inherited frmProVenda: TfrmProVenda
             TabOrder = 3
           end
           object btnAdicionarItem: TBitBtn
-            Left = 460
+            Left = 470
             Top = 18
             Width = 81
             Height = 23
@@ -237,7 +237,7 @@ inherited frmProVenda: TfrmProVenda
             OnClick = btnAdicionarItemClick
           end
           object btnApagarItem: TBitBtn
-            Left = 549
+            Left = 566
             Top = 18
             Width = 79
             Height = 23
@@ -355,8 +355,8 @@ inherited frmProVenda: TfrmProVenda
         end
       end
       object btnAlterarCliente: TBitBtn
-        Left = 402
-        Top = 36
+        Left = 408
+        Top = 34
         Width = 68
         Height = 25
         Cursor = crHandPoint
@@ -387,7 +387,7 @@ inherited frmProVenda: TfrmProVenda
           7F7F7F7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDDF7FF7F7F7F7F7F
           7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
           7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F}
-        TabOrder = 4
+        TabOrder = 2
         OnClick = btnAlterarClienteClick
       end
     end

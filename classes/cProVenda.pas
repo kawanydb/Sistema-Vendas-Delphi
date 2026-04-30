@@ -328,13 +328,6 @@ end;
 function TVenda.Atualizar(cds:TClientDataSet):Boolean;
 var Qry:TFDQuery;
 begin
-//
-//  ShowMessage('VendaId: ' + IntToStr(F_vendaId) + #13 +
-//              'ClienteId: ' + IntToStr(F_clienteId) + #13 +
-//              'DataVenda: ' + DateTimeToStr(F_dataVenda) + #13 +
-//              'TotalVenda: ' + FloatToStr(F_totalVenda));
-//
-
   try
     Result:=True;
     conexaoDB.StartTransaction;

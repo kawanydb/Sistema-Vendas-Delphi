@@ -60,6 +60,7 @@ object dtmPrincipal: TdtmPrincipal
       Font.Height = -24
       Font.Name = 'Segoe UI Black'
       Font.Style = [fsBold, fsUnderline]
+      GlowSize = 5
       ParentColor = False
       ParentFont = False
       ExplicitWidth = 126
@@ -453,8 +454,7 @@ object dtmPrincipal: TdtmPrincipal
     end
   end
   object tmrAtualizacaoDashBoard: TTimer
-    Interval = 60000
-    Left = 528
-    Top = 24
+    Left = 440
+    Top = 72
   end
 end

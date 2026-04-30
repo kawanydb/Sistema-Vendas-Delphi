@@ -3,15 +3,7 @@ inherited frmCadCategoria: TfrmCadCategoria
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 589
-      ExplicitHeight = 300
-      inherited pnlListagemTopo: TPanel
-        ExplicitTop = 0
-      end
       inherited grddListagem: TDBGrid
         Columns = <
           item
@@ -27,10 +19,6 @@ inherited frmCadCategoria: TfrmCadCategoria
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 22
-      ExplicitWidth = 589
-      ExplicitHeight = 300
       object lbl15: TLabel
         Left = 13
         Top = 11

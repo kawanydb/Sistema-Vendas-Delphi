@@ -9,17 +9,13 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   inherited pgcPrincipal: TPageControl
     Width = 574
     Height = 331
-    ActivePage = tabManutencao
     ExplicitWidth = 574
     ExplicitHeight = 331
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 566
       ExplicitHeight = 303
       inherited pnlListagemTopo: TPanel
         Width = 566
-        ExplicitTop = 0
         ExplicitWidth = 566
       end
       inherited grddListagem: TDBGrid
@@ -47,8 +43,6 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 566
       ExplicitHeight = 303
       object lbl15: TLabel

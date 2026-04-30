@@ -4,6 +4,7 @@ inherited frmCadCliente: TfrmCadCliente
   ClientHeight = 507
   ClientWidth = 655
   OnActivate = FormActivate
+  OnKeyDown = FormKeyDown
   ExplicitWidth = 661
   ExplicitHeight = 536
   PixelsPerInch = 96
@@ -17,12 +18,10 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 655
     Height = 461
-    ActivePage = tabManutencao
+    ActivePage = tabListagem
     ExplicitWidth = 655
     ExplicitHeight = 461
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 647
       ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
@@ -443,9 +442,9 @@ inherited frmCadCliente: TfrmCadCliente
       object lbl17: TLabel
         Left = 155
         Top = 259
-        Width = 44
+        Width = 42
         Height = 11
-        Caption = '(Opcional!)'
+        Caption = '(Opcional)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
         Font.Height = -9

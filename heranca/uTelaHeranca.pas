@@ -48,6 +48,7 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure grddListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   protected
       EstadoDoCadastro:TEstadoDoCadastro;
   private
@@ -92,10 +93,8 @@ function TfrmTelaHeranca.SomenteNumeros(const Valor: string): string;
 var
   i: Integer;
 begin
-  Result := ''; //valor que a função retorna, pq monta a string do zero
+  Result := '';
 
-  //percorre cada caractere da string
-  //no delphi string começa em 0
   for i := 1 to Length(Valor) do
   begin
     if Valor[i] in ['0'..'9'] then //verifica se o valor está entre 0 e 9
@@ -129,7 +128,8 @@ function TfrmTelaHeranca.RetornarCampoTraduzido(Campo:String):String;
 var i:Integer;
 begin
    for I := 0 to QryListagem.Fields.Count-1 do begin
-     if  LowerCase(QryListagem.Fields[i].FieldName)=LowerCase(Campo) then begin
+     if  LowerCase(QryListagem.Fields[i].FieldName)=LowerCase(Campo) then
+     begin
        Result:= QryListagem.Fields[i].DisplayLabel;
        Break;
      end;
@@ -237,7 +237,6 @@ begin
     lbl1.Caption :=RetornarCampoTraduzido(IndiceAtual);
     ExibirLabelIndice(IndiceAtual, lbl1);
 end;
-
 {$ENDREGION}
 
 {$REGION 'MÉTODOS VIRTUAIS'}
@@ -257,7 +256,7 @@ begin
   Result := True;
 //mensagens para o usuário saber se a ação aconteceu
      if(EstadoDoCadastro=ecInserir) then
-        showMessage('Inserir')
+        ShowMessage('Inserir')
       else if (EstadoDoCadastro=ecAlterar) then
         ShowMessage('Alterado');
 end;
@@ -275,7 +274,8 @@ begin
     begin
       if (TLabeledEdit(Components[i]).Tag = 2) and
          (TLabeledEdit(Components[i]).Enabled) and
-         (Trim(TLabeledEdit(Components[i]).Text) = '') then
+         (Trim(TLabeledEdit(Components[i]).Text) = '')
+      then
       begin
         MessageDlg(
           TLabeledEdit(Components[i]).EditLabel.Caption +
@@ -296,7 +296,8 @@ begin
     begin
       if (TCurrencyEdit(Components[i]).Tag = 2) and
          (TCurrencyEdit(Components[i]).Enabled) and
-         (TCurrencyEdit(Components[i]).Value <= 0) then
+         (TCurrencyEdit(Components[i]).Value <= 0)
+      then
       begin
         MessageDlg(
           'Todos os campos devem ser preenchidos!',
@@ -316,7 +317,8 @@ begin
     begin
       if (TMaskEdit(Components[i]).Tag = 2) and
          (TMaskEdit(Components[i]).Enabled) and
-         (Trim(TMaskEdit(Components[i]).Text) = '') then
+         (Trim(TMaskEdit(Components[i]).Text) = '')
+      then
       begin
         MessageDlg(
           'Preencha todos os campos.',
@@ -386,16 +388,16 @@ if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(S
 
   try
      if (Apagar) then begin
-     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
-                    btnApagar, btnNavigator, true);
-     ControlarIndiceTab(pgcPrincipal, 0);
-     LimparEdits;
-     QryListagem.Refresh;
+       ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
+                      btnApagar, btnNavigator, true);
+       ControlarIndiceTab(pgcPrincipal, 0);
+       LimparEdits;
+       QryListagem.Refresh;
      end
      else begin
         MessageDlg('Erro na exclusão', mtError, [mbok],0);
      end;
-   finally
+  finally
     EstadoDoCadastro:=ecNenhum;
    end;
 end;
@@ -419,22 +421,21 @@ begin
 
   if (ExisteCampoObrigatorio) then
       Abort;
-
    Try
-   if Gravar(EstadoDoCadastro) then begin
-     QryListagem.Close;
-     QryListagem.Open;
+     if Gravar(EstadoDoCadastro) then begin
+       QryListagem.Close;
+       QryListagem.Open;
 
-     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
-                    btnApagar, btnNavigator, true);
-     ControlarIndiceTab(pgcPrincipal, 0);
-     EstadoDoCadastro:=ecNenhum;
-     LimparEdits;
-     QryListagem.Refresh;
-   end
-   else begin
-      MessageDlg('Erro na gravação', mtError, [mbok],0);
-   end;
+       ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar,
+                      btnApagar, btnNavigator, true);
+       ControlarIndiceTab(pgcPrincipal, 0);
+       EstadoDoCadastro:=ecNenhum;
+       LimparEdits;
+       QryListagem.Refresh;
+     end
+     else begin
+        MessageDlg('Erro na gravação', mtError, [mbok],0);
+     end;
    finally
    End;
 end;
@@ -463,6 +464,16 @@ begin
   grddListagem.Options:=[dgTitles,dgIndicator,dgColumnResize,
                          dgColLines,dgRowLines,dgTabs,
                          dgCancelOnExit,dgTitleClick,dgTitleHotTrack];
+end;
+
+//habilita o ESC
+procedure TfrmTelaHeranca.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    Key := 0; // evita conflito
+    Close;
+  end;
 end;
 
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
@@ -498,7 +509,7 @@ end;
 
 procedure TfrmTelaHeranca.grddListagemDblClick(Sender: TObject);
 begin
-     btnAlterar.Click;
+  btnAlterar.Click;
 end;
 
 procedure TfrmTelaHeranca.grddListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

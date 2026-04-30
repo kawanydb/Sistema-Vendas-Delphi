@@ -224,10 +224,16 @@ object frmRelVendaPorData: TfrmRelVendaPorData
         object rldbtxtDescricaoCategoria: TRLDBText
           Left = 51
           Top = 4
-          Width = 66
+          Width = 73
           Height = 16
           DataField = 'dataVenda'
           DataSource = dtsVenda
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
           Text = ''
           Transparent = False
         end

@@ -8,7 +8,10 @@ inherited frmCadUsuario: TfrmCadUsuario
     Width = 579
     ExplicitWidth = 579
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 571
+      ExplicitHeight = 0
       inherited pnlListagemTopo: TPanel
         Width = 571
         ExplicitWidth = 571

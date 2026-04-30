@@ -402,6 +402,8 @@ begin
   Result := Texto;
 end;
 
+//pega os números digitados, multiplica por um peso, soma tudo, divide por 11
+//e o resto tem que ser o ultimo digito
 function TfrmCadFornecedorProduto.ValidarCnpj(const Valor: string): Boolean;
 var
   Num: string;
@@ -449,7 +451,5 @@ begin
   Result := True;
 end;
 {$ENDREGION}
-
-
 
 end.

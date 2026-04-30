@@ -58,7 +58,6 @@ end;
 
 destructor TAtualizacaoTabelaMSSQL.Destroy;
 begin
-
   inherited;
 end;
 

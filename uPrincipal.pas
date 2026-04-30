@@ -132,6 +132,7 @@ end;
 
 procedure TdtmPrincipal.FormCreate(Sender: TObject);
 begin
+
 //se não existir o arquivo ini, ele cria
   if not FileExists(TArquivoIni.ArquivoIni) then
   begin
@@ -185,12 +186,12 @@ begin
 
    uFrmmAtualizaDB.Free;
 
-  frmLogin := TfrmLogin.Create(Self);
-  try
-    frmLogin.ShowModal;
-  finally
-    FreeAndNil(frmLogin);
-  end;
+   frmLogin := TfrmLogin.Create(Self);
+    try
+      frmLogin.ShowModal;
+    finally
+      FreeAndNil(frmLogin);
+    end;
   end;
 end;
 

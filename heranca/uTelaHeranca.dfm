@@ -11,10 +11,12 @@ object frmTelaHeranca: TfrmTelaHeranca
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -23,7 +25,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     Top = 0
     Width = 597
     Height = 328
-    ActivePage = tabListagem
+    ActivePage = tabManutencao
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 16249591
@@ -72,12 +74,12 @@ object frmTelaHeranca: TfrmTelaHeranca
         end
         object btnPesquisar: TBitBtn
           Tag = 99
-          Left = 146
+          Left = 143
           Top = 16
-          Width = 58
+          Width = 64
           Height = 21
           Cursor = crHandPoint
-          Caption = '&Pesquisar'
+          Caption = '   &Pesquisar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11

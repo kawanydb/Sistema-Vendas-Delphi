@@ -21,7 +21,6 @@ uses System.Classes,
 
 type
   TAtualizaBancoDados = class
-
   private
 
   public
@@ -62,7 +61,7 @@ begin
       Qry.ExecSQL;
       conexaoDB.Commit;
     except
-    conexaoDB.Rollback
+      conexaoDB.Rollback
     end;
   finally
     Qry.Close;

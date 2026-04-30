@@ -9,7 +9,6 @@ inherited frmCadProduto: TfrmCadProduto
   inherited pgcPrincipal: TPageControl
     Width = 593
     Height = 403
-    ActivePage = tabManutencao
     ExplicitWidth = 593
     ExplicitHeight = 403
     inherited tabListagem: TTabSheet
@@ -95,28 +94,28 @@ inherited frmCadProduto: TfrmCadProduto
       ExplicitWidth = 585
       ExplicitHeight = 375
       object lbl3: TLabel
-        Left = 14
+        Left = 19
         Top = 304
         Width = 64
         Height = 13
         Caption = 'Valor Unit'#225'rio'
       end
       object lbl4: TLabel
-        Left = 185
+        Left = 190
         Top = 304
         Width = 56
         Height = 13
         Caption = 'Quantidade'
       end
       object lbl5: TLabel
-        Left = 185
+        Left = 190
         Top = 128
         Width = 47
         Height = 13
         Caption = 'Categoria'
       end
       object btnIncluirCategoria: TSpeedButton
-        Left = 336
+        Left = 341
         Top = 145
         Width = 23
         Height = 22
@@ -150,7 +149,7 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnIncluirCategoriaClick
       end
       object btnPesquisarCategoria: TSpeedButton
-        Left = 364
+        Left = 369
         Top = 145
         Width = 23
         Height = 22
@@ -184,7 +183,7 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnPesquisarCategoriaClick
       end
       object lbl12: TLabel
-        Left = 477
+        Left = 482
         Top = 154
         Width = 20
         Height = 13
@@ -197,14 +196,14 @@ inherited frmCadProduto: TfrmCadProduto
         ParentFont = False
       end
       object lbl6: TLabel
-        Left = 13
+        Left = 18
         Top = 128
         Width = 55
         Height = 13
         Caption = 'Fornecedor'
       end
       object lbl15: TLabel
-        Left = 13
+        Left = 18
         Top = 11
         Width = 138
         Height = 21
@@ -217,7 +216,7 @@ inherited frmCadProduto: TfrmCadProduto
         ParentFont = False
       end
       object lbl16: TLabel
-        Left = 14
+        Left = 19
         Top = 186
         Width = 164
         Height = 21
@@ -231,7 +230,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtProdutoId: TLabeledEdit
         Tag = 1
-        Left = 13
+        Left = 18
         Top = 58
         Width = 373
         Height = 21
@@ -244,7 +243,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtNome: TLabeledEdit
         Tag = 2
-        Left = 13
+        Left = 18
         Top = 101
         Width = 373
         Height = 21
@@ -255,7 +254,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 1
       end
       object edtDescricao: TMemo
-        Left = 14
+        Left = 19
         Top = 219
         Width = 544
         Height = 77
@@ -266,7 +265,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtValor: TCurrencyEdit
         Tag = 2
-        Left = 14
+        Left = 19
         Top = 323
         Width = 137
         Height = 21
@@ -274,7 +273,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 5
       end
       object lkpCategoria: TDBLookupComboBox
-        Left = 183
+        Left = 188
         Top = 147
         Width = 147
         Height = 21
@@ -285,7 +284,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtQuantidade: TCurrencyEdit
         Tag = 2
-        Left = 185
+        Left = 190
         Top = 323
         Width = 147
         Height = 21
@@ -293,7 +292,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 6
       end
       object pnlImagem: TPanel
-        Left = 413
+        Left = 418
         Top = 58
         Width = 145
         Height = 98
@@ -312,7 +311,7 @@ inherited frmCadProduto: TfrmCadProduto
         end
       end
       object dblkFornecedor: TDBLookupComboBox
-        Left = 14
+        Left = 19
         Top = 146
         Width = 155
         Height = 21

@@ -19,9 +19,9 @@ object frmSelecionarData: TfrmSelecionarData
   object lbl4: TLabel
     Left = 8
     Top = 17
-    Width = 61
+    Width = 64
     Height = 13
-    Caption = 'Data Inicio'
+    Caption = 'Data Inicial'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
