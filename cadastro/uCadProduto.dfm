@@ -9,6 +9,7 @@ inherited frmCadProduto: TfrmCadProduto
   inherited pgcPrincipal: TPageControl
     Width = 593
     Height = 403
+    ActivePage = tabManutencao
     ExplicitWidth = 593
     ExplicitHeight = 403
     inherited tabListagem: TTabSheet
@@ -269,7 +270,7 @@ inherited frmCadProduto: TfrmCadProduto
         Top = 323
         Width = 137
         Height = 21
-        DisplayFormat = ' R$ ,0.00;R$ ,0.00'
+        DisplayFormat = '#,##0.00'
         TabOrder = 5
       end
       object lkpCategoria: TDBLookupComboBox
@@ -288,7 +289,7 @@ inherited frmCadProduto: TfrmCadProduto
         Top = 323
         Width = 147
         Height = 21
-        DisplayFormat = ' ,0.00; ,0.00'
+        DisplayFormat = '#,##0.00'
         TabOrder = 6
       end
       object pnlImagem: TPanel
@@ -358,8 +359,8 @@ inherited frmCadProduto: TfrmCadProduto
       ''
       'LEFT JOIN categorias c'
       '  ON c.categoriaId = p.categoriaId')
-    Left = 388
-    Top = 161
+    Left = 412
+    Top = 89
     object fdtncfldQryListagemprodutoId: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
@@ -391,7 +392,6 @@ inherited frmCadProduto: TfrmCadProduto
       DisplayLabel = 'Quantidade'
       FieldName = 'quantidade'
       Origin = 'quantidade'
-      DisplayFormat = '#,##0.00'
     end
     object strngfldQryListagemDescricaoCategoria: TStringField
       DisplayLabel = 'Categoria'

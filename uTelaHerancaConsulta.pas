@@ -76,6 +76,7 @@ end;
 procedure TfrmTelaHerancaConsulta.grdPesquisaDblClick(Sender: TObject);
 begin
   aRetornarIdSelecionado := QryListagem.FieldByName(aCampoId).AsVariant;
+  Close;
 end;
 
 procedure TfrmTelaHerancaConsulta.grdPesquisaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

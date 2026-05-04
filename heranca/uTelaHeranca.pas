@@ -1,4 +1,4 @@
-unit uTelaHeranca;
+ï»¿unit uTelaHeranca;
 
 interface
 
@@ -64,6 +64,7 @@ type
     procedure DesabilitarEditPK;
     procedure SalvarGrid;
     procedure CarregarGrid;
+
   public
     grdListagem: TDBGrid;
     IndiceAtual:string;
@@ -71,8 +72,8 @@ type
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; virtual;
     procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
     function SomenteNumeros(const Valor: string): string;
-    procedure CentralizarColunas(aGrid: TDBGrid);
     function DocumentoJaCadastrado(Valor: string; AIdAtual: Integer): Boolean;
+    procedure AlinharColunas(aGrid: TDBGrid);
   end;
 
 var
@@ -83,12 +84,12 @@ implementation
 {$R *.dfm}
 uses uPrincipal;
 
-{$REGION ' OBSERVAÇÕES'}
-//TAG: 1 - Chave Primária
-//TAG: 2 - Campos Obrigatórios
+{$REGION ' OBSERVAÃ‡Ã•ES'}
+//TAG: 1 - Chave PrimÃ¡ria
+//TAG: 2 - Campos ObrigatÃ³rios
 {$ENDREGION}
 
-{$REGION 'FUNÇÕES E PROCEDURES'}
+{$REGION 'FUNÃ‡Ã•ES E PROCEDURES'}
 function TfrmTelaHeranca.SomenteNumeros(const Valor: string): string;
 var
   i: Integer;
@@ -97,8 +98,8 @@ begin
 
   for i := 1 to Length(Valor) do
   begin
-    if Valor[i] in ['0'..'9'] then //verifica se o valor está entre 0 e 9
-      Result := Result + Valor[i]; // se for número adiciona resultado
+    if Valor[i] in ['0'..'9'] then //verifica se o valor estÃ¡ entre 0 e 9
+      Result := Result + Valor[i]; // se for nÃºmero adiciona resultado
       //se n for ignora
   end;
 end;
@@ -106,7 +107,7 @@ end;
 procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
       btnGravar, btnApagar:TBitBtn; Navegador: TDBNavigator;
       Flag:Boolean);
-//configurando botões e desabilitando uns  quando outros forem clicados
+//configurando botÃµes e desabilitando uns  quando outros forem clicados
  begin
     btnNovo.Enabled :=Flag;
     btnApagar.Enabled :=Flag;
@@ -123,7 +124,7 @@ begin
    pgcPrincipal.TabIndex:=Indice;
 end;
 
-//função que retorna uma string
+//funÃ§Ã£o que retorna uma string
 function TfrmTelaHeranca.RetornarCampoTraduzido(Campo:String):String;
 var i:Integer;
 begin
@@ -209,7 +210,7 @@ begin
   //ZEBRAR
   if not (gdSelected in State) then
   begin
-  //verifica se o número da linha é ímpar ou par e da uma cor p cada
+  //verifica se o nÃºmero da linha Ã© Ã­mpar ou par e da uma cor p cada
     if Odd(TDBGrid(Sender).DataSource.DataSet.RecNo) then
       TDBGrid(Sender).Canvas.Brush.Color := $00F2F2F2 // Cinza claro
     else
@@ -226,7 +227,7 @@ begin
   // Aplica a cor no fundo
   TDBGrid(Sender).Canvas.FillRect(Rect);
 
-  //mostra o texto padrão
+  //mostra o texto padrÃ£o
   TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
@@ -239,7 +240,7 @@ begin
 end;
 {$ENDREGION}
 
-{$REGION 'MÉTODOS VIRTUAIS'}
+{$REGION 'MÃ‰TODOS VIRTUAIS'}
 function TfrmTelaHeranca.Apagar: Boolean;
 begin
     ShowMessage('DELETADO');
@@ -254,7 +255,7 @@ end;
 function TfrmTelaHeranca.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
   Result := True;
-//mensagens para o usuário saber se a ação aconteceu
+//mensagens para o usuÃ¡rio saber se a aÃ§Ã£o aconteceu
      if(EstadoDoCadastro=ecInserir) then
         ShowMessage('Inserir')
       else if (EstadoDoCadastro=ecAlterar) then
@@ -279,7 +280,7 @@ begin
       begin
         MessageDlg(
           TLabeledEdit(Components[i]).EditLabel.Caption +
-          ' é um campo obrigatório',
+          ' Ã© um campo obrigatÃ³rio',
           mtInformation,
           [mbOK],
           0
@@ -335,14 +336,14 @@ begin
   end;
 end;
 
-procedure TfrmTelaHeranca.DesabilitarEditPK;  //declara que o desabilitar pertence ao form tela herança
+procedure TfrmTelaHeranca.DesabilitarEditPK;  //declara que o desabilitar pertence ao form tela heranÃ§a
 var i: Integer;
 begin
-   for i := 0 to ComponentCount -1 do begin // o indice começa em 0 por isso o -1
-      if(Components[i] is TLabeledEdit) then begin  // verifica se o componente atual é do tipo TLabeledEdit
+   for i := 0 to ComponentCount -1 do begin // o indice comeÃ§a em 0 por isso o -1
+      if(Components[i] is TLabeledEdit) then begin  // verifica se o componente atual Ã© do tipo TLabeledEdit
           if(TLabeledEdit(Components[i]).Tag = 1) then begin
-            TLabeledEdit(Components[i]).Enabled:=False;  //desativa o campo, impedindo o usuário de editá-lo
-            Break;    // para o loop evitando busca desnecessária
+            TLabeledEdit(Components[i]).Enabled:=False;  //desativa o campo, impedindo o usuÃ¡rio de editÃ¡-lo
+            Break;    // para o loop evitando busca desnecessÃ¡ria
           end;
       end;
    end;
@@ -350,12 +351,12 @@ end;
 
 {$ENDREGION}
 
-{$REGION 'Botões'}
+{$REGION 'BotÃµes'}
 procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
 begin
   if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
   begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    MessageDlg('UsuÃ¡rio: '+oUsuarioLogado.nome +', nÃ£o tem permissÃ£o de acesso',mtWarning,[mbOK],0);
     Abort;
   end;
 
@@ -369,7 +370,7 @@ procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
   if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
   begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    MessageDlg('UsuÃ¡rio: '+oUsuarioLogado.nome +', nÃ£o tem permissÃ£o de acesso',mtWarning,[mbOK],0);
     Abort;
   end;
 
@@ -382,7 +383,7 @@ procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
 begin
 if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
   begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    MessageDlg('UsuÃ¡rio: '+oUsuarioLogado.nome +', nÃ£o tem permissÃ£o de acesso',mtWarning,[mbOK],0);
     Abort;
   end;
 
@@ -395,7 +396,7 @@ if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(S
        QryListagem.Refresh;
      end
      else begin
-        MessageDlg('Erro na exclusão', mtError, [mbok],0);
+        MessageDlg('Erro na exclusÃ£o', mtError, [mbok],0);
      end;
   finally
     EstadoDoCadastro:=ecNenhum;
@@ -415,7 +416,7 @@ procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
 begin
   if not TUsuariologado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.conexaoDB) then
   begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK],0);
+    MessageDlg('UsuÃ¡rio: '+oUsuarioLogado.nome +', nÃ£o tem permissÃ£o de acesso',mtWarning,[mbOK],0);
     Abort;
   end;
 
@@ -434,7 +435,7 @@ begin
        QryListagem.Refresh;
      end
      else begin
-        MessageDlg('Erro na gravação', mtError, [mbok],0);
+        MessageDlg('Erro na gravaÃ§Ã£o', mtError, [mbok],0);
      end;
    finally
    End;
@@ -455,7 +456,7 @@ end;
 
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
 begin
-  CentralizarColunas(grddListagem);
+  AlinharColunas(grddListagem);
   FGridCarregado := False;
 
   QryListagem.Connection:=dtmConexao.conexaoDB;
@@ -486,7 +487,7 @@ begin
     QryListagem.Open;
   end;
 
-  //garante que garregue a função
+  //garante que garregue a funÃ§Ã£o
   if not FGridCarregado then
   begin
     CarregarGrid;
@@ -526,9 +527,9 @@ var
 
 //variaveis criadas pra montar o sql sem quebrar o select original
   WhereOrAnd: string; //" se ta sendo usado where or and
-  CondicaoSQL: string; //"  condição da pesquisa (like%a%)
+  CondicaoSQL: string; //"  condiÃ§Ã£o da pesquisa (like%a%)
   SQLSemOrder: string; //"o sql original sem o order by
-  OrderByClause: string; //" só o orderby
+  OrderByClause: string; //" sÃ³ o orderby
   PosOrder: Integer;
 begin
   //cancela antes se a qry estiver editando ou inserindo
@@ -542,13 +543,13 @@ begin
     dtmConexao.conexaoDB) then
   begin
     MessageDlg(
-      'Usuário: ' + oUsuarioLogado.nome + ', não tem permissão de acesso',
+      'UsuÃ¡rio: ' + oUsuarioLogado.nome + ', nÃ£o tem permissÃ£o de acesso',
       mtWarning, [mbOK], 0
     );
     Abort;
   end;
 
-  // se não digitou nada
+  // se nÃ£o digitou nada
   if Trim(mskPesquisar.Text) = '' then
   begin
     QryListagem.Close;
@@ -558,13 +559,13 @@ begin
     Abort;
   end;
 
-  mskPesquisar.Text := Trim(mskPesquisar.Text); //trim= remove espaços digitados
-  //limpa as variáveis antes de usar
+  mskPesquisar.Text := Trim(mskPesquisar.Text); //trim= remove espaÃ§os digitados
+  //limpa as variÃ¡veis antes de usar
   NomeCampo := '';
   CondicaoSQL := '';
 
   // procura se existe ORDER BY no SQL
-  // UpperCase = transforma em maiúsculo
+  // UpperCase = transforma em maiÃºsculo
   PosOrder := Pos('ORDER BY', UpperCase(SelectOriginal));
 
   if PosOrder > 0 then
@@ -574,25 +575,25 @@ begin
   end
   else
   begin
-  //se não existir o order by, usa o sql original normal
+  //se nÃ£o existir o order by, usa o sql original normal
     SQLSemOrder := SelectOriginal;
     OrderByClause := '';
   end;
 
-  // se já existe WHERE usa AND, senão usa WHERE
+  // se jÃ¡ existe WHERE usa AND, senÃ£o usa WHERE
   if Pos('where', LowerCase(SQLSemOrder)) > 0 then
     WhereOrAnd := ' AND ' //2
   else
     WhereOrAnd := ' WHERE '; //1
 
-  // verifica se o texto digitado é um desses
+  // verifica se o texto digitado Ã© um desses
   if SameText(mskPesquisar.Text, 'Ativo') or
      SameText(mskPesquisar.Text, 'Inativo') or
      SameText(mskPesquisar.Text, 'Bloqueado') or
-     SameText(mskPesquisar.Text, 'Atenção') or
+     SameText(mskPesquisar.Text, 'AtenÃ§Ã£o') or
      SameText(mskPesquisar.Text, 'Prospecto') then
   begin
-  //muda para pesquisar se tiver maiúscula ou minúscula no texto
+  //muda para pesquisar se tiver maiÃºscula ou minÃºscula no texto
     CondicaoSQL := WhereOrAnd +
                'UPPER(s.descricao) = ' +
                QuotedStr(UpperCase(mskPesquisar.Text));
@@ -607,15 +608,15 @@ begin
     Exit;
   end;
 
-  // descobre qual campo está sendo pesquisado
+  // descobre qual campo estÃ¡ sendo pesquisado
   for I := 0 to QryListagem.FieldCount - 1 do
   begin
-    if QryListagem.Fields[I].FieldName = IndiceAtual then  //verifica se o campo é o campo atual selecionado
+    if QryListagem.Fields[I].FieldName = IndiceAtual then  //verifica se o campo Ã© o campo atual selecionado
     begin
     //se o campo selecionado for statusId
       if QryListagem.Fields[I].FieldName = 'statusId' then
       begin
-        ShowMessage('Digite um status válido: Ativo, Inativo, Bloqueado, Atenção ou Prospecto');
+        ShowMessage('Digite um status vÃ¡lido: Ativo, Inativo, Bloqueado, AtenÃ§Ã£o ou Prospecto');
         Exit;
       end;
 
@@ -625,22 +626,22 @@ begin
       if QryListagem.Fields[I].FieldName = 'pessoaDescricao' then
       begin
         NomeCampo := 'p.descricao'; //troca pro nome do sql
-        TipoCampo := ftString; //força ele a ser texto
+        TipoCampo := ftString; //forÃ§a ele a ser texto
       end
-      //senão ele verifica se existe no origin
+      //senÃ£o ele verifica se existe no origin
       else if QryListagem.Fields[I].Origin <> '' then
       //usa esse nome
         NomeCampo := QryListagem.Fields[I].Origin
       else
-      //senão usa o nome normal mesmo
+      //senÃ£o usa o nome normal mesmo
         NomeCampo := QryListagem.Fields[I].FieldName;
 
       Break;
     end;
   end;
 
-  // monta condição normal
-  //verifica se é inteiro
+  // monta condiÃ§Ã£o normal
+  //verifica se Ã© inteiro
   if (TipoCampo in [ftInteger, ftSmallint, ftAutoInc]) then
   begin
     CondicaoSQL := WhereOrAnd +
@@ -662,7 +663,7 @@ begin
                    'CAST(' + NomeCampo + ' as date) = ' +
                    QuotedStr(mskPesquisar.Text);
   end
-  //verifica se é float
+  //verifica se Ã© float
   else if (TipoCampo in [ftFloat, ftCurrency, ftFMTBcd]) then
   begin
     CondicaoSQL := WhereOrAnd +
@@ -687,14 +688,14 @@ begin
   if(trim(TMaskEdit(Sender).Text) = '')then
     Exit;
 
-  //verifica se o campo selecionado é tipo string
+  //verifica se o campo selecionado Ã© tipo string
   if(QryListagem.FieldByName(IndiceAtual).DataType in [ftString, ftWideString] )then
   begin
-  //encontra até se digitar pela metade
+  //encontra atÃ© se digitar pela metade
     QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [loPartialKey])
   end
 
-  //verifica se o campo selecionado é tipo float
+  //verifica se o campo selecionado Ã© tipo float
   else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftFloat, ftCurrency, ftFMTBcd] )then
   begin
      try
@@ -704,7 +705,7 @@ begin
      end;
   end
 
-  //verifica se o campo selecionado é tipo data
+  //verifica se o campo selecionado Ã© tipo data
   else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftDate, ftDateTime, ftTimeStamp] )then
   begin
    if TryStrToDate(TMaskEdit(Sender).Text, Date) then
@@ -712,7 +713,7 @@ begin
      QryListagem.Locate(IndiceAtual, Date, []);
    end
   end
-  //se ele não for nenhum dos tipos acima
+  //se ele nÃ£o for nenhum dos tipos acima
   else
      QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
 end;
@@ -725,7 +726,7 @@ begin
 end;
 {$ENDREGION}
 
-{$REGION 'Salvar Posição e Largura das Colunas'}
+{$REGION 'Salvar PosiÃ§Ã£o e Largura das Colunas'}
 procedure TfrmTelaHeranca.SalvarGrid;
 var
   Ini: TIniFile;
@@ -734,7 +735,7 @@ var
 begin
   Secao := Self.Name; //pega o nome da tela atual
 
-  //cria um arquivo diferente pra cada usuário
+  //cria um arquivo diferente pra cada usuÃ¡rio
   Ini := TIniFile.Create(
     ExtractFilePath(Application.ExeName) +
     'grid_' + IntToStr(oUsuarioLogado.codigo) + '.ini');
@@ -776,7 +777,7 @@ begin
   try
     for i := 0 to grddListagem.Columns.Count - 1 do
     begin
-      //lê o nome da coluna salva
+      //lÃª o nome da coluna salva
       Campo := Ini.ReadString(
         Secao,
         'Campo' + IntToStr(i),
@@ -789,7 +790,7 @@ begin
         if SameText(
           grddListagem.Columns[j].FieldName, Campo) then
         begin
-          grddListagem.Columns[j].Index := i; //move a coluna pra posição salva
+          grddListagem.Columns[j].Index := i; //move a coluna pra posiÃ§Ã£o salva
 
           //restaura a largura
           grddListagem.Columns[j].Width :=
@@ -805,14 +806,33 @@ begin
   end;
 end;
 
-procedure TfrmTelaHeranca.CentralizarColunas(aGrid: TDBGrid);
+//CentralizarColunas
+procedure TfrmTelaHeranca.AlinharColunas(aGrid: TDBGrid);
 var
   I: Integer;
+  Col: TColumn;
 begin
   for I := 0 to aGrid.Columns.Count - 1 do
   begin
-    aGrid.Columns[I].Alignment := taCenter;        // centraliza conteúdo
-    aGrid.Columns[I].Title.Alignment := taCenter; // centraliza título
+    Col := aGrid.Columns[I];
+    Col.Title.Alignment := taCenter;
+
+    if not Assigned(Col.Field) then
+      Continue;
+
+    case Col.Field.DataType of
+      // Inteiros â†’ centralizado (IDs, cÃ³digos, etc)
+      ftSmallint, ftInteger, ftWord, ftLargeint, ftAutoInc:
+        Col.Alignment := taCenter;
+
+      // Decimais / monetÃ¡rios â†’ direita
+      ftFloat, ftCurrency, ftBCD, ftFMTBcd:
+        Col.Alignment := taRightJustify;
+
+      // Texto, data, memo, resto â†’ esquerda
+      else
+        Col.Alignment := taLeftJustify;
+    end;
   end;
 end;
 {$ENDREGION}

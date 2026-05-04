@@ -96,5 +96,4 @@ procedure TfrmLogin.FormShow(Sender: TObject);
 begin
   bFechar:=False;
 end;
-
 end.

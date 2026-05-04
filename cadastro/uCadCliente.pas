@@ -1,4 +1,4 @@
-unit uCadCliente;
+﻿unit uCadCliente;
 
 interface
 
@@ -82,16 +82,15 @@ type
     procedure FormShow(Sender: TObject);
     procedure edtCEPChange(Sender: TObject);
     procedure edtCEPExit(Sender: TObject);
-    procedure dblkStatusClienteTipoPessoaCloseUp(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure strngfldQryListagemtelefoneGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemcpf_cnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemcepGetText(Sender: TField; var Text: string; DisplayText: Boolean);
-    procedure edtNumeroChange(Sender: TObject);
     procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
     procedure edtBairroKeyPress(Sender: TObject; var Key: Char);
     procedure edtCidadeKeyPress(Sender: TObject; var Key: Char);
     procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
+    procedure dblkStatusClienteTipoPessoaExit(Sender: TObject);
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -127,14 +126,14 @@ function TfrmCadCliente.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
   if not EmailValido(edtEmail.Text) then
   begin
-    ShowMessage('E-mail inv�lido!');
+    ShowMessage('E-mail inválido!');
     edtEmail.SetFocus;
     Exit;
   end;
 
    if not ValidarCpfCnpj(edtCpfCnpj.Text) then
   begin
-    ShowMessage('CPF/CNPJ inv�lido!');
+    ShowMessage('CPF/CNPJ inválido!');
     Result := False;
     Exit;
   end;
@@ -159,10 +158,11 @@ begin
   oCliente.statusId       := dblkStatusClientestatusId.KeyValue;
   oCliente.pessoaId       := dblkStatusClienteTipoPessoa.KeyValue;
 
-    if VarIsNull(dblkStatusClientestatusId.KeyValue) then
+  if VarIsNull(dblkStatusClientestatusId.KeyValue) or
+   VarIsEmpty(dblkStatusClientestatusId.KeyValue) then
   begin
     ShowMessage('Selecione um status!');
-    result:=false;
+    Result := False;
     Exit;
   end;
 
@@ -170,7 +170,7 @@ begin
     edtCpfCnpj.Text,
     QryListagem.FieldByName('clienteId').AsInteger) then
   begin
-    ShowMessage('CPF/CNPJ j� cadastrado!');
+    ShowMessage('CPF/CNPJ já cadastrado!');
     Exit;
   end;
 
@@ -244,26 +244,7 @@ begin
 end;
 
 {$REGION 'PARTE DOS DESAFIOS'}
-procedure TfrmCadCliente.dblkStatusClienteTipoPessoaCloseUp(Sender: TObject);
-begin
-  inherited;
-  //muda a label para cpf ou cnpj
-  //quando fecha a escolha de tipo pessoa
-  begin
-    if dblkStatusClienteTipoPessoa.KeyValue = 1 then
-    begin
-      lblCpfCnpj.Caption := 'CPF';
-      edtCpfCnpj.Clear;
-      edtCpfCnpj.MaxLength := 14;
-    end
-    else if dblkStatusClienteTipoPessoa.KeyValue = 2 then
-    begin
-      lblCpfCnpj.Caption := 'CNPJ';
-      edtCpfCnpj.Clear;
-      edtCpfCnpj.MaxLength := 18;
-    end;
-  end;
-end;
+
 
 procedure TfrmCadCliente.edtCpfCnpjChange(Sender: TObject);
 var
@@ -318,28 +299,10 @@ begin
   TFuncao.SomenteLetras(Key);
 end;
 
-//n�o permite digitar a,e ou qual coisa sem ser n�mero
+//não permite digitar a,e ou qual coisa sem ser número
  procedure TfrmCadCliente.edtNomeKeyPress(Sender: TObject; var Key: Char);
 begin
   TFuncao.SomenteLetras(Key);
-end;
-
-procedure TfrmCadCliente.edtNumeroChange(Sender: TObject);
-var
-  Num: string;
-begin
-  Num := SomenteNumeros(edtNumero.Text); //coloca a vari�vel = ao m�todo que s� aceita n�meros
-
-  if edtNumero.Text <> Num then  //se o usuario digitar ao diferente de numeros
-  begin
-    edtNumero.OnChange := nil; // evita loop, desligando o evento temporariamente
-    try
-      edtNumero.Text := Num; //tudo digitado � igual a num;
-      edtNumero.SelStart := Length(Num); // mant�m cursor no final
-    finally
-      edtNumero.OnChange := edtNumeroChange; //liga o evento e volta a funcionar
-    end;
-  end;
 end;
 
 procedure TfrmCadCliente.edtTelefoneChange(Sender: TObject);
@@ -347,7 +310,7 @@ var
   Num, Texto: string;
 begin
   Num := SomenteNumeros(edtTelefone.Text);
-  Texto := ''; //come�a vazio
+  Texto := ''; //começa vazio
 
   edtTelefone.OnChange := nil; //desligando o  evento temporariamente
 
@@ -385,7 +348,7 @@ begin
       Texto := Texto + '-' + Copy(Num,7,4);
   end;
 
-  edtTelefone.Text := Texto;  //texto j� formatado
+  edtTelefone.Text := Texto;  //texto já formatado
   edtTelefone.SelStart := Length(Texto); //cursor no final do texto
 
   edtTelefone.OnChange := edtTelefoneChange; //liga o evento dnv
@@ -399,7 +362,7 @@ var
 begin
   Result := False;
 
-  Num := SomenteNumeros(Valor); //limpa o valor, removendo a m�scara
+  Num := SomenteNumeros(Valor); //limpa o valor, removendo a máscara
 
   if (Num = '') or (Num = StringOfChar(Num[1], Length(Num))) then
   Exit;
@@ -409,13 +372,13 @@ begin
   begin
   //primeiro digito
     Soma := 0;
-    for i := 1 to 9 do  //passa os 9 primeiros n�meros
-      Soma := Soma + StrToInt(Num[i]) * (11 - i);//transforma de texto a n�mero, multiplica por um peso
+    for i := 1 to 9 do  //passa os 9 primeiros números
+      Soma := Soma + StrToInt(Num[i]) * (11 - i);//transforma de texto a número, multiplica por um peso
 
     Resto := (Soma * 10) mod 11; //mod= divide por 11
     if Resto = 10 then Resto := 0; //verifica o resultado
 
-    if Resto <> StrToInt(Num[10]) then Exit;   //se der 10 � 0
+    if Resto <> StrToInt(Num[10]) then Exit;   //se der 10 é 0
 
   //segundo digito
     Soma := 0;
@@ -439,11 +402,11 @@ begin
     Peso[9] := 5; Peso[10] := 4; Peso[11] := 3; Peso[12] := 2;
 
     Soma := 0;
-    for i := 1 to 12 do //passa pelos 12 n�meros
-      Soma := Soma + StrToInt(Num[i]) * Peso[i]; //multiplica cada n�mero pelo peso
+    for i := 1 to 12 do //passa pelos 12 números
+      Soma := Soma + StrToInt(Num[i]) * Peso[i]; //multiplica cada número pelo peso
 
     Resto := Soma mod 11; //divide por 11
-    if Resto < 2 then Resto := 0 else Resto := 11 - Resto; // resto menor que 2 = o, sen�o 11-resto
+    if Resto < 2 then Resto := 0 else Resto := 11 - Resto; // resto menor que 2 = o, senão 11-resto
 
     if Resto <> StrToInt(Num[13]) then Exit;
 
@@ -508,45 +471,48 @@ begin
   end;
 end;
 
-
 procedure TfrmCadCliente.grddListagemDrawColumnCell(
   Sender: TObject; const Rect: TRect; DataCol: Integer;
   Column: TColumn; State: TGridDrawState);
 var
   statusID: Integer;
   Grid: TDBGrid;
+  BgColor: TColor;
 begin
-inherited;
   Grid := TDBGrid(Sender);
 
-  //--PARTE DA BOLINHA DO STATUS--
-  //verifica se a coluna � a statusId, e filtra pra executar s� nessa coluna
+  // ── Define cor de fundo (zebrado) ──────────────────────────────
+  if gdSelected in State then
+    BgColor := clHighlight                         // linha selecionada
+  else if (Grid.DataSource.DataSet.RecNo mod 2 = 0) then
+    BgColor := $00F0F0F0                           // linha par → cinza claro
+  else
+    BgColor := clWhite;                            // linha ímpar → branco
+
   if Column.FieldName = 'statusId' then
   begin
-    //limpa e evita que o texto e o id apare�am juntos
-    TDBGrid(Sender).Canvas.FillRect(Rect);
+    // Pinta o fundo com a cor correta ANTES de desenhar a bolinha
+    Grid.Canvas.Brush.Color := BgColor;
+    Grid.Canvas.FillRect(Rect);
 
-    //pega o valor do Id e guarda
-    if Assigned(Column.Field) then
-      statusID := Column.Field.AsInteger
-    else
-    Exit;
+    if not Assigned(Column.Field) then Exit;
 
-    //subtrai 1 mesmo que comece com 0 l� na TImageList
-    //pra ficar o id com a imagem correspondente
     statusID := Column.Field.AsInteger;
 
-    //verfica se a imagem existe na TImgList,
-    //deixa a imagem centralizada, calculando o centro da c�lula,
-    //tanto p horizontal quanto vertical
     if (statusID >= 0) and (statusID < ImageList.Count) then
-      ImageList.Draw(TDBGrid(Sender).Canvas,
+      ImageList.Draw(Grid.Canvas,
                      Rect.Left + (Rect.Width div 2) - 8,
-                     Rect.Top + (Rect.Height div 2) - 8,
+                     Rect.Top  + (Rect.Height div 2) - 8,
                      statusID);
   end
   else
   begin
+    // Aplica o zebrado também nas colunas normais
+    if not (gdSelected in State) then
+    begin
+      Grid.Canvas.Brush.Color := BgColor;
+      Grid.Canvas.FillRect(Rect);
+    end;
     Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
   end;
 end;
@@ -588,7 +554,7 @@ begin
     HTTP.Request.UserAgent := 'Mozilla/5.0'; // evita bloqueio
 
     try
-      //requisi��o
+      //requisição
       Resp := HTTP.Get('https://viacep.com.br/ws/' + CEP + '/json/');
     except
       on E: Exception do
@@ -607,10 +573,10 @@ begin
     end;
 
     try
-      // CEP inv�lido
+      // CEP inválido
       if JSON.GetValue('erro') <> nil then
       begin
-        ShowMessage('CEP n�o encontrado!');
+        ShowMessage('CEP não encontrado!');
         Exit;
       end;
 
@@ -627,6 +593,27 @@ begin
   finally
     HTTP.Free;
     SSL.Free;
+  end;
+end;
+
+procedure TfrmCadCliente.dblkStatusClienteTipoPessoaExit(Sender: TObject);
+begin
+  inherited;
+  //muda a label para cpf ou cnpj
+  //quando fecha a escolha de tipo pessoa
+  begin
+    if dblkStatusClienteTipoPessoa.KeyValue = 1 then
+    begin
+      lblCpfCnpj.Caption := 'CPF';
+      edtCpfCnpj.Clear;
+      edtCpfCnpj.MaxLength := 14;
+    end
+    else if dblkStatusClienteTipoPessoa.KeyValue = 2 then
+    begin
+      lblCpfCnpj.Caption := 'CNPJ';
+      edtCpfCnpj.Clear;
+      edtCpfCnpj.MaxLength := 18;
+    end;
   end;
 end;
 
@@ -729,12 +716,24 @@ begin
 end;
 
 function TfrmCadCliente.EmailValido(const Email: string): Boolean;
-begin
+var
+  PosArroba, PosPonto: Integer;
+begin
+  Result := False;
+
+  if Email = '' then Exit;
+
+  PosArroba := Pos('@', Email);
+  PosPonto  := LastDelimiter('.', Email);
+
   Result :=
-    (Email <> '') and
-    (Pos('@', Email) > 1) and
-    (Pos('.', Email) > Pos('@', Email)) and
-    (Pos(' ', Email) = 0);
+    (PosArroba > 1) and    // tem algo antes do @
+    (PosPonto > PosArroba + 1) and  // tem algo entre @ e .
+    (PosPonto < Length(Email)) and  // não termina com .
+    (Pos(' ', Email) = 0) and       // sem espaços
+    (Pos('..', Email) = 0) and   //não permite 2 pontos
+    (Email[PosArroba + 1] <> '.') and   // tem +1 ponto
+    (Pos('@', Copy(Email, PosArroba + 1, Length(Email))) = 0); // só 1 @
 end;
 {$ENDREGION}
 end.

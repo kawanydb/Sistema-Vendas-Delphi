@@ -50,7 +50,6 @@ type
     procedure edtCnpjChange(Sender: TObject);
     procedure edtCEPChange(Sender: TObject);
     procedure edtCEPExit(Sender: TObject);
-    procedure edtNumeroChange(Sender: TObject);
     procedure strngfldQryListagemcnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure strngfldQryListagemtelefoneGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
@@ -268,24 +267,6 @@ end;
 procedure TfrmCadFornecedorProduto.edtEstadoKeyPress(Sender: TObject; var Key: Char);
 begin
   TFuncao.SomenteLetras(Key);
-end;
-
-procedure TfrmCadFornecedorProduto.edtNumeroChange(Sender: TObject);
-var
-  Num: string;
-begin
-  Num := SomenteNumeros(edtNumero.Text); //coloca a variável = ao método que só aceita números
-
-  if edtNumero.Text <> Num then  //se o usuario digitar ao diferente de numeros
-  begin
-    edtNumero.OnChange := nil; // evita loop, desligando o evento temporariamente
-    try
-      edtNumero.Text := Num; //tudo digitado é igual a num
-      edtNumero.SelStart := Length(Num); // mantém cursor no final
-    finally
-      edtNumero.OnChange := edtNumeroChange; //liga o evento e volta a funcionar
-    end;
-  end;
 end;
 
 procedure TfrmCadFornecedorProduto.edtTelefoneChange(Sender: TObject);

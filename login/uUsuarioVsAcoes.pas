@@ -115,7 +115,7 @@ procedure TfrmUsuarioVsAcoes.dbgrdACoesDrawColumnCell(Sender: TObject; const Rec
   State: TGridDrawState);
 begin
 inherited;
-  frmTelaHeranca.CentralizarColunas(dbgrdACoes);
+  frmTelaHeranca. AlinharColunas(dbgrdACoes);
   if not (gdSelected in State) then
   begin
   //verifica se o número da linha é ímpar ou par e da uma cor p cada
@@ -125,17 +125,14 @@ inherited;
       TDBGrid(Sender).Canvas.Brush.Color := $00E1E1E1; // Cinza escuro
   end;
 
-  //teste
    if (gdSelected in State) then
-begin
-  TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
-  TDBGrid(Sender).Canvas.Font.Color  := clBlack;
-end;
+  begin
+    TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
+    TDBGrid(Sender).Canvas.Font.Color  := clBlack;
+  end;
 
   // Aplica a cor no fundo
   TDBGrid(Sender).Canvas.FillRect(Rect);
-
-
 
   //mostra o texto padrão
   TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
@@ -154,7 +151,7 @@ procedure TfrmUsuarioVsAcoes.dbgrdUsuariosDrawColumnCell(Sender: TObject; const 
   Column: TColumn; State: TGridDrawState);
 begin
 inherited;
-  frmTelaHeranca.CentralizarColunas(dbgrdUsuarios);
+  frmTelaHeranca. AlinharColunas(dbgrdUsuarios);
  if not (gdSelected in State) then
   begin
   //verifica se o número da linha é ímpar ou par e da uma cor p cada
@@ -173,8 +170,6 @@ end;
 
   // Aplica a cor no fundo
   TDBGrid(Sender).Canvas.FillRect(Rect);
-
-
 
   //mostra o texto padrão
   TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
@@ -195,6 +190,4 @@ procedure TfrmUsuarioVsAcoes.QryUsuarioAfterScroll(DataSet: TDataSet);
 begin
   SelecionarAcoesAcessoPorUsuario;
 end;
-
-
 end.

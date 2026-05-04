@@ -109,7 +109,7 @@ begin
       conexaoDB.Rollback;
 
     end;
-    finally
+  finally
     if Assigned(Qry) then
        FreeAndNil(Qry);
   end;

@@ -363,7 +363,7 @@ procedure TfrmProVenda.dbGridItensDrawColumnCell(Sender: TObject; const Rect: TR
   State: TGridDrawState);
 begin
   inherited;
-  frmTelaHeranca.CentralizarColunas(dbGridItens);
+  frmTelaHeranca.AlinharColunas(dbGridItens);
   if not (gdSelected in State) then
   begin
   //verifica se o número da linha é ímpar ou par e da uma cor p cada
@@ -373,12 +373,11 @@ begin
       TDBGrid(Sender).Canvas.Brush.Color := $00E1E1E1; // Cinza escuro
   end;
 
-  //teste
    if (gdSelected in State) then
-begin
-  TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
-  TDBGrid(Sender).Canvas.Font.Color  := clBlack;
-end;
+  begin
+    TDBGrid(Sender).Canvas.Brush.Color := $00DAC7DE;
+    TDBGrid(Sender).Canvas.Font.Color  := clBlack;
+  end;
 
   // Aplica a cor no fundo
   TDBGrid(Sender).Canvas.FillRect(Rect);
@@ -400,8 +399,6 @@ begin
   //ao sair vai totalizar ele novamente
   edtTotalProduto.Value:=TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
 end;
-
-
 
 procedure TfrmProVenda.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -433,10 +430,10 @@ end;
 procedure TfrmProVenda.CarregarRegistroSelecionado;
 begin
 //vai pegar o cds e passar para preencher os campos
-  lkpProduto.KeyValue   := dtmVenda.cdsItensVenda.FieldByName('produtoId').AsInteger;
-  edtQuantidade.Value   :=dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat;
-  edtValorUnitario.Value:=dtmVenda.cdsItensVenda.FieldByName('valorUnitario').AsFloat;
-  edtTotalProduto.Value :=dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat;
+  lkpProduto.KeyValue    := dtmVenda.cdsItensVenda.FieldByName('produtoId').AsInteger;
+  edtQuantidade.Value    :=dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat;
+  edtValorUnitario.Value :=dtmVenda.cdsItensVenda.FieldByName('valorUnitario').AsFloat;
+  edtTotalProduto.Value  :=dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat;
 
 end;
 
