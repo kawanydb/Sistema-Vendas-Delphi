@@ -13,8 +13,6 @@ inherited frmProVenda: TfrmProVenda
     ExplicitWidth = 680
     ExplicitHeight = 346
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 672
       ExplicitHeight = 318
       inherited pnlListagemTopo: TPanel
@@ -292,16 +290,19 @@ inherited frmProVenda: TfrmProVenda
               item
                 Expanded = False
                 FieldName = 'NomeProduto'
+                Width = 64
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'quantidade'
+                Width = 64
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'valorUnitario'
+                Width = 64
                 Visible = True
               end
               item

@@ -79,11 +79,12 @@ type
     procedure FORNECEDOR1Click(Sender: TObject);
   private
     procedure AtualizacaobancoDados(aForm: TufrmmAtualizaDB);
-    procedure AtualizarDashBoard;
+
     procedure ColorirPie(Grafico: TDBChart);
     { Private declarations }
   public
     { Public declarations }
+    procedure AtualizarDashBoard;
   end;
 
 var
@@ -375,6 +376,11 @@ begin
     DTMGrafico.QryVendaValorPorCliente.Open;
     DTMGrafico.Qry10ProdutosMaisVendidos.Open;
     DTMGrafico.QryVendasUltimaSemana.Open;
+
+    ColorirPie(dtmPrincipal.dbcht1);
+    ColorirPie(dtmPrincipal.dbcht2);
+    ColorirPie(dtmPrincipal.dbcht3);
+    ColorirPie(dtmPrincipal.dbcht4);
   finally
     Screen.Cursor:=crSQLWait;
   end;

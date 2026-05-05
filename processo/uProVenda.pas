@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
-  Vcl.ExtCtrls,Vcl.Dialogs, Vcl.ComCtrls,uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, uEnum, cProVenda, uCadCliente;
+  Vcl.ExtCtrls,Vcl.Dialogs, Vcl.ComCtrls,uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, uEnum, cProVenda,
+  uCadCliente;
 
 type
   TfrmProVenda = class(TfrmTelaHeranca)
@@ -82,7 +83,7 @@ var
 implementation
 
 uses
-  uRelProVenda;
+  uRelProVenda,uPrincipal;
 
 {$R *.dfm}
 
@@ -143,6 +144,8 @@ begin
   else if EstadoDoCadastro = ecAlterar then
     oVenda.Atualizar(dtmVenda.cdsItensVenda);
 
+  dtmConexao.conexaoDB.Commit;
+
   AtualizarStatusCliente(Integer(lkpCliente.KeyValue), StatusAtual);
 
   if Assigned(frmCadCliente) then
@@ -151,6 +154,7 @@ begin
     frmCadCliente.QryListagem.Open;
   end;
 
+  dtmPrincipal.AtualizarDashBoard;
 
   frmRelProVenda := TfrmRelProVenda.Create(Self);
 
