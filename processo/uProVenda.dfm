@@ -49,8 +49,6 @@ inherited frmProVenda: TfrmProVenda
     end
     inherited tabManutencao: TTabSheet
       OnShow = tabManutencaoShow
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 672
       ExplicitHeight = 318
       object lbl2: TLabel
@@ -134,8 +132,6 @@ inherited frmProVenda: TfrmProVenda
           Color = 15855351
           ParentBackground = False
           TabOrder = 0
-          ExplicitLeft = -7
-          ExplicitTop = -4
           object lbl21: TLabel
             Left = 11
             Top = 4

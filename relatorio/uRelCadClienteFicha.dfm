@@ -47,9 +47,9 @@ object frmRelCadClienteFicha: TfrmRelCadClienteFicha
       end
       object rldrw2: TRLDraw
         Left = 0
-        Top = 40
+        Top = 65
         Width = 718
-        Height = 27
+        Height = 2
         Align = faBottom
         DrawKind = dkLine
         Pen.Width = 2
@@ -64,7 +64,7 @@ object frmRelCadClienteFicha: TfrmRelCadClienteFicha
     end
     object Rodape: TRLBand
       Left = 38
-      Top = 467
+      Top = 474
       Width = 718
       Height = 48
       BandType = btFooter
@@ -148,7 +148,7 @@ object frmRelCadClienteFicha: TfrmRelCadClienteFicha
     end
     object rlbnd1: TRLBand
       Left = 38
-      Top = 286
+      Top = 293
       Width = 718
       Height = 181
       object rldbtxtcategoriaId: TRLDBText
@@ -451,7 +451,7 @@ object frmRelCadClienteFicha: TfrmRelCadClienteFicha
     end
     object RLBand1: TRLBand
       Left = 38
-      Top = 105
+      Top = 112
       Width = 718
       Height = 181
       object RLDBText1: TRLDBText
@@ -852,6 +852,16 @@ object frmRelCadClienteFicha: TfrmRelCadClienteFicha
         Angle = 90.000000000000000000
         Caption = 'FICHA DE CLIENTE'
       end
+    end
+    object rlbnd2: TRLBand
+      Left = 38
+      Top = 105
+      Width = 718
+      Height = 7
+      BandType = btColumnHeader
+      Color = 15132392
+      ParentColor = False
+      Transparent = False
     end
   end
   object rldbtxtclienteId: TRLDBText

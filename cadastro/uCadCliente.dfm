@@ -1,11 +1,11 @@
 inherited frmCadCliente: TfrmCadCliente
   Tag = 2
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 507
-  ClientWidth = 655
+  ClientHeight = 512
+  ClientWidth = 722
   OnActivate = FormActivate
-  ExplicitWidth = 661
-  ExplicitHeight = 536
+  ExplicitWidth = 728
+  ExplicitHeight = 541
   PixelsPerInch = 96
   TextHeight = 13
   object img1: TImage [0]
@@ -15,16 +15,19 @@ inherited frmCadCliente: TfrmCadCliente
     Height = 105
   end
   inherited pgcPrincipal: TPageControl
-    Width = 655
-    Height = 461
-    ExplicitWidth = 655
-    ExplicitHeight = 461
+    Width = 722
+    Height = 466
+    ActivePage = tabManutencao
+    ExplicitWidth = 722
+    ExplicitHeight = 466
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 647
-      ExplicitHeight = 433
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 714
+      ExplicitHeight = 438
       inherited pnlListagemTopo: TPanel
-        Width = 647
-        ExplicitWidth = 647
+        Width = 714
+        ExplicitWidth = 714
         object img2: TImage [1]
           Left = 303
           Top = 15
@@ -262,8 +265,8 @@ inherited frmCadCliente: TfrmCadCliente
         end
       end
       inherited grddListagem: TDBGrid
-        Width = 647
-        Height = 386
+        Width = 714
+        Height = 391
         Columns = <
           item
             Expanded = False
@@ -330,52 +333,52 @@ inherited frmCadCliente: TfrmCadCliente
     inherited tabManutencao: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
-      ExplicitWidth = 647
-      ExplicitHeight = 433
+      ExplicitWidth = 714
+      ExplicitHeight = 438
       object lbl2: TLabel
-        Left = 21
+        Left = 47
         Top = 215
         Width = 19
         Height = 13
         Caption = 'CEP'
       end
       object lbl3: TLabel
-        Left = 21
+        Left = 47
         Top = 378
         Width = 45
         Height = 13
         Caption = 'Telefone '
       end
       object lbl4: TLabel
-        Left = 21
+        Left = 47
         Top = 136
         Width = 95
         Height = 13
         Caption = 'Data de nascimento'
       end
       object lbl5: TLabel
-        Left = 139
+        Left = 165
         Top = 136
         Width = 57
         Height = 13
         Caption = 'Tipo Pessoa'
       end
       object lblCpfCnpj: TLabel
-        Left = 341
+        Left = 367
         Top = 136
         Width = 19
         Height = 26
         Caption = 'CPF'#13#10
       end
       object lbl7: TLabel
-        Left = 340
+        Left = 366
         Top = 50
         Width = 31
         Height = 13
         Caption = 'Status'
       end
       object lbl12: TLabel
-        Left = 67
+        Left = 93
         Top = 380
         Width = 84
         Height = 11
@@ -388,7 +391,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
       object lbl13: TLabel
-        Left = 21
+        Left = 47
         Top = 190
         Width = 71
         Height = 21
@@ -401,7 +404,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
       object lbl14: TLabel
-        Left = 21
+        Left = 47
         Top = 351
         Width = 61
         Height = 21
@@ -414,7 +417,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
       object lbl15: TLabel
-        Left = 21
+        Left = 47
         Top = 19
         Width = 130
         Height = 21
@@ -427,7 +430,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
       object lbl16: TLabel
-        Left = 230
+        Left = 256
         Top = 217
         Width = 77
         Height = 11
@@ -440,7 +443,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
       object lbl17: TLabel
-        Left = 155
+        Left = 181
         Top = 259
         Width = 42
         Height = 11
@@ -454,7 +457,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtClienteId: TLabeledEdit
         Tag = 1
-        Left = 21
+        Left = 47
         Top = 64
         Width = 300
         Height = 21
@@ -467,7 +470,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtNome: TLabeledEdit
         Tag = 2
-        Left = 21
+        Left = 47
         Top = 107
         Width = 596
         Height = 21
@@ -480,7 +483,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtEndereco: TLabeledEdit
         Tag = 2
-        Left = 207
+        Left = 233
         Top = 231
         Width = 410
         Height = 21
@@ -492,7 +495,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtBairro: TLabeledEdit
         Tag = 2
-        Left = 360
+        Left = 386
         Top = 274
         Width = 257
         Height = 21
@@ -505,7 +508,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtCidade: TLabeledEdit
         Tag = 2
-        Left = 21
+        Left = 47
         Top = 312
         Width = 492
         Height = 21
@@ -518,7 +521,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtTelefone: TMaskEdit
         Tag = 2
-        Left = 21
+        Left = 47
         Top = 395
         Width = 219
         Height = 21
@@ -527,7 +530,7 @@ inherited frmCadCliente: TfrmCadCliente
         OnChange = edtTelefoneChange
       end
       object edtEmail: TLabeledEdit
-        Left = 246
+        Left = 272
         Top = 395
         Width = 371
         Height = 21
@@ -538,7 +541,7 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 14
       end
       object edtDataNascimento: TDateEdit
-        Left = 21
+        Left = 47
         Top = 153
         Width = 112
         Height = 21
@@ -550,7 +553,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtEstado: TLabeledEdit
         Tag = 2
-        Left = 528
+        Left = 554
         Top = 314
         Width = 89
         Height = 21
@@ -564,8 +567,8 @@ inherited frmCadCliente: TfrmCadCliente
         OnKeyPress = edtEstadoKeyPress
       end
       object dblkStatusClientestatusId: TDBLookupComboBox
-        Left = 340
-        Top = 64
+        Left = 366
+        Top = 69
         Width = 277
         Height = 21
         KeyField = 'statusId'
@@ -574,7 +577,7 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 1
       end
       object dblkStatusClienteTipoPessoa: TDBLookupComboBox
-        Left = 139
+        Left = 165
         Top = 153
         Width = 195
         Height = 21
@@ -585,7 +588,7 @@ inherited frmCadCliente: TfrmCadCliente
         OnExit = dblkStatusClienteTipoPessoaExit
       end
       object edtNumero: TLabeledEdit
-        Left = 21
+        Left = 47
         Top = 274
         Width = 58
         Height = 21
@@ -597,7 +600,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtCEP: TEdit
         Tag = 2
-        Left = 21
+        Left = 47
         Top = 229
         Width = 180
         Height = 21
@@ -608,7 +611,7 @@ inherited frmCadCliente: TfrmCadCliente
         OnExit = edtCEPExit
       end
       object edtCpfCnpj: TEdit
-        Left = 340
+        Left = 366
         Top = 153
         Width = 277
         Height = 21
@@ -617,7 +620,7 @@ inherited frmCadCliente: TfrmCadCliente
         OnChange = edtCpfCnpjChange
       end
       object edtComplemento: TLabeledEdit
-        Left = 87
+        Left = 113
         Top = 274
         Width = 257
         Height = 21
@@ -630,18 +633,18 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited pnlRodape: TPanel
-    Top = 461
-    Width = 655
+    Top = 466
+    Width = 722
     Height = 46
-    ExplicitTop = 461
-    ExplicitWidth = 655
+    ExplicitTop = 466
+    ExplicitWidth = 722
     ExplicitHeight = 46
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
-      Left = 587
-      ExplicitLeft = 587
+      Left = 654
+      ExplicitLeft = 654
     end
   end
   inherited dtsListagem: TDataSource

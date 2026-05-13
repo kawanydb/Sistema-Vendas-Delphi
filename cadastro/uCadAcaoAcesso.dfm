@@ -1,26 +1,27 @@
 inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   Caption = 'Cadastro de A'#231#227'o de Acesso'
-  ClientHeight = 372
-  ClientWidth = 574
-  ExplicitWidth = 580
-  ExplicitHeight = 401
+  ClientHeight = 400
+  ClientWidth = 673
+  ExplicitWidth = 679
+  ExplicitHeight = 429
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 574
-    Height = 331
+    Width = 673
+    Height = 359
+    ActivePage = tabManutencao
     ExplicitWidth = 574
     ExplicitHeight = 331
     inherited tabListagem: TTabSheet
       ExplicitWidth = 566
       ExplicitHeight = 303
       inherited pnlListagemTopo: TPanel
-        Width = 566
+        Width = 665
         ExplicitWidth = 566
       end
       inherited grddListagem: TDBGrid
-        Width = 566
-        Height = 256
+        Width = 665
+        Height = 284
         Columns = <
           item
             Expanded = False
@@ -43,8 +44,8 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 566
-      ExplicitHeight = 303
+      ExplicitWidth = 665
+      ExplicitHeight = 331
       object lbl15: TLabel
         Left = 13
         Top = 11
@@ -98,15 +99,15 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
     end
   end
   inherited pnlRodape: TPanel
-    Top = 331
-    Width = 574
+    Top = 359
+    Width = 673
     ExplicitTop = 331
     ExplicitWidth = 574
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
-      Left = 506
+      Left = 605
       ExplicitLeft = 506
     end
   end

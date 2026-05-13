@@ -202,6 +202,7 @@ begin
   end;
 end;
 
+
 procedure TfrmTelaHeranca.grddListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
   var
@@ -260,6 +261,13 @@ begin
         ShowMessage('Inserir')
       else if (EstadoDoCadastro=ecAlterar) then
         ShowMessage('Alterado');
+end;
+
+procedure TfrmTelaHeranca.BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
+begin
+  //Bloqueia o CTRL + DEL
+  if(Shift = [ssCtrl]) and (Key = 46) then
+    Key:=0;
 end;
 
 function TfrmTelaHeranca.ExisteCampoObrigatorio: Boolean;
@@ -475,6 +483,14 @@ begin
     Key := 0; // evita conflito
     Close;
   end;
+
+  case Key of
+      VK_F4: btnNovo.Click;
+      VK_F5: btnAlterar.Click;
+      VK_F6: btnCancelar.Click;
+      VK_F7: btnGravar.Click;
+      VK_F8: btnApagar.Click;
+  end;
 end;
 
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
@@ -682,48 +698,65 @@ begin
 end;
 
 procedure TfrmTelaHeranca.mskPesquisarChange(Sender: TObject);
-var Date:TDateTime;
+var
+  Date: TDateTime;
+  Campo: TField;
 begin
-  //verifica se esta vazio
-  if(trim(TMaskEdit(Sender).Text) = '')then
+  if Trim(TMaskEdit(Sender).Text) = '' then
     Exit;
 
-  //verifica se o campo selecionado é tipo string
-  if(QryListagem.FieldByName(IndiceAtual).DataType in [ftString, ftWideString] )then
+  Campo := QryListagem.FieldByName(IndiceAtual);
+
+  // ignora statusId
+  if Campo.FieldName = 'statusId' then
+    Exit;
+
+  // string
+  if Campo.DataType in [ftString, ftWideString] then
   begin
-  //encontra até se digitar pela metade
-    QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [loPartialKey])
+    QryListagem.Locate(
+      IndiceAtual,
+      TMaskEdit(Sender).Text, //pega o texto digitado
+      [loPartialKey]  //procura
+    );
   end
 
-  //verifica se o campo selecionado é tipo float
-  else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftFloat, ftCurrency, ftFMTBcd] )then
+  // float
+  else if Campo.DataType in [ftFloat, ftCurrency, ftFMTBcd] then
   begin
-     try
-       QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
-     except
-
-     end;
+    try
+      QryListagem.Locate(
+        IndiceAtual,
+        StrToFloat(TMaskEdit(Sender).Text), //converte string (,) em float
+        []
+      );
+    except
+    end;
   end
 
-  //verifica se o campo selecionado é tipo data
-  else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftDate, ftDateTime, ftTimeStamp] )then
+  // data
+  else if Campo.DataType in [ftDate, ftDateTime, ftTimeStamp] then
   begin
-   if TryStrToDate(TMaskEdit(Sender).Text, Date) then
-   begin
-     QryListagem.Locate(IndiceAtual, Date, []);
-   end
+    if TryStrToDate(TMaskEdit(Sender).Text, Date) then
+    begin
+      QryListagem.Locate(IndiceAtual, Date, []);
+    end;
   end
-  //se ele não for nenhum dos tipos acima
-  else
-     QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
+
+  // inteiros
+  else if Campo.DataType in [ftInteger, ftSmallint, ftAutoInc] then
+  begin
+    try
+      QryListagem.Locate(
+        IndiceAtual,
+        StrToInt(TMaskEdit(Sender).Text),
+        []
+      );
+    except
+    end;
+  end;
 end;
 
-procedure TfrmTelaHeranca.BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
-begin
-  //Bloqueia o CTRL + DEL
-  if(Shift = [ssCtrl]) and (Key = 46) then
-    Key:=0;
-end;
 {$ENDREGION}
 
 {$REGION 'Salvar Posição e Largura das Colunas'}
@@ -830,7 +863,7 @@ begin
         Col.Alignment := taRightJustify;
 
       // Texto, data, memo, resto → esquerda
-      else
+    else
         Col.Alignment := taLeftJustify;
     end;
   end;

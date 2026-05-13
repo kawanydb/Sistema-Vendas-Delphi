@@ -43,7 +43,8 @@ uses
   uTelaHerancaConsulta in 'uTelaHerancaConsulta.pas' {frmTelaHerancaConsulta},
   uConCategoria in 'consulta\uConCategoria.pas' {frmConCategoria},
   cCadFornecedor in 'classes\cCadFornecedor.pas',
-  uCadFornecedor in 'cadastro\uCadFornecedor.pas' {frmCadFornecedorProduto};
+  uCadFornecedor in 'cadastro\uCadFornecedor.pas' {frmCadFornecedorProduto},
+  uEnter in 'terceiros\uEnter.pas';
 
 {$R *.res}
 
@@ -53,7 +54,7 @@ begin
   Application.CreateForm(TdtmConexao, dtmConexao);
   Application.CreateForm(TdtmPrincipal, dtmPrincipal);
   Application.CreateForm(TfrmConCategoria, frmConCategoria);
-//  Application.CreateForm(TfrmCadFornecedorProduto, frmCadFornecedorProduto);
+  //  Application.CreateForm(TfrmCadFornecedorProduto, frmCadFornecedorProduto);
   //  Application.CreateForm(TfrmCadCategoria, frmCadCategoria);
 //  Application.CreateForm(TfrmCadCliente, frmCadCliente);
 //  Application.CreateForm(TfrmCadProduto, frmCadProduto);

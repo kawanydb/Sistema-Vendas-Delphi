@@ -22,6 +22,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     procedure btnAcessarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     bFechar:Boolean;
@@ -90,6 +91,12 @@ end;
 procedure TfrmLogin.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   CanClose:=bFechar;
+end;
+
+procedure TfrmLogin.FormCreate(Sender: TObject);
+begin
+  Left := (Screen.Width - Width) div 2;
+  Top := (Screen.Height - Height) div 2;
 end;
 
 procedure TfrmLogin.FormShow(Sender: TObject);

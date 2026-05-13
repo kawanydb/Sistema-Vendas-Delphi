@@ -1,23 +1,25 @@
 inherited frmCadUsuario: TfrmCadUsuario
   Caption = 'Cadastro de Usu'#225'rio'
-  ClientWidth = 579
-  ExplicitWidth = 585
+  ClientHeight = 404
+  ClientWidth = 647
+  ExplicitWidth = 653
+  ExplicitHeight = 433
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 579
+    Width = 647
+    Height = 363
+    ActivePage = tabManutencao
     ExplicitWidth = 579
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 571
-      ExplicitHeight = 0
       inherited pnlListagemTopo: TPanel
-        Width = 571
+        Width = 639
         ExplicitWidth = 571
       end
       inherited grddListagem: TDBGrid
-        Width = 571
+        Width = 639
+        Height = 288
         Columns = <
           item
             Expanded = False
@@ -32,7 +34,8 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 571
+      ExplicitWidth = 639
+      ExplicitHeight = 335
       object lbl15: TLabel
         Left = 14
         Top = 9
@@ -87,13 +90,14 @@ inherited frmCadUsuario: TfrmCadUsuario
     end
   end
   inherited pnlRodape: TPanel
-    Width = 579
+    Top = 363
+    Width = 647
     ExplicitWidth = 579
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
-      Left = 511
+      Left = 579
       ExplicitLeft = 511
     end
   end

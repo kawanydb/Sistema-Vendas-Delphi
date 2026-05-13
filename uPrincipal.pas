@@ -9,7 +9,7 @@ uses
   uRelCadProdutoComGrupoCategoria, uSelecionarData,uRelVendaPorData, uCadUsuario, uAlterarSenha,
   cUsuarioLogado, Vcl.ComCtrls, cAtualizacaoBancoDeDados, cArquivoIni, cAcaoAcesso, RLReport, Vcl.ExtCtrls,
   VclTee.TeeGDIPlus, Data.DB, VCLTee.TeEngine, VCLTee.Series, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart,
-  cFuncao, Vcl.StdCtrls, Vcl.Buttons, uCadFornecedor;
+  cFuncao, Vcl.StdCtrls, Vcl.Buttons, uCadFornecedor,uEnter;
 
 type
   TdtmPrincipal = class(TForm)
@@ -78,12 +78,10 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FORNECEDOR1Click(Sender: TObject);
   private
+    TeclaEnter: TMREnter;
     procedure AtualizacaobancoDados(aForm: TufrmmAtualizaDB);
-
     procedure ColorirPie(Grafico: TDBChart);
-    { Private declarations }
   public
-    { Public declarations }
     procedure AtualizarDashBoard;
   end;
 
@@ -96,7 +94,6 @@ implementation
 {$R *.dfm}
 
 uses uLogin, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico;
-
 
 procedure TdtmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
@@ -125,6 +122,8 @@ end;
 
 procedure TdtmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  FreeAndNil(TeclaEnter);
+
   if Assigned(dtmConexao) then
     FreeAndNil(dtmConexao);
   if Assigned(DTMGrafico) then
@@ -133,6 +132,9 @@ end;
 
 procedure TdtmPrincipal.FormCreate(Sender: TObject);
 begin
+    TeclaEnter:= TMREnter.Create(Self);
+    TeclaEnter.FocusEnabled:=True;
+    TeclaEnter.FocusColor:= $00FCF5FF;
 
 //se não existir o arquivo ini, ele cria
   if not FileExists(TArquivoIni.ArquivoIni) then

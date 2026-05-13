@@ -5,17 +5,23 @@ interface
 uses System.Classes,
      Vcl.Controls,
      Vcl.ExtCtrls,
-     Vcl.Dialogs, //lista de Units
+     Vcl.Dialogs,
      FireDAC.Comp.Client,
-     FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, System.SysUtils,FireDAC.Stan.Param;
+     FireDAC.Stan.Error,
+     FireDAC.DatS,
+     FireDAC.Phys.Intf,
+     FireDAC.DApt.Intf,
+     FireDAC.Stan.Async,
+     FireDAC.DApt,
+     FireDAC.Comp.DataSet,
+     System.SysUtils,
+     FireDAC.Stan.Param;
 
 type
-  TCategoria = class //Declaração do tipo da Classe
+  TCategoria = class
   private
-  //Variaveis Privada somente dentro da classe
-  F_categoriaId: Integer;  //int
-  F_descricao: String;     //varchar
+  F_categoriaId: Integer;
+  F_descricao: String;
   conexaoDB: TFDConnection;
   function getCodigo: Integer;
   function getDescricao: string;
@@ -23,17 +29,13 @@ type
   procedure setDescricao(const Value: string);
 
   public
-    constructor Create(aConexao:TFDConnection); //Construtor da Classe
-    destructor Destroy; override; //Destroi a Classe usar o Override por causa
-                                  //de Sobrescrever
-    //Variaveis Publicas que pode ser trabalhada fora da classe
+    constructor Create(aConexao:TFDConnection);
+    destructor Destroy; override;
     function Inserir:Boolean;
     function Atualizar:Boolean;
     function Apagar:Boolean;
     function Selecionar(id:Integer):Boolean;
   published
-    //Variaveis Publicas utilizadas para propriedas da classe
-    //para fornecer informações em runtime
     property codigo:Integer read getCodigo write setCodigo;
     property descricao:string read getDescricao write setDescricao;
   end;
@@ -82,7 +84,6 @@ end;
 {$ENDREGION}
 
 {$REGION 'CRUD'}
-
 function TCategoria.Apagar: Boolean;
 var Qry:TFDQuery;
 begin
@@ -107,11 +108,11 @@ begin
       Qry.ExecSQL;
       conexaoDB.Commit;
     except
-  on E: Exception do begin
-    conexaoDB.Rollback;
-    Result := False;
-  end;
-end;
+      on E: Exception do begin
+        conexaoDB.Rollback;
+        Result := False;
+      end;
+    end;
   finally
     if Assigned(Qry) then
       FreeAndNil(Qry);
@@ -168,9 +169,7 @@ begin
    finally
     if Assigned(Qry) then
     FreeAndNil(Qry);
-
    end;
-
 end;
 
 function TCategoria.Selecionar(id: Integer): Boolean;

@@ -88,6 +88,7 @@ type
     nQryClientesemail: TStringField;
     nQryClientestelefone: TStringField;
     sqltmstmpfldQryClientesdatanascimento: TSQLTimeStampField;
+    rlbnd2: TRLBand;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure nQryClientestelefoneGetText(Sender: TField; var Text: string; DisplayText: Boolean);

@@ -475,44 +475,56 @@ procedure TfrmCadCliente.grddListagemDrawColumnCell(
   Sender: TObject; const Rect: TRect; DataCol: Integer;
   Column: TColumn; State: TGridDrawState);
 var
-  statusID: Integer;
   Grid: TDBGrid;
   BgColor: TColor;
+  StatusID: Integer;
+  TextRect: TRect;
 begin
   Grid := TDBGrid(Sender);
 
-  // ── Define cor de fundo (zebrado) ──────────────────────────────
   if gdSelected in State then
-    BgColor := clHighlight                         // linha selecionada
+    BgColor := $00DAC7DE
   else if (Grid.DataSource.DataSet.RecNo mod 2 = 0) then
-    BgColor := $00F0F0F0                           // linha par → cinza claro
+    BgColor := $00F0F0F0
   else
-    BgColor := clWhite;                            // linha ímpar → branco
+    BgColor := clWhite;
+
+  Grid.Canvas.Brush.Color := BgColor;
+  Grid.Canvas.FillRect(Rect);
+
+  if gdSelected in State then
+    Grid.Canvas.Font.Color := clBlack
+  else
+    Grid.Canvas.Font.Color := clWindowText;
+
+
+  Grid.Canvas.Brush.Color := BgColor;
+  Grid.Canvas.FillRect(Rect);
+
 
   if Column.FieldName = 'statusId' then
   begin
-    // Pinta o fundo com a cor correta ANTES de desenhar a bolinha
-    Grid.Canvas.Brush.Color := BgColor;
-    Grid.Canvas.FillRect(Rect);
+    if not Column.Field.IsNull then
+    begin
+      StatusID := Column.Field.AsInteger;
 
-    if not Assigned(Column.Field) then Exit;
-
-    statusID := Column.Field.AsInteger;
-
-    if (statusID >= 0) and (statusID < ImageList.Count) then
-      ImageList.Draw(Grid.Canvas,
-                     Rect.Left + (Rect.Width div 2) - 8,
-                     Rect.Top  + (Rect.Height div 2) - 8,
-                     statusID);
+      if (StatusID >= 0) and (StatusID < ImageList.Count) then
+      begin
+        ImageList.Draw(
+          Grid.Canvas,
+          Rect.Left + (Rect.Width div 2) - 8,
+          Rect.Top + (Rect.Height div 2) - 8,
+          StatusID
+        );
+      end;
+    end;
   end
   else
   begin
-    // Aplica o zebrado também nas colunas normais
-    if not (gdSelected in State) then
-    begin
-      Grid.Canvas.Brush.Color := BgColor;
-      Grid.Canvas.FillRect(Rect);
-    end;
+
+    TextRect := Rect;
+    InflateRect(TextRect, -2, -2);
+
     Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
   end;
 end;

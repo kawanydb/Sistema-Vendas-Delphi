@@ -12,7 +12,7 @@ object dtmConexao: TdtmConexao
       'DriverID=MSSQL')
     Connected = True
     LoginPrompt = False
-    Left = 24
+    Left = 112
     Top = 40
   end
 end

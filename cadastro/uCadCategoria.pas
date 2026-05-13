@@ -39,7 +39,7 @@ implementation
 {$REGION 'Override'}
 function TfrmCadCategoria.Apagar: Boolean;
 var Qry:TFDQuery;
-begin  //amtes de apagar eu seleciono o registro e garanto que ele existe
+begin  //antes de apagar eu seleciono o registro e garanto que ele existe
 if oCategoria.Selecionar(QryListagem.FieldByName('categoriaId').AsInteger) then begin
    Result:=oCategoria.Apagar; //executo o método apagar
 end;

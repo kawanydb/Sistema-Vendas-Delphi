@@ -1,14 +1,14 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produto'
-  ClientHeight = 444
-  ClientWidth = 593
-  ExplicitWidth = 599
-  ExplicitHeight = 473
+  ClientHeight = 446
+  ClientWidth = 706
+  ExplicitWidth = 712
+  ExplicitHeight = 475
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 593
-    Height = 403
+    Width = 706
+    Height = 405
     ActivePage = tabManutencao
     ExplicitWidth = 593
     ExplicitHeight = 403
@@ -16,12 +16,12 @@ inherited frmCadProduto: TfrmCadProduto
       ExplicitWidth = 585
       ExplicitHeight = 375
       inherited pnlListagemTopo: TPanel
-        Width = 585
+        Width = 698
         ExplicitWidth = 585
       end
       inherited grddListagem: TDBGrid
-        Width = 436
-        Height = 328
+        Width = 549
+        Height = 330
         OnCellClick = grddListagemCellClick
         Columns = <
           item
@@ -68,19 +68,21 @@ inherited frmCadProduto: TfrmCadProduto
           end>
       end
       object pnl1: TPanel
-        Left = 436
+        Left = 549
         Top = 47
         Width = 149
-        Height = 328
+        Height = 330
         Align = alRight
         Color = clWindow
         ParentBackground = False
         TabOrder = 2
+        ExplicitLeft = 436
+        ExplicitHeight = 328
         object Image1: TImage
           Left = 1
           Top = 1
           Width = 147
-          Height = 326
+          Height = 328
           Align = alClient
           Proportional = True
           Stretch = True
@@ -92,31 +94,31 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 585
-      ExplicitHeight = 375
+      ExplicitWidth = 698
+      ExplicitHeight = 377
       object lbl3: TLabel
-        Left = 19
+        Left = 66
         Top = 304
         Width = 64
         Height = 13
         Caption = 'Valor Unit'#225'rio'
       end
       object lbl4: TLabel
-        Left = 190
+        Left = 237
         Top = 304
         Width = 56
         Height = 13
         Caption = 'Quantidade'
       end
       object lbl5: TLabel
-        Left = 190
+        Left = 237
         Top = 128
         Width = 47
         Height = 13
         Caption = 'Categoria'
       end
       object btnIncluirCategoria: TSpeedButton
-        Left = 341
+        Left = 388
         Top = 145
         Width = 23
         Height = 22
@@ -150,7 +152,7 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnIncluirCategoriaClick
       end
       object btnPesquisarCategoria: TSpeedButton
-        Left = 369
+        Left = 416
         Top = 145
         Width = 23
         Height = 22
@@ -184,7 +186,7 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnPesquisarCategoriaClick
       end
       object lbl12: TLabel
-        Left = 482
+        Left = 529
         Top = 154
         Width = 20
         Height = 13
@@ -197,14 +199,14 @@ inherited frmCadProduto: TfrmCadProduto
         ParentFont = False
       end
       object lbl6: TLabel
-        Left = 18
+        Left = 65
         Top = 128
         Width = 55
         Height = 13
         Caption = 'Fornecedor'
       end
       object lbl15: TLabel
-        Left = 18
+        Left = 65
         Top = 11
         Width = 138
         Height = 21
@@ -217,7 +219,7 @@ inherited frmCadProduto: TfrmCadProduto
         ParentFont = False
       end
       object lbl16: TLabel
-        Left = 19
+        Left = 66
         Top = 186
         Width = 164
         Height = 21
@@ -231,7 +233,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtProdutoId: TLabeledEdit
         Tag = 1
-        Left = 18
+        Left = 65
         Top = 58
         Width = 373
         Height = 21
@@ -244,7 +246,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtNome: TLabeledEdit
         Tag = 2
-        Left = 18
+        Left = 65
         Top = 101
         Width = 373
         Height = 21
@@ -255,7 +257,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 1
       end
       object edtDescricao: TMemo
-        Left = 19
+        Left = 66
         Top = 219
         Width = 544
         Height = 77
@@ -266,7 +268,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtValor: TCurrencyEdit
         Tag = 2
-        Left = 19
+        Left = 66
         Top = 323
         Width = 137
         Height = 21
@@ -274,7 +276,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 5
       end
       object lkpCategoria: TDBLookupComboBox
-        Left = 188
+        Left = 235
         Top = 147
         Width = 147
         Height = 21
@@ -285,7 +287,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object edtQuantidade: TCurrencyEdit
         Tag = 2
-        Left = 190
+        Left = 237
         Top = 323
         Width = 147
         Height = 21
@@ -293,7 +295,7 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 6
       end
       object pnlImagem: TPanel
-        Left = 418
+        Left = 465
         Top = 58
         Width = 145
         Height = 98
@@ -312,7 +314,7 @@ inherited frmCadProduto: TfrmCadProduto
         end
       end
       object dblkFornecedor: TDBLookupComboBox
-        Left = 19
+        Left = 66
         Top = 146
         Width = 155
         Height = 21
@@ -324,15 +326,15 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited pnlRodape: TPanel
-    Top = 403
-    Width = 593
+    Top = 405
+    Width = 706
     ExplicitTop = 403
     ExplicitWidth = 593
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
     inherited btnnFechar: TBitBtn
-      Left = 525
+      Left = 638
       ExplicitLeft = 525
     end
   end
@@ -454,12 +456,12 @@ inherited frmCadProduto: TfrmCadProduto
       'SELECT fornecedorId, nomeFornecedor'
       'FROM fornecedor'
       'ORDER BY nomeFornecedor')
-    Left = 204
-    Top = 168
+    Left = 212
+    Top = 40
   end
   object dtsFornecedor: TDataSource
     DataSet = QryFornecedor
-    Left = 116
-    Top = 144
+    Left = 148
+    Top = 48
   end
 end
