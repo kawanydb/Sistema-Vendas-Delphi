@@ -58,4 +58,3 @@ git clone https://github.com/kawanydb/Sistema-Vendas-Delphi.git
 ## 👤 Autor
 
 **kawanydb** 
-## 📞 Suporte
