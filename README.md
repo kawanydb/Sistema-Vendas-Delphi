@@ -8,12 +8,12 @@ Este é um sistema completo de gestão de vendas, desenvolvido com a linguagem *
 
 ## 🎯 Funcionalidades
 
-- ✅ Gerenciamento de clientes
-- ✅ Cadastro de produtos
-- ✅ Controle de vendas e pedidos
-- ✅ Relatórios gerenciais
-- ✅ Interface amigável
-- ✅ Banco de dados integrado
+- ✅ Gerenciamento de clientes.
+- ✅ Cadastro de categorias,produtos,clientes, fornecedores e usuários.
+- ✅ Controle de vendas e pedidos.
+- ✅ Relatórios gerenciais.
+- ✅ Interface amigável.
+- ✅ Banco de dados integrado.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -48,25 +48,14 @@ git clone https://github.com/kawanydb/Sistema-Vendas-Delphi.git
 ```
 
 2. Abra o projeto no Delphi:
-   - Localize o arquivo de projeto `.dpr` ou `.dpk`
+   - Localize o arquivo de projeto `.dproj` 
    - Abra-o com o IDE do Delphi
 
 3. Configure o banco de dados (se necessário)
 
 4. Compile e execute o projeto
 
-## 📝 Licença
-
-Este projeto é disponibilizado como está. Consulte o repositório para mais informações sobre a licença.
-
 ## 👤 Autor
 
-**kawanydb** - [GitHub Profile](https://github.com/kawanydb)
-
+**kawanydb** 
 ## 📞 Suporte
-
-Para dúvidas, issues ou sugestões, abra uma [issue no repositório](https://github.com/kawanydb/Sistema-Vendas-Delphi/issues).
-
----
-
-**Última atualização**: 2026-05-18
