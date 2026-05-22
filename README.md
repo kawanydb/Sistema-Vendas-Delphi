@@ -2,10 +2,6 @@
 
 Um sistema de vendas robusto desenvolvido em **Delphi/Pascal**, projetado para gerenciar operações comerciais com eficiência e confiabilidade.
 
-## 📋 Sobre o Projeto
-
-Este é um sistema completo de gestão de vendas, desenvolvido com a linguagem **Pascal** (Delphi), oferecendo uma solução desktop profissional para pequenas e médias empresas.
-
 ## 🎯 Funcionalidades
 
 - ✅ Gerenciamento de clientes.
