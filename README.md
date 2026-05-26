@@ -26,7 +26,7 @@ Sistema-Vendas-Delphi/
 ├── forms/                  # Formulários da aplicação
 ├── units/                  # Unidades Pascal
 ├── resources/              # Recursos (ícones, imagens)
-└── README.md              # Este arquivo
+└── README.md               # Este arquivo
 ```
 
 ## 🚀 Como Usar
